@@ -1,13 +1,13 @@
-import 'package:campusbuzz/model/event.dart';
+
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-class EventItem extends StatelessWidget {
-  const EventItem({super.key, required this.event,required this.onSelectEvent,});
+class Epage extends StatelessWidget {
+  const Epage({super.key,});
 
-  final Event event;
+
    //final void Function(Event event) onToggleFavorite;
-   final void Function(Event event) onSelectEvent;
+   
   //  final void Function(Event event) onToggleFavorite;
 
 
@@ -22,19 +22,23 @@ class EventItem extends StatelessWidget {
       elevation: 2,
       child: InkWell(
         onTap: () {
-           onSelectEvent(event);
+           
           
         },
         child: Stack(
           children: [
             FadeInImage(
               placeholder: MemoryImage(kTransparentImage),
-              image: AssetImage(event.imageUrl),
+              image: AssetImage("event"),
               fit: BoxFit.cover,
               height: 200,
               width: double.infinity,
             ),
-            
+            Column(
+              children: [
+                
+              ],
+            ),
             Positioned(
               bottom: 0,
               left: 0,
@@ -46,7 +50,7 @@ class EventItem extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      event.title,
+                      "event.title",
                       maxLines: 1,
                       textAlign: TextAlign.center,
                       softWrap: true,

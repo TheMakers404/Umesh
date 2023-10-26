@@ -1,17 +1,20 @@
-
 import 'package:campusbuzz/event_detail_screen.dart';
 import 'package:campusbuzz/model/event.dart';
 import 'package:campusbuzz/screen/inside_categ_screen.dart';
 import 'package:flutter/material.dart';
+
 class EventScreen extends StatelessWidget {
-  const EventScreen({super.key,required this.Ctitle,required this.events,
+  const EventScreen({
+    super.key,
+    required this.Ctitle,
+    required this.events,
   });
 
   final String Ctitle;
   final List<Event> events;
-    // final void Function(Event event) onToggleFavorite;
+  // final void Function(Event event) onToggleFavorite;
 
-    void selectEvent(BuildContext context, Event event) {
+  void selectEvent(BuildContext context, Event event) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx) => EventDetailScreen(
@@ -22,19 +25,15 @@ class EventScreen extends StatelessWidget {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     Widget content = Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           const Center(
-            child: Text(
-              'Uh oh ... nothing here!',
-              style: TextStyle(color: Color.fromARGB(255, 218, 17, 17))
-            ),
+            child: Text('Uh oh ... nothing here!',
+                style: TextStyle(color: Color.fromARGB(255, 218, 17, 17))),
           ),
           const SizedBox(height: 16),
           Text(
@@ -50,19 +49,31 @@ class EventScreen extends StatelessWidget {
     if (events.isNotEmpty) {
       content = GridView.builder(
         itemCount: events.length,
-        itemBuilder: (ctx, index) => EventItem(event: events[index], onSelectEvent: (event) {
+        itemBuilder: (ctx, index) => EventItem(
+          event: events[index],
+          onSelectEvent: (event) {
             selectEvent(context, event);
           },
           //  onToggleFavorite:onToggleFavorite,
-        ), gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+        ),
+        gridDelegate:
+            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
       );
     }
     return Scaffold(
-      appBar: AppBar(title:Text(Ctitle,style: const TextStyle(color: Color(0xffe93030), ),),backgroundColor: Color(0xfff5f5f5),  leading: BackButton(
-      color:Color(0xffe93030),
-
-   ),
-   elevation: 0, ),
+      appBar: AppBar(
+        title: Text(
+          Ctitle,
+          style: const TextStyle(
+            color: Color(0xffe93030),
+          ),
+        ),
+        backgroundColor: Color(0xfff5f5f5),
+        leading: BackButton(
+          color: Color(0xffe93030),
+        ),
+        elevation: 0,
+      ),
       body: content,
     );
   }

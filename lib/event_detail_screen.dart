@@ -41,6 +41,7 @@ class EventDetailScreen extends ConsumerWidget {
     final favoriteEvents = ref.watch(favoriteEventsProvider);
 
     final isFavorite = favoriteEvents.contains(event);
+    print("detailpage build");
     return Scaffold(
       backgroundColor: Color(0xffF5F5F5),
       body: SafeArea(
@@ -125,17 +126,7 @@ class EventDetailScreen extends ConsumerWidget {
                                   ),
                                 ),
                               ),
-                              // child: Padding(
-                              //   padding: const EdgeInsets.only(left:2),
-                              //   child: LikeButton(
-                              //     isLiked: isLiked,
-                              //     onTap: (liked) async {
-                              //       onToggleFavorite(event);
-                              //       eventLikeNotifier.toggleLike(event.id);
-                              //       return !liked;
-                              //     },
-                              //   ),
-                              // ),
+                            
                             ),
                           ),
                         )
@@ -193,11 +184,8 @@ class EventDetailScreen extends ConsumerWidget {
                 ),
               ),
 
-              // const Padding(
-              //   padding: EdgeInsets.symmetric(horizontal: 15,vertical: 10),
-              //   child: Text('here will be a brief description about the above event long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using Content here, content here, making it look like readable English.',
-              //   style: TextStyle(fontWeight:FontWeight.w300 ),),
-              // )
+              
+              
               SizedBox(
                 height: 15,
               ),
@@ -351,31 +339,55 @@ class EventDetailScreen extends ConsumerWidget {
       case 'c1':
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => FormScreen()),
+          MaterialPageRoute(builder: (context) => FormScreen(
+          imageUrl: event.imageUrl,
+          time: event.time,
+          date: event.date,title: event.title,college_name:event.college_name
+
+          )),
         );
         break;
       case 'c2':
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => FormScreen()),
+          MaterialPageRoute(builder: (context) => FormScreen(
+          imageUrl: event.imageUrl,
+          time: event.time,
+          date: event.date,
+          title: event.title,college_name:event.college_name
+
+          )),
         );
         break;
       case 'c3':
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => FormScreen()),
+          MaterialPageRoute(builder: (context) => FormScreen(
+          imageUrl: event.imageUrl,
+          time: event.time,
+          date: event.date,title: event.title,college_name:event.college_name
+
+          )),
         );
         break;
       case 'c4':
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => FormScreen()),
+          MaterialPageRoute(builder: (context) => FormScreen(imageUrl: event.imageUrl,
+          time: event.time,
+          date: event.date,title: event.title,college_name:event.college_name
+
+          )),
         );
         break;
       case 'c5':
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => FormScreen()),
+          MaterialPageRoute(builder: (context) =>FormScreen(imageUrl: event.imageUrl,
+          time: event.time,
+          date: event.date,title: event.title,college_name:event.college_name
+
+          )),
         );
         break;
       default:

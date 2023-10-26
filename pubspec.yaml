@@ -19,6 +19,10 @@ dependencies:
   firebase_core_platform_interface: ^4.8.0
   firebase_database: ^10.2.5
   firebase_messaging: ^14.6.6
+  flutter_barcode_scanner: ^2.0.0
+  barcode: ^2.2.4
+  pdf: ^3.10.4
+  path_provider: ^2.1.1
   
 
   flutter:
@@ -33,7 +37,7 @@ dependencies:
   image_picker: ^1.0.2
   url_launcher: ^6.0.9
   upi_india: ^3.0.1
-  video_player: ^2.7.0  
+  video_player: ^2.7.0
   flutter_local_notifications: ^15.1.0+1
   function_tree: ^0.8.13
   get: ^4.6.5
@@ -51,10 +55,11 @@ dependencies:
   flutter_riverpod: ^2.4.0
   geolocator: ^10.1.0
   geocoding: ^2.1.1
+  barcode_widget: ^2.0.4
+  confetti: ^0.7.0
   
   
-  
-#   flutter_native_splash: ^2.3.2
+  flutter_native_splash: ^2.3.2
 
 
 # flutter_native_splash:

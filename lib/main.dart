@@ -3,6 +3,7 @@ import 'package:campusbuzz/nav.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'createaccount.dart';
@@ -19,7 +20,11 @@ void main() async {
      options: DefaultFirebaseOptions.currentPlatform
   );
   //runApp(MaterialApp(home:OnboardApp()));
-  runApp(
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp
+  ]).then((fn) {
+    runApp(
     ProviderScope(
       child: FutureBuilder(
         future:
@@ -61,6 +66,8 @@ void main() async {
       ),
     ),
   );
+  });
+  
 }
 
 // class MyApp extends StatelessWidget {
