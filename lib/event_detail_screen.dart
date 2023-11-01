@@ -342,7 +342,8 @@ class EventDetailScreen extends ConsumerWidget {
           MaterialPageRoute(builder: (context) => FormScreen(
           imageUrl: event.imageUrl,
           time: event.time,
-          date: event.date,title: event.title,college_name:event.college_name
+          date: event.date,title: event.title,college_name:event.college_name,
+          
 
           )),
         );
@@ -354,7 +355,7 @@ class EventDetailScreen extends ConsumerWidget {
           imageUrl: event.imageUrl,
           time: event.time,
           date: event.date,
-          title: event.title,college_name:event.college_name
+          title: event.title,college_name:event.college_name, 
 
           )),
         );
@@ -365,7 +366,7 @@ class EventDetailScreen extends ConsumerWidget {
           MaterialPageRoute(builder: (context) => FormScreen(
           imageUrl: event.imageUrl,
           time: event.time,
-          date: event.date,title: event.title,college_name:event.college_name
+          date: event.date,title: event.title,college_name:event.college_name,
 
           )),
         );
@@ -375,7 +376,7 @@ class EventDetailScreen extends ConsumerWidget {
           context,
           MaterialPageRoute(builder: (context) => FormScreen(imageUrl: event.imageUrl,
           time: event.time,
-          date: event.date,title: event.title,college_name:event.college_name
+          date: event.date,title: event.title,college_name:event.college_name, 
 
           )),
         );
@@ -385,7 +386,7 @@ class EventDetailScreen extends ConsumerWidget {
           context,
           MaterialPageRoute(builder: (context) =>FormScreen(imageUrl: event.imageUrl,
           time: event.time,
-          date: event.date,title: event.title,college_name:event.college_name
+          date: event.date,title: event.title,college_name:event.college_name, 
 
           )),
         );

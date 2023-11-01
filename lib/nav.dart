@@ -31,7 +31,7 @@ class TabsScreen extends ConsumerStatefulWidget {
 
 class _TabsScreen extends ConsumerState<TabsScreen> {
 
-  final List<Event> _favoriteEvent = [];
+  
   
 
   void _showInfoMessage(String message) {
@@ -62,7 +62,7 @@ class _TabsScreen extends ConsumerState<TabsScreen> {
   Widget build(BuildContext context) {
     final favoriteEvent = ref.watch(favoriteEventsProvider);
      activePage = [
-       Homescreen(event: Event_details, onselectevent: (Event event) { 
+       Homescreen(event: Event_details, onselectevent: (Event event) {
         Navigator.push(
         context,
         MaterialPageRoute(

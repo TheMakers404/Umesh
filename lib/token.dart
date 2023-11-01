@@ -1,7 +1,7 @@
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
 
-class TokenDisplayScreen extends StatelessWidget {
+class Evvent {
   final String token;
   final String imageUrl;
   final String time;
@@ -10,7 +10,7 @@ class TokenDisplayScreen extends StatelessWidget {
   final String leaderName;
   final String college_name;
 
-  TokenDisplayScreen({
+  Evvent({
     required this.token,
     required this.imageUrl,
     required this.time,
@@ -19,9 +19,34 @@ class TokenDisplayScreen extends StatelessWidget {
     required this.leaderName,
     required this.college_name,
   });
+}
+
+class TokenDisplayScreen extends StatefulWidget {
+  final Evvent event;
+
+  TokenDisplayScreen({
+    
+   required this.event });
 
   @override
+  State<TokenDisplayScreen> createState() => _TokenDisplayScreenState();
+}
+
+class _TokenDisplayScreenState extends State<TokenDisplayScreen> {
+  
+  @override
   Widget build(BuildContext context) {
+    
+
+
+
+DataStorage.imageUrl = widget.event.imageUrl;
+                      DataStorage.time = widget.event.time;
+                      DataStorage.date = widget.event.date;
+                      DataStorage.title = widget.event.title;
+                      DataStorage.collegeName = widget.event.college_name;
+                      DataStorage.leaderName = widget.event.leaderName;
+
     return Scaffold(
       backgroundColor: Color(0xfff5f5f5),
       appBar: AppBar(
@@ -64,7 +89,7 @@ class TokenDisplayScreen extends StatelessWidget {
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(15),
                             child: Image.asset(
-                              imageUrl,
+                              widget.event.imageUrl,
                               height: 200,
                             )),
                       ),
@@ -73,7 +98,7 @@ class TokenDisplayScreen extends StatelessWidget {
                         top: 220,
                         left: 20,
                         child: Text(
-                          title,
+                          widget.event.title,
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 30,
@@ -91,7 +116,7 @@ class TokenDisplayScreen extends StatelessWidget {
                               size: 30,
                             ),
                             Text(
-                              college_name,
+                              widget.event.college_name,
                               style: TextStyle(color: Colors.black),
                             ),
                           ],
@@ -116,7 +141,7 @@ class TokenDisplayScreen extends StatelessWidget {
                         top: 335,
                         left: 20,
                         child: Text(
-                          leaderName,
+                          widget.event.leaderName,
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 20,
@@ -137,7 +162,7 @@ class TokenDisplayScreen extends StatelessWidget {
                           top: 390,
                           left: 20,
                           child: Text(
-                            date,
+                            widget.event.date,
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.w500),
@@ -156,7 +181,7 @@ class TokenDisplayScreen extends StatelessWidget {
                           top: 390,
                           left: 200,
                           child: Text(
-                            time,
+                            widget.event.time,
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.w500),
@@ -170,7 +195,7 @@ class TokenDisplayScreen extends StatelessWidget {
                           left: 52,
                           child: BarcodeWidget(
                         barcode: Barcode.code128(),
-                        data: '$token',
+                        data: '${widget.event}.token',
                       ),),
 
                       
@@ -199,4 +224,14 @@ class TokenDisplayScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+class DataStorage {
+  static String imageUrl = '';
+  static String time = '';
+  static String date = '';
+  static String title = '';
+  static String collegeName = '';
+  static String uniqueToken= '';
+  static String leaderName='';
 }

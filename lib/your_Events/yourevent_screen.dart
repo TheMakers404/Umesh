@@ -1,53 +1,56 @@
-import 'package:campusbuzz/model/event.dart';
 import 'package:campusbuzz/token.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-class YourEvents extends StatelessWidget {
-  const YourEvents({
-    super.key,
-    required this.title,
-    required this.imageUrl, required this.time, required this.date, required this.collegeName, required this.token, required this.leaderName,
+class YourEvents extends StatefulWidget {
+
+  
+  // final Eventt eevent;
+
+  // //adding ticket
+  // final List<Ticket> ticket;
+  
+  
+   YourEvents({
+    super.key, 
+    
 
   });
 
-  final String title;
-  final String imageUrl;
-  final String time;
-  final String date;
-  final String collegeName;
-  final String token;
-  final String leaderName;
+  @override
+  State<YourEvents> createState() => _YourEventsState();
 
-  void selectEvent(BuildContext context, Event event) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (ctx) => TokenDisplayScreen(
-          imageUrl: imageUrl,
-          title: title,
-          token: '',
-          time: '',
-          date: '',
-          college_name: '',
-          leaderName: '',
-        ),
-      ),
-    );
+  
+}
+
+class _YourEventsState extends State<YourEvents> {
+  List<Evvent> events = [];
+
+
+    void addEvent(Evvent event) {
+    setState(() {
+      events.add(event);
+    });
   }
+  
+  // void selectEvent(BuildContext context, Event event) {
+  //   Navigator.of(context).push(
+  //     MaterialPageRoute(
+  //       builder: (ctx) => TokenDisplayScreen(
+  //         token: widget.eevent.token,
+  //                           imageUrl: widget.eevent.imageUrl,
+  //                           time: widget.eevent.time,
+  //                           date: widget.eevent.date,
+  //                           title: widget.eevent.title,
+  //                           leaderName: widget.eevent.leaderName,
+  //                           college_name: widget.eevent.collegeName,
+  //       ),
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
-    Widget content = Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Center(
-            child: Text('Uh oh ... nothing here!!',
-                style: TextStyle(color: Color.fromARGB(255, 218, 17, 17))),
-          ),
-        ],
-      ),
-    );
 
     // if (title.isNotEmpty) {
     //   content = GridView.builder(
@@ -60,15 +63,20 @@ class YourEvents extends StatelessWidget {
     //         SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
     //   );
     // }
-    return Scaffold(
+    return 
+    Scaffold(
       appBar: AppBar(
         title: Text("Ticket"),
       ),
-      body: GridView.builder(
+      body: 
+      GridView.builder(
+        
         gridDelegate:
             SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-        itemCount: imageUrl.length,
+        itemCount:events.length,
         itemBuilder: (context, index) {
+          Evvent event = events[index];
+          
           return Card(
             margin: const EdgeInsets.all(8),
             shape: RoundedRectangleBorder(
@@ -82,13 +90,14 @@ class YourEvents extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) => TokenDisplayScreen(
-                            token: token,
-                            imageUrl: imageUrl,
-                            time: time,
-                            date: date,
-                            title: title,
-                            leaderName: leaderName,
-                            college_name: collegeName,
+                            // token: widget.events.token,
+                            // imageUrl: widget.events.imageUrl,
+                            // time: widget.events.time,
+                            // date: widget.events.date,
+                            // title: widget.events.title,
+                            // leaderName: widget.events.leaderName,
+                            // college_name: widget.events.collegeName, 
+                            event:event, 
                           )),
                 );
               },
@@ -96,7 +105,7 @@ class YourEvents extends StatelessWidget {
                 children: [
                   FadeInImage(
                     placeholder: MemoryImage(kTransparentImage),
-                    image: AssetImage(imageUrl),
+                    image: AssetImage(event.imageUrl),
                     fit: BoxFit.cover,
                     height: 200,
                     width: double.infinity,
@@ -115,7 +124,7 @@ class YourEvents extends StatelessWidget {
                       child: Column(
                         children: [
                           Text(
-                            title,
+                            event.title,
                             maxLines: 1,
                             textAlign: TextAlign.center,
                             softWrap: true,

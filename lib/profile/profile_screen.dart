@@ -2,8 +2,8 @@
 import 'dart:io';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:campusbuzz/Foorms/Foorm.dart';
 import 'package:campusbuzz/main.dart';
+import 'package:campusbuzz/your_Events/ymodel.dart';
 import 'package:campusbuzz/your_Events/yourevent_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -22,8 +22,32 @@ _launchurl() async {
   }
 }
 
+class Eventt {
+  final String title;
+  final String imageUrl;
+  final String time;
+  final String date;
+  final String collegeName;
+  final String token;
+  final String leaderName;
+
+  Eventt({
+    required this.title,
+    required this.imageUrl,
+    required this.time,
+    required this.date,
+    required this.collegeName,
+    required this.token,
+    required this.leaderName,
+  });
+}
+
+ 
 class Profile extends StatefulWidget {
-  Profile({super.key});
+  
+  //adding event
+  final List<Ticket> ticket = [];
+  Profile({super.key,});
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -69,13 +93,6 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    String imageUrl = DataStorage.imageUrl;
-    String time = DataStorage.time;
-    String date = DataStorage.date;
-    String title = DataStorage.title;
-    String collegeName = DataStorage.collegeName;
-    String token = DataStorage.uniqueToken;
-    String leaderName = DataStorage.leaderName;
 
     
 
@@ -253,7 +270,7 @@ class _ProfileState extends State<Profile> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => YourEvents(title:title, imageUrl:imageUrl, time: time, date: date, collegeName: collegeName, token: token, leaderName: leaderName ,)),
+                                          builder: (context) => YourEvents()),
                                     );
                                     break;
                                   case 3:

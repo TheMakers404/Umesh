@@ -1,7 +1,4 @@
 
-
-
-
 import 'package:campusbuzz/FavProv.dart';
 import 'package:campusbuzz/model/event.dart';
 import 'package:flutter/material.dart';

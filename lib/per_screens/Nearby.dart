@@ -82,7 +82,7 @@ class EventItemm extends ConsumerWidget {
                                     onTap: () {
                                       // Add your onPressed function here
                                       print('Icon pressed');
-                                      print('Icon pressed');
+                                      
                                       final wasAdded = ref
                                           .read(favoriteEventsProvider.notifier)
                                           .toggleEventFavoriteStatus(event);

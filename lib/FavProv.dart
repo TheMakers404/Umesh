@@ -21,3 +21,5 @@ final favoriteEventsProvider =
     StateNotifierProvider<FavoriteEventsNotifier, List<Event>>((ref) {
   return FavoriteEventsNotifier();
 });
+
+
