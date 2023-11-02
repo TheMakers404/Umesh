@@ -60,6 +60,7 @@ class _TabsScreen extends ConsumerState<TabsScreen> {
   @override
 
   Widget build(BuildContext context) {
+    
     final favoriteEvent = ref.watch(favoriteEventsProvider);
      activePage = [
        Homescreen(event: Event_details, onselectevent: (Event event) {

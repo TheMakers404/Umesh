@@ -24,28 +24,21 @@ class Evvent {
 class TokenDisplayScreen extends StatefulWidget {
   final Evvent event;
 
-  TokenDisplayScreen({
-    
-   required this.event });
+  TokenDisplayScreen({required this.event});
 
   @override
   State<TokenDisplayScreen> createState() => _TokenDisplayScreenState();
 }
 
 class _TokenDisplayScreenState extends State<TokenDisplayScreen> {
-  
   @override
   Widget build(BuildContext context) {
-    
-
-
-
-DataStorage.imageUrl = widget.event.imageUrl;
-                      DataStorage.time = widget.event.time;
-                      DataStorage.date = widget.event.date;
-                      DataStorage.title = widget.event.title;
-                      DataStorage.collegeName = widget.event.college_name;
-                      DataStorage.leaderName = widget.event.leaderName;
+// DataStorage.imageUrl = widget.event.imageUrl;
+//                       DataStorage.time = widget.event.time;
+//                       DataStorage.date = widget.event.date;
+//                       DataStorage.title = widget.event.title;
+//                       DataStorage.collegeName = widget.event.college_name;
+//                       DataStorage.leaderName = widget.event.leaderName;
 
     return Scaffold(
       backgroundColor: Color(0xfff5f5f5),
@@ -191,16 +184,15 @@ DataStorage.imageUrl = widget.event.imageUrl;
                         child: Divider(thickness: 0.5),
                       ),
                       Positioned(
-                          top: 435,
-                          left: 52,
-                          child: BarcodeWidget(
-                        barcode: Barcode.code128(),
-                        data: '${widget.event}.token',
-                      ),),
-
-                      
-
-                      
+                        top: 435,
+                        left: 52,
+                        child: BarcodeWidget(
+                          barcode: Barcode.code128(),
+                          data: '${widget.event}.token',
+                        ),
+                      ),
+                      Positioned(
+                          top: 445, left: 52, child: Text(widget.event.token)),
 
                       //token id
                       // Positioned(
@@ -226,12 +218,12 @@ DataStorage.imageUrl = widget.event.imageUrl;
   }
 }
 
-class DataStorage {
-  static String imageUrl = '';
-  static String time = '';
-  static String date = '';
-  static String title = '';
-  static String collegeName = '';
-  static String uniqueToken= '';
-  static String leaderName='';
-}
+// class DataStorage {
+//   static String imageUrl = '';
+//   static String time = '';
+//   static String date = '';
+//   static String title = '';
+//   static String collegeName = '';
+//   static String uniqueToken= '';
+//   static String leaderName='';
+// }

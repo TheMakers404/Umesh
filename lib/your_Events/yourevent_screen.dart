@@ -1,31 +1,34 @@
 import 'package:campusbuzz/token.dart';
+import 'package:campusbuzz/your_Events/ymodel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-class YourEvents extends StatefulWidget {
+class YourEvents extends ConsumerStatefulWidget {
 
-  
+ 
   // final Eventt eevent;
-
+final List<Evvent> events;
   // //adding ticket
   // final List<Ticket> ticket;
   
   
    YourEvents({
-    super.key, 
+    super.key, required this.events,
     
 
   });
 
   @override
-  State<YourEvents> createState() => _YourEventsState();
+  ConsumerState<YourEvents> createState() => _YourEventsState(events: events);
 
   
 }
 
-class _YourEventsState extends State<YourEvents> {
-  List<Evvent> events = [];
-
+class _YourEventsState extends ConsumerState<YourEvents> {
+  //List<Evvent> events = [];
+  List<Evvent> events ;
+ _YourEventsState({required this.events});
 
     void addEvent(Evvent event) {
     setState(() {
@@ -51,6 +54,7 @@ class _YourEventsState extends State<YourEvents> {
 
   @override
   Widget build(BuildContext context) {
+    final eventList = ref.watch(eventListProvider);
 
     // if (title.isNotEmpty) {
     //   content = GridView.builder(
@@ -73,9 +77,9 @@ class _YourEventsState extends State<YourEvents> {
         
         gridDelegate:
             SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-        itemCount:events.length,
+        itemCount:eventList.length,
         itemBuilder: (context, index) {
-          Evvent event = events[index];
+          Evvent event = eventList[index];
           
           return Card(
             margin: const EdgeInsets.all(8),

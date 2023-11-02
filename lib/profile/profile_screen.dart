@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:campusbuzz/main.dart';
-import 'package:campusbuzz/your_Events/ymodel.dart';
+import 'package:campusbuzz/token.dart';
 import 'package:campusbuzz/your_Events/yourevent_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -22,38 +22,23 @@ _launchurl() async {
   }
 }
 
-class Eventt {
-  final String title;
-  final String imageUrl;
-  final String time;
-  final String date;
-  final String collegeName;
-  final String token;
-  final String leaderName;
-
-  Eventt({
-    required this.title,
-    required this.imageUrl,
-    required this.time,
-    required this.date,
-    required this.collegeName,
-    required this.token,
-    required this.leaderName,
-  });
-}
 
  
 class Profile extends StatefulWidget {
   
   //adding event
-  final List<Ticket> ticket = [];
-  Profile({super.key,});
+
+  Profile({super.key, });
 
   @override
   State<Profile> createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
+  List<Evvent> events = [];
+  
+ 
+
   File? _pickedImageFile;
 
   void logOutAccount(BuildContext context) async {
@@ -93,6 +78,7 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    //final events = context.read(eventListProvider);
 
     
 
@@ -270,7 +256,7 @@ class _ProfileState extends State<Profile> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => YourEvents()),
+                                          builder: (context) => YourEvents(events: events,)),
                                     );
                                     break;
                                   case 3:

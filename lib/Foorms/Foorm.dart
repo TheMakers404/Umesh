@@ -1,16 +1,16 @@
-
 import 'package:campusbuzz/token.dart';
 import 'package:campusbuzz/your_Events/ymodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class FormScreen extends StatefulWidget {
+class FormScreen extends ConsumerStatefulWidget {
   final String imageUrl;
   final String time;
   final String date;
   final String title;
   final String college_name;
-    
+  
 
   const FormScreen(
       {super.key,
@@ -21,25 +21,24 @@ class FormScreen extends StatefulWidget {
       required this.college_name});
 
   @override
-  State<StatefulWidget> createState() {
-    return FormScreenState();
+  ConsumerState<FormScreen> createState() {
+    return _FormScreen();
   }
 }
 
-class FormScreenState extends State<FormScreen> {
+class _FormScreen extends ConsumerState<FormScreen> {
+  
+  
+
 
   //adding event to yourevent screen:-
-  late String _img;
-  late String _e_name;
+  //  List<Evvent> events = [];
+  //  void addEvent(Evvent event) {
+  //   setState(() {
+  //     events.add(event);
+  //   });
+  // }
 
-  List<Ticket> userList = [];
-  addUser(Ticket ticket) {
-    setState(() {
-      userList.add(ticket);
-    });
-  }
-
-  
   List<String> items = [
     '1',
     '2',
@@ -56,7 +55,7 @@ class FormScreenState extends State<FormScreen> {
   String _AboutAbstract = '';
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  
   Widget _buildName() {
     return Column(children: [
       const Padding(
@@ -397,6 +396,7 @@ class FormScreenState extends State<FormScreen> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -440,6 +440,9 @@ class FormScreenState extends State<FormScreen> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15)),
                     onPressed: () {
+                      
+                       //final eventListNotifier = context.read();
+                       
                       if (!_formKey.currentState!.validate()) {
                         return;
                       }
@@ -452,8 +455,8 @@ class FormScreenState extends State<FormScreen> {
                         "About Abstract": data6.text,
                         "Teamsize": dropdownValue,
                       };
-
                       
+
                       // Firestore.Instance.collection("test").add(data);
                       //  FirebaseFirestore.instance.collection("User").add(data).then((value) {
                       // print("Data added with ID: ${value.id}");
@@ -467,6 +470,24 @@ class FormScreenState extends State<FormScreen> {
 
                         uniqueToken = uniqueToken;
 
+                        //testing #2
+                        Evvent newEvent = Evvent(
+                          token: uniqueToken,
+                          imageUrl: widget.imageUrl,
+                          time: widget.time,
+                          date: widget.date,
+                          title: widget.title,
+                          leaderName: _Leader,
+                          college_name: widget.college_name,
+                        );
+                        ref.read(eventListProvider.notifier).addEvent(newEvent);
+                        //eventListNotifier.addEvent(newEvent);
+
+                        // YourEvents yourEventsWidget = YourEvents(
+                        //     events: widget.events); 
+                        // yourEventsWidget.addEvent(newEvent);
+                        //addEvent(newEvent);
+
                         // Navigate to the new screen to display the token
                         Navigator.of(context).push(
                           MaterialPageRoute(
@@ -478,7 +499,16 @@ class FormScreenState extends State<FormScreen> {
                                 // title: widget.title,
                                 // leaderName: _Leader,
                                 // college_name: widget.college_name,
-                                 event: Evvent(token: uniqueToken, imageUrl: widget.imageUrl, time: widget.time, date: widget.date, title: widget.title, leaderName: _Leader, college_name: widget.college_name),),
+                                event: newEvent
+                                //  Evvent(
+                                //     token: uniqueToken,
+                                //     imageUrl: widget.imageUrl,
+                                //     time: widget.time,
+                                //     date: widget.date,
+                                //     title: widget.title,
+                                //     leaderName: _Leader,
+                                //     college_name: widget.college_name),
+                                ),
                           ),
                         );
                       }).catchError((error) {
@@ -487,13 +517,11 @@ class FormScreenState extends State<FormScreen> {
 
                       _formKey.currentState?.save();
 
-
                       //adding event to yourevent screen
                       // _img = DataStorage.imageUrl;
                       // _e_name = DataStorage.title;
-                      
-                      addUser(Ticket(_img, _e_name));
-                      
+
+                      //addUser(Ticket(_img, _e_name));
 
                       //  print(_name);
                       //  print(_email);
@@ -553,6 +581,6 @@ class FormScreenState extends State<FormScreen> {
   }
 }
 
-// data_storage.dart
+// #testing2
 
 
