@@ -62,6 +62,7 @@ class _TabsScreen extends ConsumerState<TabsScreen> {
   Widget build(BuildContext context) {
     
     final favoriteEvent = ref.watch(favoriteEventsProvider);
+    // favoriteEventsNotifier.loadFavoriteEventsFromFirestore();
      activePage = [
        Homescreen(event: Event_details, onselectevent: (Event event) {
         Navigator.push(
@@ -89,7 +90,7 @@ class _TabsScreen extends ConsumerState<TabsScreen> {
         onPageChanged: _selectPage,
         children: activePage,
       ),
-          bottomNavigationBar: 
+          bottomNavigationBar:
           //changed here
           Container(
             decoration: BoxDecoration(

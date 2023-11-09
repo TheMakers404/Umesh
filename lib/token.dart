@@ -1,6 +1,39 @@
 import 'package:barcode_widget/barcode_widget.dart';
+import 'package:campusbuzz/pdf/paf_api.dart';
 import 'package:flutter/material.dart';
 
+
+//pdf ticket
+// class Invoice{
+//   final Eventdetails eventdetails;
+//   final Something something;
+
+
+//   Invoice({
+//   required this.eventdetails,
+//   required this.something});
+
+
+// }
+
+// class Something {
+//   final String location;
+//   const Something({required this.location});
+// }
+
+// class Eventdetails {
+//   final String title;
+//   final String date;
+//   final String time;
+
+//   Eventdetails({
+//     required this.title,
+//     required this.date,
+//     required this.time,
+//   });
+// }
+
+//your events screen ticket
 class Evvent {
   final String token;
   final String imageUrl;
@@ -33,6 +66,8 @@ class TokenDisplayScreen extends StatefulWidget {
 class _TokenDisplayScreenState extends State<TokenDisplayScreen> {
   @override
   Widget build(BuildContext context) {
+    final PdfInvoiceService service = PdfInvoiceService();
+    int number = 0;
 // DataStorage.imageUrl = widget.event.imageUrl;
 //                       DataStorage.time = widget.event.time;
 //                       DataStorage.date = widget.event.date;
@@ -58,7 +93,7 @@ class _TokenDisplayScreenState extends State<TokenDisplayScreen> {
             Center(
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 25, vertical: 25),
+                     EdgeInsets.symmetric(horizontal: 25, vertical: 25),
                 child: Container(
                   height: 545,
                   width: double.infinity,
@@ -77,7 +112,7 @@ class _TokenDisplayScreenState extends State<TokenDisplayScreen> {
                   child: Stack(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(
+                        padding: EdgeInsets.symmetric(
                             horizontal: 10, vertical: 10),
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(15),
@@ -188,11 +223,11 @@ class _TokenDisplayScreenState extends State<TokenDisplayScreen> {
                         left: 52,
                         child: BarcodeWidget(
                           barcode: Barcode.code128(),
-                          data: '${widget.event}.token',
+                          data: widget.event.token,
+                          // data: '${widget.event}.token',
                         ),
                       ),
-                      Positioned(
-                          top: 445, left: 52, child: Text(widget.event.token)),
+                      
 
                       //token id
                       // Positioned(
@@ -210,7 +245,19 @@ class _TokenDisplayScreenState extends State<TokenDisplayScreen> {
                 ),
               ),
             ),
-            ElevatedButton(onPressed: () {}, child: Text("Download"))
+            ElevatedButton(onPressed: () async{
+
+              // final invoice = Invoice(eventdetails: Eventdetails(title: "Name", date: "date", time: "time"), something: Something(location: "location")
+
+              // );
+              // final pdfFile= await PdfInvoiceApi.generte(invoice);
+              // PdfApi.openFile(pdfFile);
+              final data = await service.createHelloWorld();
+                service.savePdfFile("invoice_$number", data);
+                number++;
+
+              
+            }, child: Text("Download"))
           ],
         ),
       ),
@@ -227,3 +274,5 @@ class _TokenDisplayScreenState extends State<TokenDisplayScreen> {
 //   static String uniqueToken= '';
 //   static String leaderName='';
 // }
+
+

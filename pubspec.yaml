@@ -57,6 +57,9 @@ dependencies:
   geocoding: ^2.1.1
   barcode_widget: ^2.0.4
   confetti: ^0.7.0
+  open_file: ^3.3.2
+  intl: ^0.18.1
+  open_document: ^1.0.7
   
   
   flutter_native_splash: ^2.3.2

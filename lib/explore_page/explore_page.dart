@@ -14,65 +14,17 @@ class Explore_list extends ConsumerWidget {
   final Event event;
 
   final void Function(Event event) onselectevent;
-  // final void Function(Event event) onToggleFavorite;
+
 
   @override
   Widget build(BuildContext context,WidgetRef ref) {
     final favoriteEvents = ref.watch(favoriteEventsProvider);
 
     final isFavorite = favoriteEvents.contains(event);
-    // final eventLikeNotifier = Provider.of<EventLikeNotifier>(context);
-    // final isLiked = eventLikeNotifier.isLiked(event.id);
+
     return SingleChildScrollView(
       child: Column(
         children: [
-          //if (event == Event_details.first) // Add this condition
-            // const Padding(
-              // padding: EdgeInsets.all(5),
-              // child: Column(
-                // children: [
-                  // Padding(
-                  //   padding: EdgeInsets.only(top: 15,bottom: 10),
-                  //   child: Text(
-                  //     'Explore',
-                  //     style: TextStyle(
-                  //       fontSize: 25,
-                  //       fontWeight: FontWeight.w800,
-                  //       color: Color(0xffE93030),
-                  //     ),
-                  //   ),
-                  // ),
-                // ],
-              // ),
-            // ),
-          //search
-          // if (event == Event_details.first)
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 16),
-            //   child: Container(
-            //     decoration: BoxDecoration(
-            //         color: const Color.fromARGB(255, 255, 255, 255),
-            //         borderRadius: BorderRadius.circular(23.5)),
-            //     child: Padding(
-            //       padding: const EdgeInsets.symmetric(
-            //         horizontal: 20,
-            //       ),
-            //       child: TextFormField(
-            //         decoration: const InputDecoration(
-            //           border: InputBorder.none,
-            //           focusedBorder: InputBorder.none,
-            //           hintText: 'Search anything...',
-            //           hintStyle: TextStyle(color: Color(0xffC7C7C7)),
-            //           prefixIcon: Icon(
-            //             Icons.search,
-            //             color: Color(0xffc7c7c7),
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
-          
             Column(
               children: [
                 //event 1
@@ -104,38 +56,17 @@ class Explore_list extends ConsumerWidget {
                         onTap: () {
                           onselectevent(event);
                         },
-                          //insted of inkwell using GestureDetector
-                          // onTap: () {
-                          //   print("event pressed");
-                          //   Navigator.push(
-                          //       context,
-                          //       MaterialPageRoute(
-                          //           builder: (context) => Detail()));
-                          // }, //for navigations or any other function
+                        
                           child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            // decoration: BoxDecoration(
-                            //   color: Colors.white,
-                            //   borderRadius: BorderRadius.only(
-                            //   topLeft: Radius.circular(15),
-                            //   topRight: Radius.circular(15)),
-                            // ),
+                            
                             width: 370,
                             height: 200,
                             child: Stack(
                               children: [
-                                // ClipRRect(
-                                //   borderRadius: BorderRadius.circular(15.0),
-                                //   child: FadeInImage(
-                                //     placeholder: MemoryImage(kTransparentImage),
-                                //     image:AssetImage(event.imageUrl),
-                                //     fit: BoxFit.cover,
-
-                                //     width: double.infinity,
-                                //   ),
-                                // ),
+                                
                                 ClipRRect(
                                   borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(15),
@@ -198,19 +129,7 @@ class Explore_list extends ConsumerWidget {
                                   ),
                                 ),
                               ),
-                                          // child: Padding(
-                                          //   padding:
-                                          //       const EdgeInsets.only(left: 2),
-                                          //   child: LikeButton(
-                                          //     isLiked: isLiked,
-                                          //     onTap: (liked) async {
-                                          //       onToggleFavorite(event);
-                                          //       eventLikeNotifier
-                                          //           .toggleLike(event.id);
-                                          //       return !liked;
-                                          //     },
-                                          //   ),
-                                          // ),
+                                          
                                         ),
                                       ),
                                     )
