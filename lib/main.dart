@@ -1,3 +1,4 @@
+import 'package:campusbuzz/NoConnectionScreen.dart';
 import 'package:campusbuzz/event_list.dart';
 import 'package:campusbuzz/nav.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -5,10 +6,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'createaccount.dart';
 import 'firebase_options.dart';
 import 'welcomeback.dart';
+import 'dart:developer';
+import 'dart:async';
+import 'package:campusbuzz/NoConnectionScreen.dart';
+import 'package:campusbuzz/retrieve.dart';
 
 
 void main() async {
@@ -17,74 +22,76 @@ void main() async {
   
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-     options: DefaultFirebaseOptions.currentPlatform
+    options: DefaultFirebaseOptions.currentPlatform
   );
   //runApp(MaterialApp(home:OnboardApp()));
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp
   ]).then((fn) {
-    runApp(
-    ProviderScope(
-      child: FutureBuilder(
-        future:
-            gettingData(), // Assuming gettingData returns a Future<List<Event>>
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            
-            // Data retrieval is complete, build the app
-            //         return MaterialApp(
-            //   title: 'Your App Title',
-            //   home: TabsScreen(),
-            // );
-      return (MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home:TabsScreen()
-        )
-        );
-    
-          } else if (snapshot.hasError) {
-            // Error occurred while fetching data
-            return MaterialApp(
-              home: Scaffold(
-                body: Center(
-                  child: Text("Error fetching data: ${snapshot.error}"),
-                ),
-              ),
-            );
-          } else {
-            // Data retrieval is in progress, show a loading indicator
-            return MaterialApp(
-              home: Scaffold(
-                body: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              ),
-            );
-          }
-        },
-      ),
-    ),
-  );
+    runApp( MaterialApp(home:DriverClass())); 
   });
   
 }
 
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
+class DriverClass extends StatefulWidget {
+  const DriverClass({super.key});
+// DriverClass act as
+  @override
+  State<DriverClass> createState() => _DriverClassState();
+}
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return ChangeNotifierProvider(
-//       create: (context) => EventLikeNotifier(),
-//       child: const MaterialApp(
-//         debugShowCheckedModeBanner: false,
-//         title: 'Campusbuzz',
-//         home: TabsScreen(),
-//       ),
-//     );
-//   }
-// }
+class _DriverClassState extends State<DriverClass> {
+  bool hasConnection = true; // Assume there's a connection initially
+
+  @override
+  void initState() {
+    super.initState();
+    checkConnectivity();
+  }
+
+  Future<void> checkConnectivity() async {
+    log("Checking for Connection....");
+    final connectivityResult = await Connectivity().checkConnectivity();
+    setState(() {
+      hasConnection = connectivityResult != ConnectivityResult.none;
+    });
+
+    // Delay for 10 seconds if there's no connection
+    if (!hasConnection) {
+      log("NoConnection : Navigated to NoConnectionScreen");
+      Timer(Duration(seconds: 0), () {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => NoConnectionScreen(),
+        ));
+      });
+    } else {
+      // Cheking whether Current User Signed in or Not
+      Widget screen;
+      log("Connection avaialable");
+      log("Checking For User");
+      if (FirebaseAuth.instance.currentUser != null) {
+        log("User exits on the device(ALready Signed In)");
+        // If user Exist navigating to TabScreen
+        // screen = TabsScreen();
+        runApp(MaterialApp(home: retrieve()));
+      } else {
+        // If user does not Exist navigating to OnboardScreen for Authentication
+        // screen = OnboardScreens();
+        log("User does not exits on the device");
+        log("Navigating to OnboardScreens");
+        runApp(MaterialApp(home: OnboardScreens()));
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}
+
+
 
 
 
@@ -102,7 +109,7 @@ class _OnboardAppState extends State<OnboardApp> {
   @override
   Widget build(BuildContext context) {
     return 
-       MaterialApp(
+      MaterialApp(
         
         debugShowCheckedModeBanner: false,
         title: 'Campus Buzz',
@@ -110,8 +117,8 @@ class _OnboardAppState extends State<OnboardApp> {
         // home: (FirebaseAuth.instance.currentUser != null)
         //     ? Home()
         //     : WelcomeBackScreen(),
-             home:(FirebaseAuth.instance.currentUser != null) ? TabsScreen():OnboardScreens()
-       
+            home:(FirebaseAuth.instance.currentUser != null) ? TabsScreen():OnboardScreens()
+      
       );
     
   }
