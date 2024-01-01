@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class FormScreen extends ConsumerStatefulWidget {
+class HackScreen extends ConsumerStatefulWidget {
   final String imageUrl;
   final String time;
   final String date;
@@ -12,7 +12,7 @@ class FormScreen extends ConsumerStatefulWidget {
   final String college_name;
   
 
-  const FormScreen(
+  const HackScreen(
       {super.key,
       required this.imageUrl,
       required this.time,
@@ -21,13 +21,15 @@ class FormScreen extends ConsumerStatefulWidget {
       required this.college_name});
 
   @override
-  ConsumerState<FormScreen> createState() {
-    return _FormScreen();
+  ConsumerState<HackScreen> createState() {
+    return _HackScreen();
   }
 }
 
-class _FormScreen extends ConsumerState<FormScreen> {
+class _HackScreen extends ConsumerState<HackScreen> {
   List<String> participantNames = [];
+
+  bool hack = false;
   
   
 
@@ -166,7 +168,7 @@ int selectedIndex = 0;
         child: Row(
           children: [
             Text(
-              "Team Leader",
+              "upload link",
               style: TextStyle(fontSize: 20),
             ),
             Text(
@@ -185,7 +187,7 @@ int selectedIndex = 0;
             focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(5.5)),
-            hintText: 'Enter your Name',
+            hintText: 'link',
             hintStyle: TextStyle(
               color: Colors.grey,
             ),
@@ -400,7 +402,7 @@ int selectedIndex = 0;
             SizedBox(height: 20),
             Text('Entry Fee: ${entryFee.length > selectedIndex ? entryFee[selectedIndex] : ""}'),
             SizedBox(height: 20),
-            Text('Max Participants: ${participants.length > selectedIndex ? participants[selectedIndex] : ""}'),
+            // Text('Max Participants: ${participants.length > selectedIndex ? participants[selectedIndex] : ""}'),
           ],
         );
       },
@@ -450,36 +452,36 @@ int selectedIndex = 0;
   //     ],
   //   );
   // 
-  Widget _buildDynamicTextFields(int numberOfFields) {
-    List<Widget> textFields = [];
+  // Widget _buildDynamicTextFields(int numberOfFields) {
+  //   List<Widget> textFields = [];
 
-    for (int i = 0; i < numberOfFields; i++) {
-      textFields.add(
-        TextFormField(
-          // controller:data8 ,
-          controller: TextEditingController(),
-          decoration: InputDecoration(
-            labelText: 'Participant ${i + 1} Name',
-            filled: true,
-          ),
-          validator: (String? value) {
-            if (value!.isEmpty) {
-              return 'Name is Required';
-            }
-            return null;
-          },
-          onSaved: (String? value) {
-            participantNames.add(value!);
-            // Handle the participant's name as needed
-          },
-        ),
-      );
-      textFields.add(SizedBox(height: 15));
-    }
+  //   for (int i = 0; i < numberOfFields; i++) {
+  //     textFields.add(
+  //       TextFormField(
+  //         // controller:data8 ,
+  //         controller: TextEditingController(),
+  //         decoration: InputDecoration(
+  //           labelText: 'Participant ${i + 1} Name',
+  //           filled: true,
+  //         ),
+  //         validator: (String? value) {
+  //           if (value!.isEmpty) {
+  //             return 'Name is Required';
+  //           }
+  //           return null;
+  //         },
+  //         onSaved: (String? value) {
+  //           participantNames.add(value!);
+  //           // Handle the participant's name as needed
+  //         },
+  //       ),
+  //     );
+  //     textFields.add(SizedBox(height: 15));
+  //   }
 
-    return Column(children: textFields);
+  //   return Column(children: textFields);
 
-  }
+  // }
   
  
 
@@ -555,7 +557,8 @@ int selectedIndex = 0;
                         "phone Number": data5.text,
                         "About Abstract": data6.text,
                         "Teamsize": dropdownValue,
-                        "team members":participantNames,
+                        "hack":hack,
+                        // "team members":participantNames,
                       };
                       
 
@@ -584,16 +587,24 @@ int selectedIndex = 0;
                         );
                         ref.read(eventListProvider.notifier).addEvent(newEvent);
                        
-                        // Navigate to the new screen to display the token
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => TokenDisplayScreen(
-                              
-                                event: newEvent
-                             
-                                ),
-                          ),
-                        );
+                 
+                         if (hack) {
+             
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => TokenDisplayScreen(
+                    event: newEvent,
+                  ),
+                ),
+              );
+            } else {
+             
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => pending(),
+                ),
+              );
+            }
                       }).catchError((error) {
                         print("Error adding data: $error");
                       });
@@ -631,6 +642,18 @@ int selectedIndex = 0;
   }
 }
 
-// #testing2
+class pending extends StatelessWidget {
+  const pending({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Text("pending"),
+        
+      ),
+    );
+  }
+}
 
 

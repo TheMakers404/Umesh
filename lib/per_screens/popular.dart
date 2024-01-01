@@ -51,7 +51,7 @@ class EventItemm2 extends ConsumerWidget {
                               topRight: Radius.circular(12)),
                           child: Hero(
                             tag: 'eventImage_${event.title}_s',
-                            child: Image.asset(
+                            child: Image.network(
                               event.imageUrl,
                               width: 210,
                               height: 138,
@@ -178,3 +178,177 @@ class EventItemm2 extends ConsumerWidget {
     );
   }
 }
+
+
+
+
+//accept and deny function 
+
+
+
+// class Hack extends StatefulWidget {
+//   const Hack({Key? key}) : super(key: key);
+
+//   @override
+//   _HackState createState() => _HackState();
+// }
+
+// class _HackState extends State<Hack> {
+//   bool hackStatus = false;
+
+//   // Function to update the hack field in Firestore
+//   Future<void> updateHackStatus(bool status) async {
+//     try {
+//       await FirebaseFirestore.instance.collection('User').doc('LkZjeaqLCPEq191om8qa').update({
+//         'hack': status,
+//       });
+//       setState(() {
+//         hackStatus = status;
+//       });
+//       print('Hack status updated successfully!');
+//     } catch (error) {
+//       print('Error updating hack status: $error');
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: Text("Hack Testing")),
+//       body: FutureBuilder<DocumentSnapshot>(
+//         future: FirebaseFirestore.instance.collection('User').doc('LkZjeaqLCPEq191om8qa').get(),
+//         builder: (context, snapshot) {
+//           if (snapshot.connectionState == ConnectionState.waiting) {
+//             return CircularProgressIndicator();
+//           }
+
+//           if (snapshot.hasError) {
+//             return Text('Error: ${snapshot.error}');
+//           }
+
+//           if (!snapshot.hasData || !snapshot.data!.exists) {
+//             return Text('Document not found');
+//           }
+
+//           String name = snapshot.data!['Leader Name'] ?? 'Name not found';
+
+//           return Column(
+//             children: [
+//               Text("Name: $name"),
+//               SizedBox(height: 20),
+//               ElevatedButton(
+//                 onPressed: () {
+//                   // Accept button pressed, update hack field to true
+//                   updateHackStatus(true);
+//                 },
+//                 style: ElevatedButton.styleFrom(
+//                   backgroundColor: hackStatus ? Colors.green : null,
+//                 ),
+//                 child: Text("Accept"),
+//               ),
+//               SizedBox(height: 10),
+//               ElevatedButton(
+//                 onPressed: () {
+//                   // Deny button pressed, update hack field to false
+//                   updateHackStatus(false);
+//                 },
+//                 style: ElevatedButton.styleFrom(
+//                   backgroundColor: hackStatus ? null : Colors.red,
+//                 ),
+//                 child: Text("Deny"),
+//               ),
+//             ],
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
+
+
+
+
+//proper working accept and deny
+
+// class Hack extends StatefulWidget {
+//   const Hack({Key? key}) : super(key: key);
+
+//   @override
+//   State<Hack> createState() => _HackState();
+// }
+
+// class _HackState extends State<Hack> {
+//   bool? _currentHackStatus; // Initialize as null
+
+//   // Function to update the hack field in Firestore
+//   Future<void> updateHackStatus(bool status) async {
+//     try {
+//       await FirebaseFirestore.instance.collection('User').doc('LkZjeaqLCPEq191om8qa').update({
+//         'hack': status,
+//       });
+//       setState(() {
+//         _currentHackStatus = status;
+//       });
+//       print('Hack status updated successfully!');
+//     } catch (error) {
+//       print('Error updating hack status: $error');
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: Text("Hack Testing")),
+//       body: FutureBuilder<DocumentSnapshot>(
+//         future: FirebaseFirestore.instance.collection('User').doc('LkZjeaqLCPEq191om8qa').get(),
+//         builder: (context, snapshot) {
+//           if (snapshot.connectionState == ConnectionState.waiting) {
+//             return CircularProgressIndicator();
+//           }
+
+//           if (snapshot.hasError) {
+//             return Text('Error: ${snapshot.error}');
+//           }
+
+//           if (!snapshot.hasData || !snapshot.data!.exists) {
+//             return Text('Document not found');
+//           }
+
+//           if (_currentHackStatus == null) {
+//             // Set _currentHackStatus only if it's not set yet
+//             _currentHackStatus = snapshot.data!['hack'];
+//           }
+
+//           bool hackStatus = _currentHackStatus ?? false;
+//           String name = snapshot.data!['Leader Name'] ?? 'Name not found';
+
+//           return Column(
+//             children: [
+//               Text("Name: $name"),
+//               SizedBox(height: 20),
+//               ElevatedButton(
+//                 onPressed: () {
+//                   updateHackStatus(true);
+//                 },
+//                 style: ElevatedButton.styleFrom(
+//                   backgroundColor: hackStatus ? Colors.green : null,
+//                 ),
+//                 child: Text("Accept"),
+//               ),
+//               SizedBox(height: 10),
+//               ElevatedButton(
+//                 onPressed: () {
+//                   updateHackStatus(false);
+//                 },
+//                 style: ElevatedButton.styleFrom(
+//                   backgroundColor: hackStatus ? null : Colors.red,
+//                 ),
+//                 child: Text("Deny"),
+//               ),
+//             ],
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }

@@ -51,16 +51,25 @@ class EventItemm extends ConsumerWidget {
                               topRight: Radius.circular(12)),
                           child: Hero(
                             tag: 'eventImage_${event.id}',
-                            child: Image.asset(
-                              event.imageUrl,
+                            child: 
+                            Image(image :NetworkImage(event.imageUrl)
+                              ,
                               width: 210,
                               height: 138,
                               fit: BoxFit.cover,
                             ),
+        //                     CachedNetworkImage(
+        //   imageUrl: "event.imageUrl",
+        //   placeholder: (context, url) => CircularProgressIndicator(),
+        //   errorWidget: (context, url, error) => Icon(Icons.error),
+        //   width: 210,
+        //   height: 138,
+        //   fit: BoxFit.cover,
+        // ),
                           ),
                         ),
                         Column(
-                          children: [
+                           children: [
                             Align(
                               alignment: Alignment.centerRight,
                               child: Padding(
@@ -167,10 +176,13 @@ class EventItemm extends ConsumerWidget {
                               ],
                             ),
                           ),
-                        )
+                        ),
+
+                        
                       ],
                     ),
-                  )
+                  ),
+                  
                 ],
               )),
         ),

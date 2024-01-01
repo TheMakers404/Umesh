@@ -46,6 +46,7 @@ void main() async {
           } else if (snapshot.hasError) {
             // Error occurred while fetching data
             return MaterialApp(
+              debugShowCheckedModeBanner: false,
               home: Scaffold(
                 body: Center(
                   child: Text("Error fetching data: ${snapshot.error}"),
@@ -55,6 +56,7 @@ void main() async {
           } else {
             // Data retrieval is in progress, show a loading indicator
             return MaterialApp(
+              debugShowCheckedModeBanner: false,
               home: Scaffold(
                 body: Center(
                   child: CircularProgressIndicator(),

@@ -26,7 +26,7 @@ final List<Evvent> events;
 }
 
 class _YourEventsState extends ConsumerState<YourEvents> {
-  final CollectionReference _events = 
+  final CollectionReference _events =
     FirebaseFirestore.instance.collection('events');
   //List<Evvent> events = [];
   List<Evvent> events ;

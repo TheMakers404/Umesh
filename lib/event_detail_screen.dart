@@ -7,6 +7,7 @@ import 'package:campusbuzz/FavProv.dart';
 // }
 
 import 'package:campusbuzz/Foorms/Foorm.dart';
+import 'package:campusbuzz/Foorms/hackform.dart';
 import 'package:campusbuzz/model/event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -61,7 +62,7 @@ class EventDetailScreen extends ConsumerWidget {
                         child: Hero(
                             tag: 'eventImage_${event.id}',
                             
-                            child: Image.asset(
+                            child: Image.network(
                               event.imageUrl,
                               width: double.infinity,
                               height: 240,
@@ -363,7 +364,7 @@ class EventDetailScreen extends ConsumerWidget {
       case 'c3':
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => FormScreen(
+          MaterialPageRoute(builder: (context) => HackScreen(
           imageUrl: event.imageUrl,
           time: event.time,
           date: event.date,title: event.title,college_name:event.college_name,
