@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:campusbuzz/shimmer.dart';
+import 'package:shimmer/shimmer.dart';
 
 void main() {
   runApp(MyApp());

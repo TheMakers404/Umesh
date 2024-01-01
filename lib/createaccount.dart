@@ -270,7 +270,7 @@ Future<void> write_new_user() async {
         
         log("------Proceeding to Retrieve Events---");
         Navigator.push(
-            context, CupertinoPageRoute(builder: ((context) => retrieve())));
+            context, CupertinoPageRoute(builder: ((context) => userVe())));
               } on FirebaseAuthException catch (ex){
         log("$ex");
         String lexp = ex.code.toString();
