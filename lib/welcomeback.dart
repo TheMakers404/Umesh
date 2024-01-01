@@ -1,4 +1,5 @@
 import 'package:campusbuzz/nav.dart';
+import 'package:campusbuzz/retrieve.dart';
 import 'package:flutter/material.dart';
 import 'welcomeback.dart';
 import "package:firebase_core/firebase_core.dart";
@@ -50,9 +51,15 @@ class _WelcomeBackScreenState extends State<WelcomeBackScreen> {
         UserCredential uc = await FirebaseAuth.instance
             .signInWithEmailAndPassword(email: emailStr, password: passwordStr);
         if (uc.user != null) {
+        User? current_user = FirebaseAuth.instance.currentUser;
+          // current_user.updateDisplayName();
+log("------------------------------------------------------------------------------------------------------------------------------");
+String unique_user_id = await current_user?.uid ?? "Username";
+log("Current Users ID:${unique_user_id}");
+log("------------------------------------------------------------------------------------------------------------------------------");
           Navigator.popUntil(context, (route) => route.isFirst);
           Navigator.pushReplacement(
-              context, CupertinoPageRoute(builder: (context) => TabsScreen()));
+              context, CupertinoPageRoute(builder: (context) => retrieve()));
         }
       } on FirebaseAuthException catch (ex) {
         String lexp = ex.code.toString();

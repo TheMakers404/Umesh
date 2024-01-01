@@ -23,7 +23,7 @@ dependencies:
   barcode: ^2.2.4
   pdf: ^3.10.4
   path_provider: ^2.1.1
-  
+  firebase_storage: ^11.2.8
 
   flutter:
     sdk: flutter
@@ -63,6 +63,7 @@ dependencies:
   
   
   flutter_native_splash: ^2.3.2
+  shimmer: ^3.0.0
 
 
 # flutter_native_splash:
