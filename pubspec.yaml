@@ -24,8 +24,6 @@ dependencies:
   barcode: ^2.2.4
   pdf: ^3.10.4
   path_provider: ^2.1.1
-  cached_network_image: ^3.3.0
-  
   
 
   flutter:
@@ -68,6 +66,7 @@ dependencies:
   syncfusion_flutter_pdf: ^23.1.44
   
   flutter_native_splash: ^2.3.2
+  shimmer: ^3.0.0
 
 
 # flutter_native_splash:

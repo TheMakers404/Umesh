@@ -23,12 +23,12 @@ Future<List<Event>> gettingData() async {
   try {
     final QuerySnapshot eventSnapshot =
         await FirebaseFirestore.instance.collection('Event').get();
-    log('Number of documents retrieved: ${eventSnapshot.size}');
+    // log('Number of documents retrieved: ${eventSnapshot.size}');
 
     // Map each document in the QuerySnapshot to an Event object.
     final List<Event> events = eventSnapshot.docs.map((doc) {
       final data = doc.data() as Map<String, dynamic>;
-      log('Document ID: ${doc.id}');
+      // log('Document ID: ${doc.id}');
       return Event(
         id: "${data['id']}",
         // id: data['id'],

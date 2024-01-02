@@ -9,7 +9,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'dart:developer';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+
+
+
 
 _launchurl() async {
   var url = Uri.parse(
@@ -25,8 +32,8 @@ _launchurl() async {
 
  
 class Profile extends StatefulWidget {
-  
-  //adding event
+
+
 
   Profile({super.key, });
 
@@ -35,9 +42,28 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+
+  String DisplayFname = "";
+  String DisplayLname = "";
+  String DisplayImage = "";
+  String imageDownloadUrl = "";
+
+
+
   List<Evvent> events = [];
   
- 
+
+
+  ImagePicker imagePicker = ImagePicker();
+
+
+
+    Future<void> callingProfile() async {
+    await profileComponents();
+  }
+
+
+
 
   File? _pickedImageFile;
 
@@ -60,8 +86,105 @@ class _ProfileState extends State<Profile> {
     'end'
   ];
 
+  Future<void> profileComponents() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? current_user = auth.currentUser;
+    if (current_user != null) {
+      try {
+        DocumentSnapshot userDoc = await FirebaseFirestore.instance
+            .collection("Users")
+            .doc(current_user.uid)
+            .get();
+        // String FetchFname =
+        // String FetchLname = userDoc.get("uLname");
+        // String FetchImage =
+
+        DisplayFname = userDoc.get("uFname");
+        // DisplayLname = FetchLname;
+        DisplayImage = userDoc.get("profilePhotoURL");
+
+        // return {
+        //   'fname': FetchFname,
+        //   'lname': FetchLname,
+        //   'image': FetchImage,
+        // };
+      } catch (e) {
+        log("Error of Profile:${e}");
+      }
+    }
+    // return {};
+  }
+
+
+// Map<String,String> profileData = await profileComponents();
+  String getFormattedDateTime() {
+    var now = DateTime.now();
+    var formatter = DateFormat('dd-MM-yyyy HH:mm');
+    return formatter.format(now);
+  }
+
+
+ Future<void> imgUploadToDatabase(XFile? srcImg) async {
+    //  final picker = ImagePicker();
+    try {
+      // final pickedFile = await picker.getImage(source: srcImg);
+      User? current_user = FirebaseAuth.instance.currentUser;
+      String uidFile = await current_user?.uid ?? "";
+      if (srcImg != null) {
+        //Adding Image to Firebase Storage
+        // Creaing a reference to the directory
+        Reference refProfiles =
+            FirebaseStorage.instance.ref().child("profiles");
+
+        //Creating file name
+
+        String currentDate = getFormattedDateTime();
+
+        //Creating file reference
+        Reference refFile = refProfiles.child("$currentDate $uidFile");
+
+        //Storing the file
+        try {
+          await refFile.putFile(File(srcImg.path)); //Using File Constructor
+        } catch (e) {
+          log("Error while Uploading Image: $e");
+        }
+
+        //Getting downloadUrl
+        imageDownloadUrl = await refFile.getDownloadURL();
+      }
+
+      //updting profileLink in Database
+      try {
+        log("Updating the new Profile Photo Link");
+        await FirebaseFirestore.instance
+            .collection('Users')
+            .doc(uidFile)
+            .update({'profilePhotoURL': imageDownloadUrl});
+
+        log('Photo URL updated successfully');
+      } catch (e) {
+        print('Error updating photo URL: $e');
+      }
+
+      try {
+        setState(() {
+          DisplayImage = imageDownloadUrl;
+        });
+      } catch (e) {
+        log("Error while setting up new profile photo: $e");
+      }
+    } catch (e) {
+      // Handle errors, e.g., permission denied
+      print('Error picking image: $e');
+    }
+  }
+  
+  
+
   void _pickImage(ImageSource source) async {
-    final pickedImage = await ImagePicker().pickImage(
+    // final pickedImage = await ImagePicker().pickImage(
+    XFile? pickedImage = await ImagePicker().pickImage(
       source: source,
       imageQuality: 50,
       maxWidth: 150,
@@ -76,13 +199,51 @@ class _ProfileState extends State<Profile> {
     });
   }
 
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
   @override
   Widget build(BuildContext context) {
-    //final events = context.read(eventListProvider);
+  
 
-    
-
-    return Scaffold(
+  return FutureBuilder(
+      future: callingProfile(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          // Return a loading indicator while data is being fetched
+          return CircularProgressIndicator(); // You can customize this
+        } 
+        
+        
+        else if (snapshot.hasError) {
+          // Handle errors
+          return Text("Error: ${snapshot.error}");
+        } 
+        
+        
+        
+        
+        else {
+          // Data is fetched, build your UI based on the fetched data
+              return Scaffold(
       backgroundColor: const Color(0xfff5f5f5),
       body: Column(
         children: [
@@ -128,11 +289,11 @@ class _ProfileState extends State<Profile> {
                                 child: Container(
                                     width: 100,
                                     height: 100,
-                                    child: const Padding(
+                                    child: Padding(
                                       padding:
                                           EdgeInsets.only(top: 30, left: 15),
                                       child: Text(
-                                        'Hi Bobburi Umesh',
+                                        "Hi ${DisplayFname}",
                                         style: TextStyle(
                                             fontSize: 25,
                                             color: Color(0xffF81B1B),
@@ -160,9 +321,19 @@ class _ProfileState extends State<Profile> {
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: GestureDetector(
-                                          onTap: () {
-                                            _pickImage(ImageSource.camera);
-                                          },
+                                          onTap: () async {
+                                                  // ImageSource imgUploadCam = ImageSource.camera;
+
+                                                  log("Updating Profile Photo using Camera");
+                                                  XFile? uploadedImg =
+                                                      await imagePicker
+                                                          .pickImage(
+                                                              source:
+                                                                  ImageSource
+                                                                      .camera);
+                                                  await imgUploadToDatabase(
+                                                      uploadedImg);
+                                                },
                                           child: Container(
                                             child: const Icon(
                                               Icons.camera_alt,
@@ -172,9 +343,16 @@ class _ProfileState extends State<Profile> {
                                         ),
                                       ),
                                       GestureDetector(
-                                        onTap: () {
-                                          _pickImage(ImageSource.gallery);
-                                        },
+                                      onTap: () async {
+                                                // await imgUploadviaGallery();
+                                                log("Updating Profile Photo using Gallery");
+                                                XFile? uploadedImg =
+                                                    await imagePicker.pickImage(
+                                                        source: ImageSource
+                                                            .gallery);
+                                                await imgUploadToDatabase(
+                                                    uploadedImg);
+                                              },
                                         child: Container(
                                           child: const Icon(
                                             Icons.image,
@@ -297,9 +475,16 @@ class _ProfileState extends State<Profile> {
         ],
       ),
     );
-  }
-}
+        }
 
+
+
+
+  }
+  
+);
+}
+}
 //profile page details
 
 class MyProfile extends StatefulWidget {

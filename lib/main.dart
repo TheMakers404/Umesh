@@ -17,7 +17,7 @@ void main() async {
   
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-     options: DefaultFirebaseOptions.currentPlatform
+    options: DefaultFirebaseOptions.currentPlatform
   );
   //runApp(MaterialApp(home:OnboardApp()));
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,7 +46,6 @@ void main() async {
           } else if (snapshot.hasError) {
             // Error occurred while fetching data
             return MaterialApp(
-              debugShowCheckedModeBanner: false,
               home: Scaffold(
                 body: Center(
                   child: Text("Error fetching data: ${snapshot.error}"),
@@ -56,7 +55,6 @@ void main() async {
           } else {
             // Data retrieval is in progress, show a loading indicator
             return MaterialApp(
-              debugShowCheckedModeBanner: false,
               home: Scaffold(
                 body: Center(
                   child: CircularProgressIndicator(),
@@ -104,7 +102,7 @@ class _OnboardAppState extends State<OnboardApp> {
   @override
   Widget build(BuildContext context) {
     return 
-       MaterialApp(
+      MaterialApp(
         
         debugShowCheckedModeBanner: false,
         title: 'Campus Buzz',
@@ -112,8 +110,8 @@ class _OnboardAppState extends State<OnboardApp> {
         // home: (FirebaseAuth.instance.currentUser != null)
         //     ? Home()
         //     : WelcomeBackScreen(),
-             home:(FirebaseAuth.instance.currentUser != null) ? TabsScreen():OnboardScreens()
-       
+            home:(FirebaseAuth.instance.currentUser != null) ? TabsScreen():OnboardScreens()
+      
       );
     
   }
