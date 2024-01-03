@@ -31,6 +31,7 @@ class _FormScreen extends ConsumerState<FormScreen> {
   List<String> participantNames = [];
   
   
+  
 
 
   //adding event to yourevent screen:-
@@ -48,7 +49,7 @@ int selectedIndex = 0;
     '4',
     '5',
   ];
-  String dropdownValue = '1';
+  
   String _name = '';
   String _email = '';
   String _Leader = '';
@@ -361,7 +362,8 @@ int selectedIndex = 0;
         var sportNames = umeshDoc['sportNames'] as List<dynamic>;
         var entryFee = umeshDoc['entry fee'] as List<dynamic>;
         var participants = umeshDoc['participantCounts'] as List<dynamic>;
-
+         int drop = participants[selectedIndex];
+        
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -402,57 +404,30 @@ int selectedIndex = 0;
             Text('Entry Fee: ${entryFee.length > selectedIndex ? entryFee[selectedIndex] : ""}'),
             SizedBox(height: 20),
             Text('Max Participants: ${participants.length > selectedIndex ? participants[selectedIndex] : ""}'),
+            
+            _builddropdownbox1(drop ),
           ],
         );
+         
       },
     );}
-  //   return Column(
-  //     children: [
-  //       const Row(
-  //         children: [
-  //           Text(
-  //             "Team Size",
-  //             style: TextStyle(fontSize: 20),
-  //           ),
-  //           Text(
-  //             "*",
-  //             style: TextStyle(fontSize: 20, color: Colors.red),
-  //           ),
-  //         ],
-  //       ),
-  //       Container(
-  //         decoration: BoxDecoration(
-  //           color: Color(0xffF0F0F0),
-  //           borderRadius: BorderRadius.circular(5.5),
-  //         ),
-  //         child: Padding(
-  //           padding: const EdgeInsets.only(left: 12, right: 12),
-  //           child: DropdownButton<String>(
-  //             underline: SizedBox(),
-  //             value: dropdownValue,
-  //             isExpanded: true,
-  //             borderRadius: BorderRadius.circular(5.5),
-  //             items: items.map<DropdownMenuItem<String>>((String value) {
-  //               return DropdownMenuItem<String>(
-  //                 value: value,
-  //                 child: Text(value),
-  //               );
-  //             }).toList(),
-  //             onChanged: (String? newValue) {
-  //               setState(() {
-  //                 dropdownValue = newValue ?? '';
-  //               });
-  //             },
-  //           ),
-  //         ),
-  //       ),
-  //       SizedBox(height: 15),
-  //       _buildDynamicTextFields(int.parse(dropdownValue)),
-  //     ],
-  //   );
-  // 
+
+
+
+     Widget _builddropdownbox1(int participants) {
+    //  print(participants);
+    return Column(
+      children: [
+
+        SizedBox(height: 15),
+        _buildDynamicTextFields(participants),
+      ],
+    );
+     }
   Widget _buildDynamicTextFields(int numberOfFields) {
     List<Widget> textFields = [];
+    print("arrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+    print(numberOfFields);
 
     for (int i = 0; i < numberOfFields; i++) {
       textFields.add(
@@ -481,6 +456,11 @@ int selectedIndex = 0;
     return Column(children: textFields);
 
   }
+  
+  //    Widget _builddynamicTextFieldsBasedOnParticipants(List<dynamic> participants) {
+  //   return _buildDynamicTextFields(participants.length);
+  // }
+
   
  
 
@@ -533,6 +513,8 @@ int selectedIndex = 0;
                 _builddropdownbox(),
                 SizedBox(height: 15),
                 // _buildDynamicTextFields(int.parse(dropdownValue)),
+                // _builddynamicTextFieldsBasedOnParticipants(participantNames),
+                // _buildDynamicTextFields(int.parse(dropdownValue)),
                  SizedBox(height: 50),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -555,7 +537,7 @@ int selectedIndex = 0;
                         "collage Name": data4.text,
                         "phone Number": data5.text,
                         "About Abstract": data6.text,
-                        "Teamsize": dropdownValue,
+                        // "Teamsize": dropdownValue,
                         "team members":participantNames,
                       };
                       

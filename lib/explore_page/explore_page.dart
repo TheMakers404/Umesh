@@ -3,6 +3,7 @@ import 'package:campusbuzz/FavProv.dart';
 import 'package:campusbuzz/model/event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shimmer/shimmer.dart';
 
 class Explore_list extends ConsumerWidget {
   const Explore_list(
@@ -73,12 +74,44 @@ class Explore_list extends ConsumerWidget {
                               topRight: Radius.circular(15)),
                                   child: Hero(
                                     tag: 'eventImage_${event.id}',
-                                    child: Image.asset(
-                                      event.imageUrl,
-                                      width: 370,
-                                      height: 200,
-                                      fit: BoxFit.cover,
-                                    ),
+                                    child: 
+                                    // Image.network(
+                                    //   event.imageUrl,
+                                    //   width: 370,
+                                    //   height: 200,
+                                    //   fit: BoxFit.cover,
+                                    // ),
+                                    Stack(
+    children: [
+      ClipRRect(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(12),
+          topRight: Radius.circular(12),
+        ),
+        child: Shimmer.fromColors(
+          baseColor: Colors.grey[300]!,
+          highlightColor: Colors.grey[100]!,
+          child: Container(
+            width: 370,
+            height: 200,
+            color: Colors.white,
+          ),
+        ),
+      ),
+      ClipRRect(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(12),
+          topRight: Radius.circular(12),
+        ),
+        child: Image.network(
+          event.imageUrl,
+          width: 370,
+          height: 200,
+          fit: BoxFit.cover,
+        ),
+      ),
+    ],
+  ),
                                   ),
                                 ),
                                 Column(

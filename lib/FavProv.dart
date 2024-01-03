@@ -17,7 +17,6 @@
 //   }
 // }
 
-import 'package:campusbuzz/model/event.dart';
 // final favoriteEventsProvider =
 //     StateNotifierProvider<FavoriteEventsNotifier, List<Event>>((ref) {
 //   return FavoriteEventsNotifier();
@@ -25,10 +24,7 @@ import 'package:campusbuzz/model/event.dart';
 
 
 
-
-
-
-
+import 'package:campusbuzz/model/event.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

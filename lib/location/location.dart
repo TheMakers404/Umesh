@@ -268,7 +268,7 @@ class _HackState extends State<Hack> {
   // Function to update the hack field in Firestore
   Future<void> updateHackStatus(bool status) async {
     try {
-      await FirebaseFirestore.instance.collection('User').doc('LkZjeaqLCPEq191om8qa').update({
+      await FirebaseFirestore.instance.collection('User').doc('4MwYiindWvDZO0OJvS3c').update({
         'hack': status,
       });
       setState(() {
@@ -285,7 +285,7 @@ class _HackState extends State<Hack> {
     return Scaffold(
       appBar: AppBar(title: Text("Hack Testing")),
       body: FutureBuilder<DocumentSnapshot>(
-        future: FirebaseFirestore.instance.collection('User').doc('LkZjeaqLCPEq191om8qa').get(),
+        future: FirebaseFirestore.instance.collection('User').doc('4MwYiindWvDZO0OJvS3c').get(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return CircularProgressIndicator();

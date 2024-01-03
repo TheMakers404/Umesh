@@ -2,6 +2,9 @@ import 'package:campusbuzz/FavProv.dart';
 import 'package:campusbuzz/model/event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shimmer/shimmer.dart';
+
+
 
 class EventItemm extends ConsumerWidget {
   final Event event;
@@ -52,12 +55,37 @@ class EventItemm extends ConsumerWidget {
                           child: Hero(
                             tag: 'eventImage_${event.id}',
                             child: 
-                            Image(image :NetworkImage(event.imageUrl)
-                              ,
-                              width: 210,
-                              height: 138,
-                              fit: BoxFit.cover,
-                            ),
+                            Stack(
+    children: [
+      ClipRRect(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(12),
+          topRight: Radius.circular(12),
+        ),
+        child: Shimmer.fromColors(
+          baseColor: Colors.grey[300]!,
+          highlightColor: Colors.grey[100]!,
+          child: Container(
+            width: 210,
+            height: 138,
+            color: Colors.white,
+          ),
+        ),
+      ),
+      ClipRRect(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(12),
+          topRight: Radius.circular(12),
+        ),
+        child: Image.network(
+          event.imageUrl,
+          width: 210,
+          height: 138,
+          fit: BoxFit.cover,
+        ),
+      ),
+    ],
+  ),
         //                     CachedNetworkImage(
         //   imageUrl: "event.imageUrl",
         //   placeholder: (context, url) => CircularProgressIndicator(),

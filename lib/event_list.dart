@@ -12,6 +12,9 @@ const AvailableCategories = [
   Categori(id: 'c3', Ctitle: 'Cultural', color: Color.fromARGB(255, 255, 255, 255),categimg: 'images/festt.png'),
   Categori(id: 'c4', Ctitle: 'Tech', color: Color.fromARGB(92, 255, 255, 255),categimg: 'images/techh.png'),
   Categori(id: 'c5', Ctitle: 'Talks', color: Color.fromARGB(255, 255, 255, 255),categimg: 'images/sportt.png'),
+  Categori(id: 'c6', Ctitle: 'Hackathon', color: Color.fromARGB(255, 255, 255, 255),categimg: 'images/techh.png'),
+
+
 ];
 
 //event details
