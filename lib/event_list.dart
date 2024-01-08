@@ -74,4 +74,4 @@ Future<List<Event>> gettingData() async {
 
 //Since the images are displayed using paths
 // in Databse in place of imageUrl field paste the required image path
-//from the pubspec.yaml
+//from thepubspec.yaml

@@ -1,22 +1,26 @@
 import 'package:campusbuzz/FavProv.dart';
 import 'package:campusbuzz/model/event.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:provider/provider.dart';
+// import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shimmer/shimmer.dart';
 
 
 
-class EventItemm extends ConsumerWidget {
+
+class EventItemm extends StatelessWidget {
   final Event event;
   final void Function(Event event) onselectevent;
 
   EventItemm({required this.event, required this.onselectevent});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final favoriteEvents = ref.watch(favoriteEventsProvider);
+  Widget build(BuildContext context) {
 
-    final isFavorite = favoriteEvents.contains(event);
+    final provider= Provider.of<Favoriteprovider>(context);
+    // final favoriteEvents = ref.watch(favoriteEventsProvider);
+
+    // final isFavorite = favoriteEvents.contains(event);
     return Padding(
       padding: const EdgeInsets.only(left: 15,bottom: 20),
       child: Container(
@@ -117,32 +121,37 @@ class EventItemm extends ConsumerWidget {
                                       borderRadius: BorderRadius.circular(50)),
                                   child: InkWell(
                                     onTap: () {
+
+                                      provider.togglefav(event);
                                       // Add your onPressed function here
-                                      print('Icon pressed');
+                                      // print('Icon pressed');
                                       
-                                      final wasAdded = ref
-                                          .read(favoriteEventsProvider.notifier)
-                                          .toggleEventFavoriteStatus(event);
-                                      ScaffoldMessenger.of(context)
-                                          .clearSnackBars();
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content: Text(wasAdded
-                                              ? 'Event added as a favorite.'
-                                              : 'Event removed.'),
-                                        ),
-                                      );
+                                      // final wasAdded = ref
+                                      //     .read(favoriteEventsProvider.notifier)
+                                      //     .toggleEventFavoriteStatus(event);
+                                      // ScaffoldMessenger.of(context)
+                                      //     .clearSnackBars();
+                                      // ScaffoldMessenger.of(context)
+                                      //     .showSnackBar(
+                                      //   SnackBar(
+                                      //     content: Text(wasAdded
+                                      //         ? 'Event added as a favorite.'
+                                      //         : 'Event removed.'),
+                                      //   ),
+                                      // );
 
                                       // widget.onToggleFavorite(event);
                                     },
                                     child: Padding(
                                         padding: EdgeInsets.all(5.0),
                                         child: Icon(
-                                          isFavorite
-                                              ? Icons.favorite
-                                              : Icons.favorite_border_outlined,
-                                          color: Colors.red,
+                                          provider.isExist(event)
+                                          ? Icons.favorite
+                                                          : Icons
+                                                              .favorite_border_outlined,
+                                                      color: Colors.red,
+                                        
+                                          
                                         )),
                                   ),
                                 ),

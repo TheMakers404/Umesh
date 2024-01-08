@@ -1,4 +1,5 @@
-// import 'package:campusbuzz/model/event.dart';
+import 'package:campusbuzz/model/event.dart';
+import 'package:flutter/material.dart';
 // import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // class FavoriteEventsNotifier extends StateNotifier<List<Event>> {
@@ -24,40 +25,40 @@
 
 
 
-import 'package:campusbuzz/model/event.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+// import 'package:campusbuzz/model/event.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class FavoriteEventsNotifier extends StateNotifier<List<Event>> {
-  FavoriteEventsNotifier() : super([]);
+// class FavoriteEventsNotifier extends StateNotifier<List<Event>> {
+//   FavoriteEventsNotifier() : super([]);
 
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+//   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  bool toggleEventFavoriteStatus(Event event) {
-    final eventIsFavorite = state.contains(event);
+//   bool toggleEventFavoriteStatus(Event event) {
+//     final eventIsFavorite = state.contains(event);
 
-    if (eventIsFavorite) {
-      state = state.where((m) => m.id != event.id).toList();
-      // Delete the corresponding document in Firestore
-      _firestore.collection('favorite_events').doc(event.id).delete();
-    } else {
-      state = [...state, event];
-      // Add a new document in Firestore
-      _firestore.collection('favorite_events').doc(event.id).set({
-        'id': event.id,
-        'name': event.title,
-        // Add other event properties as needed
-      });
-    }
+//     if (eventIsFavorite) {
+//       state = state.where((m) => m.id != event.id).toList();
+//       // Delete the corresponding document in Firestore
+//       _firestore.collection('favorite_events').doc(event.id).delete();
+//     } else {
+//       state = [...state, event];
+//       // Add a new document in Firestore
+//       _firestore.collection('favorite_events').doc(event.id).set({
+//         'id': event.id,
+//         'name': event.title,
+//         // Add other event properties as needed
+//       });
+//     }
 
-    return !eventIsFavorite;
-  }
-}
+//     return !eventIsFavorite;
+//   }
+// }
 
-final favoriteEventsProvider =
-    StateNotifierProvider<FavoriteEventsNotifier, List<Event>>((ref) {
-  return FavoriteEventsNotifier();
-});
+// final favoriteEventsProvider =
+//     StateNotifierProvider<FavoriteEventsNotifier, List<Event>>((ref) {
+//   return FavoriteEventsNotifier();
+// });
 
 
 //testing #1
@@ -88,3 +89,33 @@ final favoriteEventsProvider =
 //     StateNotifierProvider<FavoriteEventsNotifier, List<Event>>((ref) {
 //   return FavoriteEventsNotifier();
 // });
+
+
+
+
+//#testing 2
+
+class Favoriteprovider extends ChangeNotifier{
+  List<Event> _events=[];
+  List<Event> get events => _events;
+
+  void togglefav(Event event){
+    final isExist = _events.contains(event);
+    if(isExist){
+      _events.remove(event);
+    }else{
+      _events.add(event);
+    }
+    notifyListeners();
+  }
+
+  bool isExist(Event event){
+    final isExist =_events.contains(event);
+    return isExist;
+  }
+  void clearfav(){
+    _events=[];
+    notifyListeners();
+  }
+
+}

@@ -8,14 +8,15 @@ import 'package:campusbuzz/homescreen.dart';
 import 'package:campusbuzz/model/event.dart';
 import 'package:campusbuzz/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+// import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:provider/provider.dart';
 
 import 'event_list.dart';
 
 
 
-class TabsScreen extends ConsumerStatefulWidget {
+class TabsScreen extends StatefulWidget {
 
 
   const TabsScreen({super.key});
@@ -23,13 +24,13 @@ class TabsScreen extends ConsumerStatefulWidget {
   
 
   @override
- ConsumerState<TabsScreen> createState() {
+ State<TabsScreen> createState() {
 
     return _TabsScreen();
   }
 }
 
-class _TabsScreen extends ConsumerState<TabsScreen> {
+class _TabsScreen extends State<TabsScreen> {
 
   
   
@@ -43,7 +44,7 @@ class _TabsScreen extends ConsumerState<TabsScreen> {
     );
   }
 
-  //defin 
+  //defin
   List<Widget> activePage = [];
 
   void _selectPage(int index) {
@@ -61,7 +62,9 @@ class _TabsScreen extends ConsumerState<TabsScreen> {
 
   Widget build(BuildContext context) {
     
-    final favoriteEvent = ref.watch(favoriteEventsProvider);
+    // final favoriteEvent = ref.watch(favoriteEventsProvider);
+    final favlist= Provider.of<Favoriteprovider>(context);
+    final events=favlist.events;
     // favoriteEventsNotifier.loadFavoriteEventsFromFirestore();
      activePage = [
        Homescreen(event: Event_details, onselectevent: (Event event) {
@@ -78,7 +81,7 @@ class _TabsScreen extends ConsumerState<TabsScreen> {
        
       ),
       Explore(
-        event: favoriteEvent,
+        event: events,
         title: 'Favorites',
         
       ),

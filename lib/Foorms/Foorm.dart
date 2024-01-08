@@ -346,8 +346,6 @@ int selectedIndex = 0;
       )
     ]);
   }
-
- 
   Widget _builddropdownbox() {
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance.collection('Event').snapshots(),

@@ -1,10 +1,10 @@
 import 'package:campusbuzz/event_detail_screen.dart';
-import 'package:campusbuzz/explore_page/explore_page.dart';
+import 'package:campusbuzz/explore_page/fav_page.dart';
 import 'package:campusbuzz/model/event.dart';
 import 'package:flutter/material.dart';
 
-class Explore extends StatelessWidget {
-  const Explore({
+class Fav extends StatelessWidget {
+  const Fav({
     super.key,
     this.title,
     required this.event,
@@ -31,7 +31,6 @@ class Explore extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("explore-------screen");
     Widget content = const Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -56,7 +55,7 @@ class Explore extends StatelessWidget {
     if (event.isNotEmpty) {
       content = ListView.builder(
           itemCount: event.length,
-          itemBuilder: (ctx, index) => Explore_list(
+          itemBuilder: (ctx, index) => Fav_list(
                 event: event[index],
                 onselectevent: (event) {
                   selectEvent(context, event);
