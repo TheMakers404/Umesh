@@ -1,10 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:campusbuzz/FavProv.dart';
 import 'package:campusbuzz/model/event.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 // import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shimmer/shimmer.dart';
-
 
 
 
@@ -81,12 +81,21 @@ class EventItemm extends StatelessWidget {
           topLeft: Radius.circular(12),
           topRight: Radius.circular(12),
         ),
-        child: Image.network(
-          event.imageUrl,
-          width: 210,
-          height: 138,
-          fit: BoxFit.cover,
-        ),
+        child: 
+        // Image.network(
+        //   event.imageUrl,
+        //   width: 210,
+        //   height: 138,
+        //   fit: BoxFit.cover,
+        // ),
+        CachedNetworkImage(
+        imageUrl: event.imageUrl,
+        width: 210,
+        height: 138,
+        fit: BoxFit.cover,
+        //placeholder: (context, url) => CircularProgressIndicator(),
+        errorWidget: (context, url, error) => Icon(Icons.error),
+     ),
       ),
     ],
   ),

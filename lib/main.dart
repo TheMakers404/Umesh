@@ -266,19 +266,21 @@ class _OnboardScreensState extends State<OnboardScreens> {
               });
             },
             itemBuilder: (context, index) {
-              return Column(
-                children: [
-                  _pages[index],
-                  if (_pages[index].showButtons && index == 2)
-                    Column(
-                      children: [
-                        const SizedBox(height: 50),
-                        _buildGetStartedButton(context),
-                        const SizedBox(height: 20),
-                        _buildSignInButton(context),
-                      ],
-                    ),
-                ],
+              return SingleChildScrollView(
+                child: Column(
+                  children: [
+                    _pages[index],
+                    if (_pages[index].showButtons && index == 2)
+                      Column(
+                        children: [
+                          const SizedBox(height: 50),
+                          _buildGetStartedButton(context),
+                          const SizedBox(height: 20),
+                          _buildSignInButton(context),
+                        ],
+                      ),
+                  ],
+                ),
               );
             },
           ),

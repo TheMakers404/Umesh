@@ -1,21 +1,14 @@
+import 'dart:developer';
+
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:campusbuzz/nav.dart';
 import 'package:campusbuzz/retrieve.dart';
-import 'package:flutter/material.dart';
-import 'welcomeback.dart';
-import "package:firebase_core/firebase_core.dart";
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:auth_handler/auth_handler.dart';
-import 'dart:developer';
 import 'package:flutter/cupertino.dart';
-import 'emailVerfication.dart';
-import 'main.dart';
-
-import 'previewScreen.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
 import 'frgtpass.dart';
-import 'firebase_options.dart';
-import 'package:flutter/services.dart';
 
 class WelcomeBackScreen extends StatefulWidget {
   const WelcomeBackScreen({
@@ -112,127 +105,137 @@ log("---------------------------------------------------------------------------
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 15, top: 10),
-          child: IconButton(
-            icon: const Icon(Icons.arrow_back_ios),
-            color: Colors.black,
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ),
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: Colors.white,
+      //   elevation: 0,
+      //   leading: Padding(
+      //     padding: const EdgeInsets.only(left: 15, top: 10),
+      //     child: IconButton(
+      //       icon: const Icon(Icons.arrow_back_ios),
+      //       color: Colors.black,
+      //       onPressed: () {
+      //         Navigator.pop(context);
+      //       },
+      //     ),
+      //   ),
+      // ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
+        //  padding: const EdgeInsets.only(top: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(height: 10),
+            const SizedBox(height: 25),
             const Image(
               image: AssetImage('assets/images/welcome.png'),
-              height: 320,
+            
+              fit: BoxFit.cover,
             ),
-            const SizedBox(height: 10),
-            const Text(
-              "You've Been Missed!",
-              style: TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-            const SizedBox(height: 5),
-            const Text(
-            "Welcome back to CampusBuzz! Dive in!",
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.grey,
-              ),
-            ),
-            const SizedBox(height: 10),
-            _buildGoogleSignInBlock(context),
-            Container(
-              width: 360,
-              height: 53,
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(0, 237, 232, 232),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: TextField(
-                controller: emailController,
-                decoration: InputDecoration(
-                  labelText: 'Email Address',
-                  prefixIcon: Icon(Icons.email),
-                ),
-              ),
-            ),
-            const SizedBox(height: 5),
-            Container(
-              width: 360,
-              height: 53,
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(24, 237, 232, 232),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: TextField(
-                controller: passwordController,
-                obscureText: true,
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  prefixIcon: Icon(Icons.lock),
-                ),
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ForgotPasswordScreen(),
+            const SizedBox(height: 0),
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                
+              
+                children: [
+                  const Text(
+                    "You've Been Missed!",
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
                     ),
-                  );
-                },
-                child: const Text(
-                  'Forgot Password?',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.blue,
-                    decoration: TextDecoration.underline,
                   ),
-                ),
+                  const SizedBox(height: 5),
+                  const Text(
+                  "Welcome back to CampusBuzz! Dive in!",
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  _buildGoogleSignInBlock(context),
+                  Container(
+                    width: 360,
+                    height: 53,
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(0, 237, 232, 232),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: TextField(
+                      controller: emailController,
+                      decoration: InputDecoration(
+                        labelText: 'Email Address',
+                        prefixIcon: Icon(Icons.email),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  Container(
+                    width: 360,
+                    height: 53,
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(24, 237, 232, 232),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: TextField(
+                      controller: passwordController,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        labelText: 'Password',
+                        prefixIcon: Icon(Icons.lock),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ForgotPasswordScreen(),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        'Forgot Password?',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.blue,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  SizedBox(
+                    width: 360,
+                    height: 53,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        loginAccount(context);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF112031),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                      child: const Text(
+                        'Sign In',
+                        style: TextStyle(
+                          fontSize: 26,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                ],
               ),
             ),
-            const SizedBox(height: 5),
-            SizedBox(
-              width: 360,
-              height: 53,
-              child: ElevatedButton(
-                onPressed: () {
-                  loginAccount(context);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF112031),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-                child: const Text(
-                  'Sign In',
-                  style: TextStyle(
-                    fontSize: 26,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
           ],
         ),
 
@@ -279,7 +282,7 @@ Widget _buildGoogleSignInBlock(BuildContext context) {
   }
   return Column(
     children: [
-          GestureDetector(
+          InkWell(
              onTap: () {
                 // Handle Google sign in button press
                 sigInviaGoogle(context);
@@ -314,6 +317,7 @@ Widget _buildGoogleSignInBlock(BuildContext context) {
           ),
         ),
       ),
+      SizedBox(height: 10,),
       _buildDivider(),
     ],
   );

@@ -522,6 +522,7 @@ int selectedIndex = 0;
                         borderRadius: BorderRadius.circular(15)),
                     onPressed: () {
                       
+                      
                        //final eventListNotifier = context.read();
                        
                       if (!_formKey.currentState!.validate()) {
@@ -568,9 +569,9 @@ int selectedIndex = 0;
                         // Navigate to the new screen to display the token
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => TokenDisplayScreen(
+                            builder: (context) => TokenDisplayScreen(event: newEvent,
                               
-                                event: newEvent
+                               
                              
                                 ),
                           ),

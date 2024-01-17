@@ -1,11 +1,12 @@
 import 'package:campusbuzz/categories.dart';
 import 'package:campusbuzz/data/category_list.dart';
 import 'package:campusbuzz/event_detail_screen.dart';
-import 'package:campusbuzz/location/location.dart';
 import 'package:campusbuzz/model/event.dart';
 import 'package:campusbuzz/per_screens/Nearby.dart';
 import 'package:campusbuzz/per_screens/popular.dart';
+import 'package:campusbuzz/phonepe.dart';
 import 'package:campusbuzz/screen/category_screen.dart';
+import 'package:campusbuzz/search.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
@@ -65,6 +66,51 @@ class _HomescreenState extends State<Homescreen> {
     //   print(value);
     // });
   }
+
+  Widget _buildDivider() {
+  return Padding(
+    padding: const EdgeInsets.only(left: 10,right: 10),
+    child: const Row(
+      children: [
+        Expanded(child: Divider()),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 18),
+          child: Text(
+            'Nearby Events',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+              color:  Color.fromARGB(202, 17, 32, 49),
+            ),
+          ),
+        ),
+        Expanded(child: Divider()),
+      ],
+    ),
+  );
+}
+ Widget _buildDivider2() {
+  return Padding(
+    padding: const EdgeInsets.only(left: 10,right: 10),
+    child: const Row(
+      children: [
+        Expanded(child: Divider()),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 18),
+          child: Text(
+            'Popular Events',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+              color:  Color.fromARGB(202, 17, 32, 49),
+            ),
+          ),
+        ),
+        Expanded(child: Divider()),
+      ],
+    ),
+  );
+}
 
   List imageList = [
     {"id": 4, "image_path": 'images/b1.jpeg'},
@@ -156,11 +202,12 @@ class _HomescreenState extends State<Homescreen> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => MyForm(),
-                                ));
+                          final results = showSearch(context:context, delegate: DtSearch());
+                          // Navigator.push(
+                          //       context,
+                          //       MaterialPageRoute(
+                          //         builder: (context) => MyForm(),
+                          //       ));
                           print("bell icon tapped");
                         },
                         child: const Padding(
@@ -193,26 +240,31 @@ class _HomescreenState extends State<Homescreen> {
                         ),
                       ],
                     ),
-                    child: Padding(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                            contentPadding: EdgeInsets.only(top: 14),
-                            border: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            hintText: 'Search for events...',
-                            hintStyle: TextStyle(color: Color(0xff939393)),
-                            prefixIcon: Icon(
-                              Icons.search_rounded,
-                              color: Color(0xff858585),
-                              size: 30,
-                            ),
-                            suffixIcon: Icon(
-                              Icons.mic,
-                              color: Color(0xff525252),
-                              size: 30,
-                            )),
+                    child: InkWell(
+                      onTap: () {
+                        final results = showSearch(context:context, delegate: DtSearch());
+                      },
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                              contentPadding: EdgeInsets.only(top: 14),
+                              border: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              hintText: 'Search for events...',
+                              hintStyle: TextStyle(color: Color(0xff939393)),
+                              prefixIcon: Icon(
+                                Icons.search_rounded,
+                                color: Color(0xff858585),
+                                size: 30,
+                              ),
+                              suffixIcon: Icon(
+                                Icons.mic,
+                                color: Color(0xff525252),
+                                size: 30,
+                              )),
+                        ),
                       ),
                     ),
                   ),
@@ -335,51 +387,7 @@ class _HomescreenState extends State<Homescreen> {
                 const SizedBox(
                   height: 10,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 6.0),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5.0),
-                        child: Container(
-                          width: 95,
-                          height: 1,
-                          color: Color.fromARGB(139, 158, 158, 158),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 7,
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(left: 2),
-                        child: Text(
-                          'Near By Events',
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700,
-                              color: Color.fromARGB(202, 17, 32, 49)),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5.0),
-                        child: Container(
-                          width: 90,
-                          height: 1,
-                          color: Color.fromARGB(139, 158, 158, 158),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                    ],
-                  ),
-                ),
+                _buildDivider(),
                 const SizedBox(
                   height: 15,
                 ),
@@ -418,51 +426,52 @@ class _HomescreenState extends State<Homescreen> {
                 const SizedBox(
                   height: 5,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 6.0),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5.0),
-                        child: Container(
-                          width: 95,
-                          height: 1,
-                          color: Color.fromARGB(139, 158, 158, 158),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 7,
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(left: 2),
-                        child: Text(
-                          'Popular Events',
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700,
-                              color: Color.fromARGB(202, 17, 32, 49)),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5.0),
-                        child: Container(
-                          width: 90,
-                          height: 1,
-                          color: Color.fromARGB(139, 158, 158, 158),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                    ],
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.only(left: 6.0),
+                //   child: Row(
+                //     children: [
+                //       SizedBox(
+                //         width: 5,
+                //       ),
+                //       Padding(
+                //         padding: const EdgeInsets.only(top: 5.0),
+                //         child: Container(
+                //           width: 95,
+                //           height: 1,
+                //           color: Color.fromARGB(139, 158, 158, 158),
+                //         ),
+                //       ),
+                //       SizedBox(
+                //         width: 7,
+                //       ),
+                //       const Padding(
+                //         padding: EdgeInsets.only(left: 2),
+                //         child: Text(
+                //           'Popular Events',
+                //           style: TextStyle(
+                //               fontSize: 20,
+                //               fontWeight: FontWeight.w700,
+                //               color: Color.fromARGB(202, 17, 32, 49)),
+                //         ),
+                //       ),
+                //       SizedBox(
+                //         width: 8,
+                //       ),
+                //       Padding(
+                //         padding: const EdgeInsets.only(top: 5.0),
+                //         child: Container(
+                //           width: 90,
+                //           height: 1,
+                //           color: Color.fromARGB(139, 158, 158, 158),
+                //         ),
+                //       ),
+                //       SizedBox(
+                //         width: 5,
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                _buildDivider2(),
                 const SizedBox(
                   height: 15,
                 ),
@@ -519,6 +528,16 @@ class _HomescreenState extends State<Homescreen> {
                 //     },
                 //   ),
                 // ),
+
+                ElevatedButton(onPressed: (){
+                  Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => Phonepee(
+                    
+                  ),
+                ),
+              );
+                }, child: Text("Pay")),
                 
               ],
             ),
