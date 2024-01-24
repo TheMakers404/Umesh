@@ -4,11 +4,12 @@ import 'package:campusbuzz/event_detail_screen.dart';
 import 'package:campusbuzz/model/event.dart';
 import 'package:campusbuzz/per_screens/Nearby.dart';
 import 'package:campusbuzz/per_screens/popular.dart';
-import 'package:campusbuzz/phonepe.dart';
+import 'package:campusbuzz/provider/banner.dart';
 import 'package:campusbuzz/screen/category_screen.dart';
 import 'package:campusbuzz/search.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'event_list.dart';
 
@@ -52,20 +53,6 @@ bool showAllItems = false;
 
 class _HomescreenState extends State<Homescreen> {
   //  NotificationServices notificationServices = NotificationServices();
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    // notificationServices.requestNotificationPermission();
-    // notificationServices.firebaseInit();
-    // // notificationServices.isTokenRefresh();
-    // notificationServices.getDeviceToken().then((value) {
-    //   print('device token');
-    //   print(value);
-    // });
-  }
 
   Widget _buildDivider() {
   return Padding(
@@ -295,6 +282,7 @@ class _HomescreenState extends State<Homescreen> {
                 //running banner
           
                 Column(
+                  
                   children: [
                     InkWell(
                       onTap: () {
@@ -313,41 +301,48 @@ class _HomescreenState extends State<Homescreen> {
                         ),
                       ],
                         ),
-                        child: CarouselSlider(
-                          items: imageList
-                              .map(
-                                (item) => Container(
-                                  decoration: BoxDecoration(
-                                    
-                                  ),
-                                  margin: EdgeInsets.symmetric(horizontal: 5),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Image.asset(
-                                      item['image_path'],
-                                      fit: BoxFit.cover,
-                                      width: double.infinity,
+                        child: Consumer<BannerProvider>(
+
+                           builder: (context, bannerProvider, _) { 
+                            print("Running Banner");
+                            return CarouselSlider(
+                            items: imageList
+                                .map(
+                                  (item) => Container(
+                                    decoration: BoxDecoration(
+                                      
+                                    ),
+                                    margin: EdgeInsets.symmetric(horizontal: 5),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Image.asset(
+                                        item['image_path'],
+                                        fit: BoxFit.cover,
+                                        width: double.infinity,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              )
-                              .toList(),
-                          carouselController: carouselController,
-                          options: CarouselOptions(
-                            scrollPhysics: const BouncingScrollPhysics(),
-                            autoPlay: true,
-                            aspectRatio: 2,
-                            viewportFraction: 0.93,
-                            enlargeCenterPage: true, //added
-                            enlargeStrategy:
-                                CenterPageEnlargeStrategy.height, //added
-                      
-                            onPageChanged: (index, reason) {
-                              setState(() {
-                                currentIndex = index;
-                              });
-                            },
-                          ),
+                                )
+                                .toList(),
+                            carouselController: carouselController,
+                            options: CarouselOptions(
+                              scrollPhysics: const BouncingScrollPhysics(),
+                              autoPlay: true,
+                              aspectRatio: 2,
+                              viewportFraction: 0.93,
+                              enlargeCenterPage: true, //added
+                              enlargeStrategy:
+                                  CenterPageEnlargeStrategy.height, //added
+                                                
+                              onPageChanged: (index, reason) {
+                                context.read<BannerProvider>().updateCurrentIndex(index);
+                                  currentIndex = index;
+                                
+                              },
+                            ),
+                          );
+                            }
+                           
                         ),
                       ),
                     ),
@@ -529,15 +524,7 @@ class _HomescreenState extends State<Homescreen> {
                 //   ),
                 // ),
 
-                ElevatedButton(onPressed: (){
-                  Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => Phonepee(
-                    
-                  ),
-                ),
-              );
-                }, child: Text("Pay")),
+                
                 
               ],
             ),

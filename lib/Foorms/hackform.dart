@@ -1,47 +1,106 @@
-import 'package:campusbuzz/token.dart';
-import 'package:campusbuzz/your_Events/ymodel.dart';
+import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+// import 'package:flutter_document_picker/flutter_document_picker.dart';
+import 'package:file_picker/file_picker.dart';
+import 'dart:io';
+import 'package:flutter_pdfview/flutter_pdfview.dart';
 
-class HackScreen extends ConsumerStatefulWidget {
-  final String imageUrl;
-  final String time;
-  final String date;
-  final String title;
-  final String college_name;
-  
-
-  const HackScreen(
-      {super.key,
-      required this.imageUrl,
-      required this.time,
-      required this.date,
-      required this.title,
-      required this.college_name});
+class FormScreen1 extends StatefulWidget {
+  const FormScreen1({
+    super.key,
+  });
 
   @override
-  ConsumerState<HackScreen> createState() {
-    return _HackScreen();
+  State<StatefulWidget> createState() {
+    return FormScreenState();
   }
 }
 
-class _HackScreen extends ConsumerState<HackScreen> {
-  List<String> participantNames = [];
+class FormScreenState extends State<FormScreen1> {
+  Map<String, dynamic>? fileData;
+  String selectedFileName = 'NOFileSelected';
+  // final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
-  bool hack = false;
-  
-  
+  Future<String?> uploadPdf(String fileName, File file) async {
+    final reference =
+        FirebaseStorage.instance.ref().child("pdfs/$fileName.pdf");
 
+    try {
+      final uploadTask = reference.putFile(file);
 
-  //adding event to yourevent screen:-
-  //  List<Evvent> events = [];
-  //  void addEvent(Evvent event) {
-  //   setState(() {
-  //     events.add(event);
-  //   });
-  // }
-int selectedIndex = 0;
+      await uploadTask.whenComplete(() {});
+
+      final downloadLink = await reference.getDownloadURL();
+      print('successfully uploaded');
+      print(downloadLink);
+
+      return downloadLink;
+    } catch (e) {
+      print('Error uploading file: $e');
+      return null;
+    }
+  }
+
+  void _submitForm() async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
+    _formKey.currentState?.save();
+
+    if (fileData != null) {
+      Map<String, dynamic> formData = {
+        "Team Name": _name,
+        "Email Id": _email,
+        "Leader Name": _Leader,
+        "collage Name": _CLGNAME,
+        "phone Number": _phoneNumber,
+        "About Abstract": _AboutAbstract,
+        "Teamsize": dropdownValue,
+        "pdfName": fileData!["pdfName"],
+        "pdfUrl": fileData!["pdfUrl"],
+      };
+
+      // Store form data and file data together in Firestore
+      // Replace this with your Firestore code
+      await FirebaseFirestore.instance.collection("Test12").add(formData);
+      _formKey.currentState?.reset();
+
+      // For now, log the data
+      log("Form Data: $formData");
+    } else {
+      // Handle if fileData is not available
+    }
+  }
+
+  void _pickAndUploadFile() async {
+    final filePicked = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf'],
+    );
+
+    if (filePicked != null) {
+      setState(() {
+        selectedFileName = filePicked.files.single.name;
+      });
+      String fileName = filePicked.files[0].name;
+      print(fileName);
+      File file = File(filePicked.files[0].path!);
+      final downloadLink = await uploadPdf(fileName, file);
+
+      if (downloadLink != null) {
+        fileData = {
+          "pdfName": fileName,
+          "pdfUrl": downloadLink,
+        };
+
+        // Now, submit the form data and file data together
+      }
+    }
+  }
+
   List<String> items = [
     '1',
     '2',
@@ -58,7 +117,7 @@ int selectedIndex = 0;
   String _AboutAbstract = '';
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  
+
   Widget _buildName() {
     return Column(children: [
       const Padding(
@@ -77,7 +136,6 @@ int selectedIndex = 0;
         ),
       ),
       TextFormField(
-        controller: data1,
         decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent),
@@ -123,7 +181,6 @@ int selectedIndex = 0;
         ),
       ),
       TextFormField(
-        controller: data2,
         decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent),
@@ -168,7 +225,7 @@ int selectedIndex = 0;
         child: Row(
           children: [
             Text(
-              "upload link",
+              "Team Leader",
               style: TextStyle(fontSize: 20),
             ),
             Text(
@@ -179,7 +236,6 @@ int selectedIndex = 0;
         ),
       ),
       TextFormField(
-        controller: data3,
         decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent),
@@ -187,7 +243,7 @@ int selectedIndex = 0;
             focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(5.5)),
-            hintText: 'link',
+            hintText: 'Enter your Name',
             hintStyle: TextStyle(
               color: Colors.grey,
             ),
@@ -225,7 +281,6 @@ int selectedIndex = 0;
         ),
       ),
       TextFormField(
-        controller: data4,
         decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent),
@@ -271,7 +326,6 @@ int selectedIndex = 0;
         ),
       ),
       TextFormField(
-        controller: data5,
         decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent),
@@ -318,7 +372,6 @@ int selectedIndex = 0;
         ),
       ),
       TextFormField(
-        controller: data6,
         decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent),
@@ -347,156 +400,140 @@ int selectedIndex = 0;
     ]);
   }
 
- 
   Widget _builddropdownbox() {
-    return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('Event').snapshots(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return CircularProgressIndicator();
-        }
-
-        //using snapshot
-
-        var umeshDoc = snapshot.data!.docs.firstWhere((doc) => doc.id == 'B4jzFfrKvIWpvomLK2tB');
-        var sportNames = umeshDoc['sportNames'] as List<dynamic>;
-        var entryFee = umeshDoc['entry fee'] as List<dynamic>;
-        var participants = umeshDoc['participantCounts'] as List<dynamic>;
-
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+    return Column(
+      children: [
+        const Row(
           children: [
-
-            //dropdownbox
-            Container(
-              decoration: BoxDecoration(
-            color: Color(0xffF0F0F0),
-            borderRadius: BorderRadius.circular(5.5),
+            Text(
+              "Team Size",
+              style: TextStyle(fontSize: 20),
+            ),
+            Text(
+              "*",
+              style: TextStyle(fontSize: 20, color: Colors.red),
+            ),
+          ],
+        ),
+        Container(
+          decoration: BoxDecoration(
+              color: Color(0xffF0F0F0),
+              borderRadius: BorderRadius.circular(5.5)),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 12, right: 12),
+            child: DropdownButton<String>(
+              underline: SizedBox(),
+              value: dropdownValue,
+              isExpanded: true,
+              borderRadius: BorderRadius.circular(5.5),
+              items: items.map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                    value: value, child: Text(value));
+              }).toList(),
+              onChanged: (String? newValue) {
+                setState(() {
+                  dropdownValue = newValue ?? '';
+                });
+              },
+            ),
           ),
-              child: Padding(
-               padding: const EdgeInsets.only(left: 12, right: 12),
-                child: DropdownButton<int>(
-                    underline: SizedBox(),
-                  value: selectedIndex,
-                  hint: Text('Select a sport'),
-                   isExpanded: true,
-               borderRadius: BorderRadius.circular(5.5),
-                  items: List.generate(sportNames.length, (index) {
-                    return DropdownMenuItem<int>(
-                      value: index,
-                      child: Text(sportNames[index].toString()),
-                    );
-                  }),
-                  onChanged: (int? index) { 
-                    if (index != null) {
-                      setState(() {
-                        selectedIndex = index;
-                      });
+        ),
+      ],
+    );
+  }
+
+  Widget _buildAddFiles() {
+    return Column(
+      children: [
+        const Row(
+          children: [
+            Text(
+              "Upload File",
+              style: TextStyle(fontSize: 20),
+            ),
+            Text(
+              "*",
+              style: TextStyle(fontSize: 20, color: Colors.red),
+            ),
+          ],
+        ),
+        SizedBox(height: 20),
+        selectedFileName != 'NOFileSelected'
+            ? Stack(children: [
+                InkWell(
+                  onTap: () async {
+                    if (fileData != null && fileData!["pdfUrl"] != null) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PdfViewer(fileData!["pdfUrl"]),
+                        ),
+                      );
                     }
                   },
-                
+                  child: Card(
+                    elevation: 3,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            selectedFileName.length > 20
+                                ? '${selectedFileName.substring(0, 20)}...'
+                                : selectedFileName,
+                            style: TextStyle(fontSize: 20),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selectedFileName = 'NOFileSelected';
+                      fileData = null;
+                    });
+                  },
+                  child: Align(
+                    alignment: Alignment.topRight,
+                    child: const Icon(
+                      Icons.clear,
+                      color: Colors.red,
+                    ),
+                  ),
+                ),
+              ])
+            : GestureDetector(
+                onTap: _pickAndUploadFile,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xffF0F0F0),
+                    borderRadius: BorderRadius.circular(5.5),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(Icons.add),
+                        SizedBox(width: 5),
+                        Text("Add File"),
+                      ],
+                    ),
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 20),
-            Text('Entry Fee: ${entryFee.length > selectedIndex ? entryFee[selectedIndex] : ""}'),
-            SizedBox(height: 20),
-            // Text('Max Participants: ${participants.length > selectedIndex ? participants[selectedIndex] : ""}'),
-          ],
-        );
-      },
-    );}
-  //   return Column(
-  //     children: [
-  //       const Row(
-  //         children: [
-  //           Text(
-  //             "Team Size",
-  //             style: TextStyle(fontSize: 20),
-  //           ),
-  //           Text(
-  //             "*",
-  //             style: TextStyle(fontSize: 20, color: Colors.red),
-  //           ),
-  //         ],
-  //       ),
-  //       Container(
-  //         decoration: BoxDecoration(
-  //           color: Color(0xffF0F0F0),
-  //           borderRadius: BorderRadius.circular(5.5),
-  //         ),
-  //         child: Padding(
-  //           padding: const EdgeInsets.only(left: 12, right: 12),
-  //           child: DropdownButton<String>(
-  //             underline: SizedBox(),
-  //             value: dropdownValue,
-  //             isExpanded: true,
-  //             borderRadius: BorderRadius.circular(5.5),
-  //             items: items.map<DropdownMenuItem<String>>((String value) {
-  //               return DropdownMenuItem<String>(
-  //                 value: value,
-  //                 child: Text(value),
-  //               );
-  //             }).toList(),
-  //             onChanged: (String? newValue) {
-  //               setState(() {
-  //                 dropdownValue = newValue ?? '';
-  //               });
-  //             },
-  //           ),
-  //         ),
-  //       ),
-  //       SizedBox(height: 15),
-  //       _buildDynamicTextFields(int.parse(dropdownValue)),
-  //     ],
-  //   );
-  // 
-  // Widget _buildDynamicTextFields(int numberOfFields) {
-  //   List<Widget> textFields = [];
+      ],
+    );
+  }
 
-  //   for (int i = 0; i < numberOfFields; i++) {
-  //     textFields.add(
-  //       TextFormField(
-  //         // controller:data8 ,
-  //         controller: TextEditingController(),
-  //         decoration: InputDecoration(
-  //           labelText: 'Participant ${i + 1} Name',
-  //           filled: true,
-  //         ),
-  //         validator: (String? value) {
-  //           if (value!.isEmpty) {
-  //             return 'Name is Required';
-  //           }
-  //           return null;
-  //         },
-  //         onSaved: (String? value) {
-  //           participantNames.add(value!);
-  //           // Handle the participant's name as needed
-  //         },
-  //       ),
-  //     );
-  //     textFields.add(SizedBox(height: 15));
-  //   }
-
-  //   return Column(children: textFields);
-
-  // }
-  
- 
-
-  TextEditingController data1 = new TextEditingController();
-  TextEditingController data2 = new TextEditingController();
-  TextEditingController data3 = new TextEditingController();
-  TextEditingController data4 = new TextEditingController();
-  TextEditingController data5 = new TextEditingController();
-  TextEditingController data6 = new TextEditingController();
-  TextEditingController data7 = new TextEditingController();
-  // TextEditingController data8 = new TextEditingController();
-
-  @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -508,7 +545,7 @@ int selectedIndex = 0;
         backgroundColor: Colors.white,
         elevation: 0,
         iconTheme: const IconThemeData(
-          color: Colors.black,
+          color: Colors.black, //change your color here
         ),
       ),
       body: SingleChildScrollView(
@@ -532,87 +569,16 @@ int selectedIndex = 0;
                 _buiLdAboutAbstract(),
                 SizedBox(height: 15),
                 _builddropdownbox(),
-                SizedBox(height: 15),
-                // _buildDynamicTextFields(int.parse(dropdownValue)),
-                 SizedBox(height: 50),
+                SizedBox(height: 51),
+                _buildAddFiles(),
+                SizedBox(height: 50),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: MaterialButton(
                     color: Color(0xff112031),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15)),
-                    onPressed: () {
-                      
-                       //final eventListNotifier = context.read();
-                       
-                      if (!_formKey.currentState!.validate()) {
-                        return;
-                      }
-                      _formKey.currentState?.save();
-                      Map<String, dynamic> data = {
-                        "Team Name": data1.text,
-                        "Email Id": data2.text,
-                        "Leader Name": data3.text,
-                        "collage Name": data4.text,
-                        "phone Number": data5.text,
-                        "About Abstract": data6.text,
-                        "Teamsize": dropdownValue,
-                        "hack":hack,
-                        // "team members":participantNames,
-                      };
-                      
-
-                      // Firestore.Instance.collection("test").add(data);
-                      //  FirebaseFirestore.instance.collection("User").add(data).then((value) {
-                      // print("Data added with ID: ${value.id}");
-                      //    }
-                      FirebaseFirestore.instance
-                          .collection("User")
-                          .add(data)
-                          .then((value) {
-                        String uniqueToken = value.id;
-                        print("Data added with ID: $uniqueToken");
-
-                        uniqueToken = uniqueToken;
-
-                        //testing #2
-                        Evvent newEvent = Evvent(
-                          token: uniqueToken,
-                          imageUrl: widget.imageUrl,
-                          time: widget.time,
-                          date: widget.date,
-                          title: widget.title,
-                          leaderName: _Leader,
-                          college_name: widget.college_name,
-                        );
-                        ref.read(eventListProvider.notifier).addEvent(newEvent);
-                       
-                 
-                         if (hack) {
-             
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => TokenDisplayScreen(
-                    event: newEvent,
-                  ),
-                ),
-              );
-            } else {
-             
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => pending(),
-                ),
-              );
-            }
-                      }).catchError((error) {
-                        print("Error adding data: $error");
-                      });
-
-                      _formKey.currentState?.save();
-
-                     
-                    },
+                    onPressed: _submitForm,
                     child: const Padding(
                       padding: EdgeInsets.all(13),
                       child: Row(
@@ -630,9 +596,6 @@ int selectedIndex = 0;
                     ),
                   ),
                 ),
-
-                
-                
               ],
             ),
           ),
@@ -642,18 +605,21 @@ int selectedIndex = 0;
   }
 }
 
-class pending extends StatelessWidget {
-  const pending({super.key});
+class PdfViewer extends StatelessWidget {
+  final String filePath;
+
+  const PdfViewer(this.filePath, {super.key});
 
   @override
   Widget build(BuildContext context) {
+    log("PDF Viewer File Path: $filePath");
     return Scaffold(
-      body: Center(
-        child: Text("pending"),
-        
+      appBar: AppBar(
+        title: Text("PDF Viewer"),
+      ),
+      body: PDFView(
+        filePath: filePath,
       ),
     );
   }
 }
-
-

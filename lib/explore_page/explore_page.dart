@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:campusbuzz/FavProv.dart';
 import 'package:campusbuzz/model/event.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +27,7 @@ class _Explore_listState extends State<Explore_list> {
   @override
   Widget build(BuildContext context) {
 
-    print("explorepage build");
+    log("explorepage build");
 
     // final provider= Provider.of<Favoriteprovider>(context);
     // final favoriteEvents = ref.watch(favoriteEventsProvider);
@@ -117,8 +119,7 @@ class _Explore_listState extends State<Explore_list> {
                                       ),
                                     ),
                                   ),
-                                  Consumer<Favoriteprovider>(builder: (context,value,child){
-                                    return Column(
+                                   Column(
                                     children: [
                                       Align(
                                         alignment: Alignment.centerRight,
@@ -146,7 +147,7 @@ class _Explore_listState extends State<Explore_list> {
                                               child: InkWell(
                                                 onTap: () {
 
-                                                  value.togglefav(widget.event);
+                                                  // value.togglefav(widget.event);
                                                   
                                                   // Add your onPressed function here
                                                   // print('Icon pressed');
@@ -172,11 +173,9 @@ class _Explore_listState extends State<Explore_list> {
                                                     padding:
                                                         EdgeInsets.all(5.0),
                                                     child: Icon(
-                                                      value.isExist(widget.event)
-                                                          ? Icons.favorite
-                                                          : Icons
-                                                              .favorite_border_outlined,
-                                                      color: Colors.red,
+                                                      // value.isExist(widget.event)
+                                                           Icons.favorite
+                                                        
                                                     )),
                                               ),
                                             ),
@@ -184,8 +183,8 @@ class _Explore_listState extends State<Explore_list> {
                                         ),
                                       )
                                     ],
-                                  );
-                                  }),
+                                  ),
+                                  
                                 ],
                               ),
                             ),

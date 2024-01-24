@@ -10,6 +10,7 @@ class Sport extends StatefulWidget {
 
 class _SportState extends State<Sport> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   String _College = '';
   String _Name = '';
@@ -22,6 +23,8 @@ class _SportState extends State<Sport> {
     '3rd Year',
     '4th Year',
   ];
+  var globalDrop1 = "";
+  var globalDrop2 = "";
   List<String> items2 = [
     'CSE',
     'AIML',
@@ -30,6 +33,9 @@ class _SportState extends State<Sport> {
   ];
   String dropdownValue = '1st Year';
   String dropdownValue1 = 'CSE';
+  List<String> participantNames = [];
+
+  int selectedIndex = 0;
 
   Widget _buildName() {
     return Column(children: [
@@ -61,7 +67,6 @@ class _SportState extends State<Sport> {
               color: Colors.grey,
             ),
             filled: true),
-        keyboardType: TextInputType.phone,
         maxLength: null,
         validator: (String? value) {
           if (value!.isEmpty) {
@@ -107,7 +112,6 @@ class _SportState extends State<Sport> {
               color: Colors.grey,
             ),
             filled: true),
-        keyboardType: TextInputType.phone,
         maxLength: null,
         validator: (String? value) {
           if (value!.isEmpty) {
@@ -153,7 +157,6 @@ class _SportState extends State<Sport> {
               color: Colors.grey,
             ),
             filled: true),
-        keyboardType: TextInputType.phone,
         maxLength: null,
         validator: (String? value) {
           if (value!.isEmpty) {
@@ -354,13 +357,162 @@ class _SportState extends State<Sport> {
     );
   }
 
+  Widget _builddropdownbox() {
+    return Column(
+      children: [
+        const Row(
+          children: [
+            Text(
+              "List of sports",
+              style: TextStyle(fontSize: 20),
+            ),
+            Text(
+              "*",
+              style: TextStyle(fontSize: 20, color: Colors.red),
+            ),
+          ],
+        ),
+        SizedBox(height: 5),
+        StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance.collection('Event').snapshots(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return CircularProgressIndicator();
+            }
+
+            //using snapshot
+
+            var umeshDoc = snapshot.data!.docs
+                .firstWhere((doc) => doc.id == 'B4jzFfrKvIWpvomLK2tB');
+            var sportNames = umeshDoc['sportNames'] as List<dynamic>;
+            var entryFee = umeshDoc['entry fee'] as List<dynamic>;
+            var participants = umeshDoc['participantCounts'] as List<dynamic>;
+            int drop = participants[selectedIndex];
+
+            var drop1 = entryFee[selectedIndex];
+            var drop2 = sportNames[selectedIndex];
+
+            globalDrop1 = drop1;
+            globalDrop2 = drop2;
+
+            print("--------------------------------------------------------");
+
+            print(drop1);
+
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                //dropdownbox
+                Container(
+                  decoration: BoxDecoration(
+                    color: Color(0xffF0F0F0),
+                    borderRadius: BorderRadius.circular(5.5),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 12, right: 12),
+                    child: DropdownButton<int>(
+                      underline: SizedBox(),
+                      value: selectedIndex,
+                      hint: Text('Select a sport'),
+                      isExpanded: true,
+                      borderRadius: BorderRadius.circular(5.5),
+                      items: List.generate(sportNames.length, (index) {
+                        return DropdownMenuItem<int>(
+                          value: index,
+                          child: Text(sportNames[index].toString()),
+                        );
+                      }),
+                      onChanged: (int? index) {
+                        if (index != null) {
+                          setState(() {
+                            selectedIndex = index;
+                          });
+                        }
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                Text(
+                    'Entry Fee: ${entryFee.length > selectedIndex ? entryFee[selectedIndex] : ""}'),
+                SizedBox(height: 20),
+                Text(
+                    'Max Participants: ${participants.length > selectedIndex ? participants[selectedIndex] : ""}'),
+
+                _builddropdownbox1(drop),
+              ],
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _builddropdownbox1(int participants) {
+    //  print(participants);
+    return Column(
+      children: [
+        SizedBox(height: 15),
+        _buildDynamicTextFields(participants),
+      ],
+    );
+  }
+
+  Widget _buildDynamicTextFields(int numberOfFields) {
+    List<Widget> textFields = [];
+    print("arrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+    print(numberOfFields);
+
+    for (int i = 0; i < numberOfFields; i++) {
+      textFields.add(
+        TextFormField(
+          // controller:data8 ,
+          controller: TextEditingController(),
+          decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.transparent),
+                borderRadius: BorderRadius.circular(5.5)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.transparent),
+                borderRadius: BorderRadius.circular(5.5)),
+            // hintText: 'Enter THE NAME',
+            hintStyle: const TextStyle(
+              color: Colors.grey,
+            ),
+            filled: true,
+            labelText: 'Participant ${i + 1} Name',
+            labelStyle: const TextStyle(
+              color: Color.fromARGB(
+                  255, 106, 105, 105), // Change this to your desired color
+              // Other text style properties can be added here
+            ),
+          ),
+          validator: (String? value) {
+            if (value!.isEmpty) {
+              return 'Name is Required';
+            }
+            return null;
+          },
+          onSaved: (String? value) {
+            participantNames.add(value!);
+            // Handle the participant's name as needed
+          },
+        ),
+      );
+      textFields.add(SizedBox(height: 15));
+    }
+
+    return Column(children: textFields);
+  }
+
   Widget build(BuildContext context) {
     CollectionReference eventsCollection =
         FirebaseFirestore.instance.collection('Test12');
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Form Demo",
+          "Sport",
           style: TextStyle(
               color: Colors.black, fontSize: 25, fontWeight: FontWeight.w500),
         ),
@@ -395,6 +547,9 @@ class _SportState extends State<Sport> {
                 _builddropdown1(),
                 const SizedBox(height: 15),
                 _builddropdown2(),
+                SizedBox(height: 15),
+
+                _builddropdownbox(),
                 // const SizedBox(height: 15),
                 // _builddropdown2(),
                 const SizedBox(height: 50),
@@ -418,9 +573,13 @@ class _SportState extends State<Sport> {
                         'Year': dropdownValue,
                         'Branch': dropdownValue1,
                         'Roll No': _Roll,
+                        "team members": participantNames,
+                        "entryfee": globalDrop1,
+                        "sportname": globalDrop2,
                       });
 
                       _formKey.currentState?.reset();
+                      participantNames.clear();
                     },
                     child: const Padding(
                       padding: EdgeInsets.all(13),

@@ -1,7 +1,6 @@
 // import 'package:campusbuzz/CampusBuzz%20Intro%20Screens/CampusBuzz%20Intro%20Screens/createaccount.dart';
 // import 'package:campusbuzz/CampusBuzz%20Intro%20Screens/CampusBuzz%20Intro%20Screens/main.dart';
 // import 'package:campusbuzz/CampusBuzz%20Intro%20Screens/CampusBuzz%20Intro%20Screens/welcomeback.dart';
-import 'package:campusbuzz/FavProv.dart';
 import 'package:campusbuzz/event_detail_screen.dart';
 import 'package:campusbuzz/event_explore_screen/explore_screen.dart';
 import 'package:campusbuzz/homescreen.dart';
@@ -10,7 +9,6 @@ import 'package:campusbuzz/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:provider/provider.dart';
 
 import 'event_list.dart';
 
@@ -63,8 +61,8 @@ class _TabsScreen extends State<TabsScreen> {
   Widget build(BuildContext context) {
     
     // final favoriteEvent = ref.watch(favoriteEventsProvider);
-    final favlist= Provider.of<Favoriteprovider>(context);
-    final events=favlist.events;
+    // final favlist= Provider.of<Favoriteprovider>(context);
+    // final events=favlist.events;
     // favoriteEventsNotifier.loadFavoriteEventsFromFirestore();
      activePage = [
        Homescreen(event: Event_details, onselectevent: (Event event) {
@@ -81,7 +79,7 @@ class _TabsScreen extends State<TabsScreen> {
        
       ),
       Explore(
-        event: events,
+        event: Event_details,
         title: 'Favorites',
         
       ),
@@ -170,11 +168,3 @@ class _TabsScreen extends State<TabsScreen> {
     );
   }
 }
-
-
-
-
-
-
-//your events
-

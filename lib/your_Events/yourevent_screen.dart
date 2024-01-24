@@ -139,7 +139,7 @@ class _YourEventsState extends ConsumerState<YourEvents> {
       date: eventData["date"],
       title: eventData["title"],
       leaderName: eventData["leaderName"],
-      college_name: eventData["college_name"],
+      college_name: eventData["college_name"], College_Name: '', Name: '', Mail_Id: '', Mobile_No: '', Year: '', Branch: '', amount: 0,
       //index: index, // Add an index property to Evvent class if needed
     );
   }

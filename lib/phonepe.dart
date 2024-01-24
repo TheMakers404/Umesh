@@ -1,11 +1,16 @@
 import 'dart:convert';
 
+import 'package:campusbuzz/token.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:phonepe_payment_sdk/phonepe_payment_sdk.dart';
 
 class Phonepee extends StatefulWidget {
-  const Phonepee({super.key});
+  final Evvent event;
+
+  final int amount;
+  const Phonepee({super.key, required this.amount, required this.event});
 
   @override
   State<Phonepee> createState() => _PhonepeState();
@@ -68,6 +73,7 @@ return base64Body;
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(title: Text("Payment"),),
       body: Column(
@@ -77,6 +83,7 @@ return base64Body;
           }, child: Text("Pay Now")),
           SizedBox(height: 10,),
           Text("result \n $result"),
+          Text(widget.amount.toString()),
         ],
       ),
     );
@@ -99,6 +106,9 @@ return base64Body;
 
 
   void startpgtransaction()async{
+    CollectionReference eventsCollection =
+        FirebaseFirestore.instance.collection('Test12');
+         DocumentReference documentReference = eventsCollection.doc();
     PhonePePaymentSdk.startTransaction(body, callbackUrl, checksum, "",).then((response) => {
     setState(() {
                    if (response != null) 
@@ -108,7 +118,34 @@ return base64Body;
                            if (status == 'SUCCESS') 
                            {
                             result="Flow Completed - Status: Success!";
+                            
                              // "Flow Completed - Status: Success!";
+                              documentReference.set({
+                        'College Name': widget.event.college_name,
+                        'Name': widget.event.Name,
+                        'Mail Id': widget.event.Mail_Id,
+                        'Mobile No': widget.event.Mobile_No,
+                        'Year': widget.event.Year,
+                        'Branch': widget.event.Branch,
+                        'amount':widget.event.amount,
+                        'College Name': widget.event.College_Name,
+                        
+                      //   'Name': _Name,
+                      //   'Mail Id': _email,
+                      //   'Mobile No': _Number,
+                      //   'Year': dropdownValue,
+                      //   'Branch': dropdownValue1,
+                      //   'amount':amountt,
+                        
+                      });
+                             
+
+                             Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => TokenDisplayScreen(event: widget.event,),
+            ),
+          );
                            } 
                            else {
                             result="Flow Completed - Status: $status and Error: $error";

@@ -1,11 +1,11 @@
-import 'package:campusbuzz/FavProv.dart';
 import 'package:campusbuzz/event_list.dart';
 import 'package:campusbuzz/nav.dart';
+import 'package:campusbuzz/provider/banner.dart';
+import 'package:campusbuzz/provider/ymodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:provider/provider.dart';
 
 import 'createaccount.dart';
@@ -28,8 +28,15 @@ void main() async {
   ]).then((fn) {
     runApp(
     // ProviderScope(
-      // child: 
-      FutureBuilder(
+    //   child: 
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => EventListNotifier(), ),
+        ChangeNotifierProvider(create: (context) => BannerProvider(),),
+
+      ],
+        
+        child:FutureBuilder(
         future:
             gettingData(), // Assuming gettingData returns a Future<List<Event>>
         builder: (context, snapshot) {
@@ -40,14 +47,14 @@ void main() async {
             //   title: 'Your App Title',
             //   home: TabsScreen(),
             // );
-      return ChangeNotifierProvider(
-        create:(context) => Favoriteprovider(),
-        child: (MaterialApp(
+      return 
+       
+        (MaterialApp(
           debugShowCheckedModeBanner: false,
           home:TabsScreen()
           )
-          ),
-      );
+          );
+     
     
           } else if (snapshot.hasError) {
             // Error occurred while fetching data
@@ -71,6 +78,7 @@ void main() async {
         },
       ),
     // ),
+    ),
   );
   });
   

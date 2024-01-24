@@ -14,7 +14,7 @@ class EventItemm2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final provider= Provider.of<Favoriteprovider>(context);
+    // final provider= Provider.of<Favoriteprovider>(context);
     // final favoriteEvents = ref.watch(favoriteEventsProvider);
 
     // final isFavorite = favoriteEvents.contains(event);
@@ -85,7 +85,7 @@ class EventItemm2 extends StatelessWidget {
                                   child: InkWell(
                                     onTap: () {
 
-                                      provider.togglefav(event);
+                                      // provider.togglefav(event);
                                       // Add your onPressed function here
                                       // print('Icon pressed');
                                       // print('Icon pressed');
@@ -108,12 +108,11 @@ class EventItemm2 extends StatelessWidget {
                                     child: Padding(
                                         padding: EdgeInsets.all(5.0),
                                         child: Icon(
-                                          provider.isExist(event)?
-                                          Icons.favorite:
+                                        
+                                          Icons.favorite
                                         
                                    
-                                              Icons.favorite_border_outlined,
-                                          color: Colors.red,
+                                         
                                         )),
                                   ),
                                 ),

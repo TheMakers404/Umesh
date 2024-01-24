@@ -7,6 +7,7 @@
 
 import 'package:campusbuzz/FavProv.dart';
 import 'package:campusbuzz/Foorms/Foorm.dart';
+import 'package:campusbuzz/Foorms/fest.dart';
 import 'package:campusbuzz/Foorms/hackform.dart';
 import 'package:campusbuzz/model/event.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +42,7 @@ class EventDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final provider= Provider.of<Favoriteprovider>(context);
+    // final provider= Provider.of<Favoriteprovider>(context);
     // final favoriteEvents = ref.watch(favoriteEventsProvider);
 
     // final isFavorite = favoriteEvents.contains(event);
@@ -109,7 +110,7 @@ class EventDetailScreen extends StatelessWidget {
                                 child: InkWell(
                                   onTap: () {
 
-                                    provider.togglefav(event);
+                                    // provider.togglefav(event);
                                     // Add your onPressed function here
                                     // print('Icon pressed');
                                     // final wasAdded = ref
@@ -129,9 +130,10 @@ class EventDetailScreen extends StatelessWidget {
                                   child: Padding(
                                     padding: EdgeInsets.all(5.0),
                                     child: Icon(
-                                      provider.isExist(event)?
-                                      Icons.favorite:
-                                      Icons.favorite_border_outlined,color: Colors.red,)
+                                      // provider.isExist(event)?
+                                      Icons.favorite
+                                      // :Icons.favorite_border_outlined,color: Colors.red,
+                                      )
                                   ),
                                 ),
                               ),
@@ -348,10 +350,11 @@ class EventDetailScreen extends StatelessWidget {
       case 'c1':
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => FormScreen(
-          imageUrl: event.imageUrl,
+          MaterialPageRoute(builder: (context) => Fest(
+            imageUrl: event.imageUrl,
           time: event.time,
-          date: event.date,title: event.title,college_name:event.college_name,
+          date: event.date,
+          title: event.title,college_name:event.college_name, 
           
 
           )),
@@ -360,7 +363,7 @@ class EventDetailScreen extends StatelessWidget {
       case 'c2':
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => FormScreen(
+          MaterialPageRoute(builder: (context) => Fest(
           imageUrl: event.imageUrl,
           time: event.time,
           date: event.date,
@@ -372,10 +375,7 @@ class EventDetailScreen extends StatelessWidget {
       case 'c3':
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => HackScreen(
-          imageUrl: event.imageUrl,
-          time: event.time,
-          date: event.date,title: event.title,college_name:event.college_name,
+          MaterialPageRoute(builder: (context) => FormScreen1(
 
           )),
         );
@@ -383,7 +383,7 @@ class EventDetailScreen extends StatelessWidget {
       case 'c4':
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => FormScreen(imageUrl: event.imageUrl,
+          MaterialPageRoute(builder: (context) => Fest(imageUrl: event.imageUrl,
           time: event.time,
           date: event.date,title: event.title,college_name:event.college_name, 
 
@@ -393,7 +393,7 @@ class EventDetailScreen extends StatelessWidget {
       case 'c5':
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) =>FormScreen(imageUrl: event.imageUrl,
+          MaterialPageRoute(builder: (context) =>Fest(imageUrl: event.imageUrl,
           time: event.time,
           date: event.date,title: event.title,college_name:event.college_name, 
 

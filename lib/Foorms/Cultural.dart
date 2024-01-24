@@ -1,53 +1,25 @@
-import 'dart:convert';
-
-import 'package:campusbuzz/token.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:phonepe_payment_sdk/phonepe_payment_sdk.dart';
 
-
-
-class Fest extends ConsumerStatefulWidget {
-  final String imageUrl;
-  final String time;
-  final String date;
-  final String title;
-  final String college_name;
-  const Fest({super.key, required this.imageUrl, required this.time, required this.date, required this.title, required this.college_name});
+class Cultural extends StatefulWidget {
+  const Cultural({super.key});
 
   @override
-  ConsumerState<Fest> createState() => _FestState();
+  State<Cultural> createState() => _CulturalState();
 }
 
-class _FestState extends ConsumerState<Fest> {
+class _CulturalState extends State<Cultural> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-
-//PHONEPE
-  String environment ="SANDBOX";
-    String appId = "";
-    String merchantId= "PGTESTPAYUAT";
-    bool enableLogging= true;
-    String checksum ="";
-    String saltkey = "099eb0cd-02cf-4e2a-8aca-3e6c6aff0399";
-    String saltIndex="1";
-    String callbackUrl="https://webhook.site/d63eac9e-3533-4b6c-b361-b42443723f53";
-    String body = "";
-    Object? result;
-
-    String apiEndPoint="/pg/v1/pay";
-
-
-
-
-    
-  
-
-
-//PHONEPE
-
+  @override
+  var globalDrop1 = "";
+  var globalDrop2 = "";
+  List<String> participantNames = [];
+  int selectedIndex = 0;
+  String _College = '';
+  String _Name = '';
+  String _email = '';
+  String _Number = '';
+  String _Roll = '';
   List<String> items = [
     '1st Year',
     '2nd Year',
@@ -60,23 +32,17 @@ class _FestState extends ConsumerState<Fest> {
     'EEE',
     'CIVIL',
   ];
-  var amountt ;
   String dropdownValue = '1st Year';
   String dropdownValue1 = 'CSE';
 
-  TextEditingController newController = TextEditingController();
-   TextEditingController College = TextEditingController();
-   TextEditingController Name = TextEditingController();
-   TextEditingController mail = TextEditingController();
-
-  Widget _buildCollegeM() {
+  Widget _buildName() {
     return Column(children: [
       const Padding(
         padding: EdgeInsets.only(right: 24, bottom: 5),
         child: Row(
           children: [
             Text(
-              "College Name",
+              "Name",
               style: TextStyle(fontSize: 20),
             ),
             Text(
@@ -87,7 +53,6 @@ class _FestState extends ConsumerState<Fest> {
         ),
       ),
       TextFormField(
-        controller: College,
         decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
                 borderSide: const BorderSide(color: Colors.transparent),
@@ -108,18 +73,21 @@ class _FestState extends ConsumerState<Fest> {
 
           return null;
         },
+        onSaved: (String? value) {
+          _Name = value ?? '';
+        },
       )
     ]);
   }
 
-  Widget _buildName() {
+  Widget _buildRoll() {
     return Column(children: [
       const Padding(
         padding: EdgeInsets.only(right: 24, bottom: 5),
         child: Row(
           children: [
             Text(
-              "Name",
+              "Roll No",
               style: TextStyle(fontSize: 20),
             ),
             Text(
@@ -130,7 +98,51 @@ class _FestState extends ConsumerState<Fest> {
         ),
       ),
       TextFormField(
-        controller: Name,
+        decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.transparent),
+                borderRadius: BorderRadius.circular(5.5)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.transparent),
+                borderRadius: BorderRadius.circular(5.5)),
+            hintText: 'Enter Roll No',
+            hintStyle: const TextStyle(
+              color: Colors.grey,
+            ),
+            filled: true),
+        maxLength: null,
+        validator: (String? value) {
+          if (value!.isEmpty) {
+            return 'Requierd';
+          }
+
+          return null;
+        },
+        onSaved: (String? value) {
+          _Roll = value ?? '';
+        },
+      )
+    ]);
+  }
+
+  Widget _buildCollegeM() {
+    return Column(children: [
+      const Padding(
+        padding: EdgeInsets.only(right: 24, bottom: 5),
+        child: Row(
+          children: [
+            Text(
+              "College Name",
+              style: TextStyle(fontSize: 20),
+            ),
+            Text(
+              "*",
+              style: TextStyle(fontSize: 20, color: Colors.red),
+            ),
+          ],
+        ),
+      ),
+      TextFormField(
         decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
                 borderSide: const BorderSide(color: Colors.transparent),
@@ -150,6 +162,55 @@ class _FestState extends ConsumerState<Fest> {
           }
 
           return null;
+        },
+        onSaved: (String? value) {
+          _College = value ?? '';
+        },
+      )
+    ]);
+  }
+
+  Widget _buildMOBILENM() {
+    return Column(children: [
+      Padding(
+        padding: const EdgeInsets.only(right: 24, bottom: 5),
+        child: Row(
+          children: [
+            Text(
+              "Mobile No",
+              style: TextStyle(fontSize: 20),
+            ),
+            Text(
+              "*",
+              style: TextStyle(fontSize: 20, color: Colors.red),
+            ),
+          ],
+        ),
+      ),
+      TextFormField(
+        decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.transparent),
+                borderRadius: BorderRadius.circular(5.5)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.transparent),
+                borderRadius: BorderRadius.circular(5.5)),
+            hintText: 'Enter your Number',
+            hintStyle: TextStyle(
+              color: Colors.grey,
+            ),
+            filled: true),
+        keyboardType: TextInputType.phone,
+        maxLength: null,
+        validator: (String? value) {
+          if (value!.isEmpty) {
+            return 'Number is requierd';
+          }
+
+          return null;
+        },
+        onSaved: (String? value) {
+          _Number = value ?? '';
         },
       )
     ]);
@@ -173,7 +234,6 @@ class _FestState extends ConsumerState<Fest> {
         ),
       ),
       TextFormField(
-        controller: mail,
         decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent),
@@ -204,53 +264,9 @@ class _FestState extends ConsumerState<Fest> {
 
           return null;
         },
-      )
-    ]);
-  }
-
-  Widget _buildMOBILENM() {
-    return Column(children: [
-      Padding(
-        padding: const EdgeInsets.only(right: 24, bottom: 5),
-        child: Row(
-          children: [
-            Text(
-              "Mobile No",
-              style: TextStyle(fontSize: 20),
-            ),
-            Text(
-              "*",
-              style: TextStyle(fontSize: 20, color: Colors.red),
-            ),
-          ],
-        ),
-      ),
-      TextFormField(
-        controller: newController,
-        decoration: InputDecoration(
-            enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
-                borderRadius: BorderRadius.circular(5.5)),
-            focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
-                borderRadius: BorderRadius.circular(5.5)),
-            hintText: 'Enter your Number',
-            hintStyle: TextStyle(
-              color: Colors.grey,
-            ),
-            filled: true),
-        keyboardType: TextInputType.phone,
-        maxLength: null,
-        // validator: (String? value) {
-        //   if (value!.isEmpty) {
-        //     return 'Number is requierd';
-        //   }
-
-        //   return null;
-        // },
-        // onSaved: (String? value) {
-        //   _Number = value ?? '';
-        // },
+        onSaved: (String? value) {
+          _email = value ?? '';
+        },
       )
     ]);
   }
@@ -338,7 +354,8 @@ class _FestState extends ConsumerState<Fest> {
       ],
     );
   }
-   Widget _buildamount() {
+
+  Widget _builddropdownbox() {
     return Column(
       children: [
         const Row(
@@ -364,25 +381,64 @@ class _FestState extends ConsumerState<Fest> {
             //using snapshot
 
             var umeshDoc = snapshot.data!.docs
-                .firstWhere((doc) => doc.id == '6sVrYoG9WDgU2MpZSRwN');
-            int amount = umeshDoc['price'] ;
+                .firstWhere((doc) => doc.id == 'B4jzFfrKvIWpvomLK2tB');
+            var sportNames = umeshDoc['sportNames'] as List<dynamic>;
+            var entryFee = umeshDoc['entry fee'] as List<dynamic>;
+            var participants = umeshDoc['participantCounts'] as List<dynamic>;
+            int drop = participants[selectedIndex];
 
-            amountt= amount;
+            var drop1 = entryFee[selectedIndex];
+            var drop2 = sportNames[selectedIndex];
 
-            
-            
+            globalDrop1 = drop1;
+            globalDrop2 = drop2;
 
-      
+            print("--------------------------------------------------------");
 
-         
+            print(drop1);
 
             return Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(amountt.toString()),
-                
-                
+                //dropdownbox
+                Container(
+                  decoration: BoxDecoration(
+                    color: Color(0xffF0F0F0),
+                    borderRadius: BorderRadius.circular(5.5),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 12, right: 12),
+                    child: DropdownButton<int>(
+                      underline: SizedBox(),
+                      value: selectedIndex,
+                      hint: Text('Select a sport'),
+                      isExpanded: true,
+                      borderRadius: BorderRadius.circular(5.5),
+                      items: List.generate(sportNames.length, (index) {
+                        return DropdownMenuItem<int>(
+                          value: index,
+                          child: Text(sportNames[index].toString()),
+                        );
+                      }),
+                      onChanged: (int? index) {
+                        if (index != null) {
+                          setState(() {
+                            selectedIndex = index;
+                          });
+                        }
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                Text(
+                    'Entry Fee: ${entryFee.length > selectedIndex ? entryFee[selectedIndex] : ""}'),
+                SizedBox(height: 20),
+                Text(
+                    'Max Participants: ${participants.length > selectedIndex ? participants[selectedIndex] : ""}'),
+
+                _builddropdownbox1(drop),
               ],
             );
           },
@@ -390,150 +446,61 @@ class _FestState extends ConsumerState<Fest> {
       ],
     );
   }
-  getchecksum(){
-      final resquestData={
-  "merchantId": merchantId,
-  "merchantTransactionId": "transaction_123",
-  "merchantUserId": "90223250",
-  "amount": 1000,
-  "mobileNumber": "9999999999",
-  "callbackUrl": "https://webhook.site/callback-url",
-  "paymentInstrument": {
-    "type": "PAY_PAGE",
-    
-  },
- 
-};
 
-String base64Body=base64.encode(utf8.encode(json.encode(resquestData)));
+  Widget _builddropdownbox1(int participants) {
+    //  print(participants);
+    return Column(
+      children: [
+        SizedBox(height: 15),
+        _buildDynamicTextFields(participants),
+      ],
+    );
+  }
 
-checksum='${sha256.convert(utf8.encode(base64Body+apiEndPoint+saltkey)).toString()}###$saltIndex';
+  Widget _buildDynamicTextFields(int numberOfFields) {
+    List<Widget> textFields = [];
+    print("arrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+    print(numberOfFields);
 
-return base64Body;
-
-
+    for (int i = 0; i < numberOfFields; i++) {
+      textFields.add(
+        TextFormField(
+          // controller:data8 ,
+          controller: TextEditingController(),
+          decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.transparent),
+                borderRadius: BorderRadius.circular(5.5)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.transparent),
+                borderRadius: BorderRadius.circular(5.5)),
+            // hintText: 'Enter THE NAME',
+            hintStyle: const TextStyle(
+              color: Colors.grey,
+            ),
+            filled: true,
+            labelText: 'Participant ${i + 1} Name',
+            labelStyle: const TextStyle(
+              color: Color.fromARGB(
+                  255, 106, 105, 105), // Change this to your desired color
+              // Other text style properties can be added here
+            ),
+          ),
+          onSaved: (String? value) {
+            participantNames.add(value!);
+            // Handle the participant's name as needed
+          },
+        ),
+      );
+      textFields.add(SizedBox(height: 15));
     }
 
-
-
-  
-
-  @override
-  void initState() {
-    super.initState();
-    phonepeInit();
-
-    body=getchecksum().toString();
+    return Column(children: textFields);
   }
 
-   void phonepeInit() {
-
-
-    PhonePePaymentSdk.init(environment, appId, merchantId, enableLogging)
-        .then((val) => {
-              setState(() {
-                result = 'PhonePe SDK Initialized - $val';
-              })
-            })
-        .catchError((error) {
-      handleError(error);
-      return <dynamic>{};
-    });
-  }
-  void storeUserDataInFirestore() {
+  Widget build(BuildContext context) {
     CollectionReference eventsCollection =
         FirebaseFirestore.instance.collection('Test12');
-
-    eventsCollection.add({
-      'College Name': College.text.trim(),
-      'Name': Name.text.trim(),
-      'Mail Id':mail.text.trim() ,
-      'Mobile No': newController.text.trim(),
-      'Year': dropdownValue,
-      'Branch': dropdownValue1,
-      'amount': amountt,
-    });
-  }
-
-
-  void startpgtransaction()async{
-    // CollectionReference eventsCollection =
-    //     FirebaseFirestore.instance.collection('Test12');
-    
-        //  DocumentReference documentReference = eventsCollection.doc();
-    PhonePePaymentSdk.startTransaction(body, callbackUrl, checksum, "",).then((response) => {
-    setState(() {
-                   if (response != null) 
-                        {
-                           String status = response['status'].toString();
-                           String error = response['error'].toString();
-                           if (status == 'SUCCESS') 
-                           {
-                            result="Flow Completed - Status: Success!";
-                            storeUserDataInFirestore();
-                            Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => TokenDisplayScreen(event: Evvent(token: "token", imageUrl: widget.imageUrl, time: widget.time, date: widget.date, title: widget.title, leaderName: Name.text.trim(), college_name: widget.college_name, College_Name: "widget.College_Name", Name: "widget.Name", Mail_Id: "Mail_Id", Mobile_No: "Mobile_No", Year: "Year", Branch: "Branch", amount: 1),),
-            ),
-          );
-                            
-                             // "Flow Completed - Status: Success!";
-                        //       documentReference.set({
-                        // 'College Name': widget.event.college_name,
-                        // 'Name': widget.event.Name,
-                        // 'Mail Id': widget.event.Mail_Id,
-                        // 'Mobile No': widget.event.Mobile_No,
-                        // 'Year': widget.event.Year,
-                        // 'Branch': widget.event.Branch,
-                        // 'amount':widget.event.amount,
-                        // 'College Name': widget.event.College_Name,
-                        
-                      //   'Name': _Name,
-                      //   'Mail Id': _email,
-                      //   'Mobile No': _Number,
-                      //   'Year': dropdownValue,
-                      //   'Branch': dropdownValue1,
-                      //   'amount':amountt,
-                        
-                      // });
-                       
-                             
-
-                            
-                           } 
-                           else {
-                            result="Flow Completed - Status: $status and Error: $error";
-
-                            
-
-                       
-                            
-                          // "Flow Completed - Status: $status and Error: $error";
-                           }
-                        } 
-                   else {
-                    result="flow incomplete";
-                          // "Flow Incomplete";
-                        }
-                })
-  }).catchError((error) {
-  // handleError(error)
-  storeUserDataInFirestore();
-  return <dynamic>{};
-  });
-  }
-  
-  void handleError(error) {
-    setState(() {
-      result={"error": error};
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    //  CollectionReference eventsCollection =
-    //     FirebaseFirestore.instance.collection('Test12');
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -556,73 +523,53 @@ return base64Body;
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
+                const SizedBox(height: 15),
                 _buildName(),
                 const SizedBox(height: 10),
-                _buildCollegeM(),
+                _buildMOBILENM(),
                 const SizedBox(
                   height: 15,
                 ),
                 _buildMailID(),
                 const SizedBox(height: 15),
-                _buildMOBILENM(),
+                _buildCollegeM(),
+                const SizedBox(height: 15),
+                _buildRoll(),
                 const SizedBox(height: 15),
                 _builddropdown1(),
                 const SizedBox(height: 15),
                 _builddropdown2(),
                 const SizedBox(height: 15),
-                _buildamount(),
-                // const SizedBox(height: 15),
-                // _builddropdown2(),
+                _builddropdownbox(),
                 const SizedBox(height: 50),
                 Padding(
-                  padding:  EdgeInsets.symmetric(horizontal: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: MaterialButton(
                     color: const Color(0xff112031),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15)),
                     onPressed: () async {
-                      startpgtransaction();
-                      // if (!_formKey.currentState!.validate()) {
-                      //   return;
-                      // }
+                      if (!_formKey.currentState!.validate()) {
+                        return;
+                      }
 
-                      
+                      _formKey.currentState?.save();
+                      await eventsCollection.add({
+                        'College Name': _College,
+                        'Name': _Name,
+                        'Mail Id': _email,
+                        'Mobile No': _Number,
+                        'Year': dropdownValue,
+                        'Branch': dropdownValue1,
+                        'Roll No': _Roll,
+                        'subevents': globalDrop1,
+                        'entryfee': globalDrop2,
+                        "team members": participantNames,
+                      });
 
-                      // _formKey.currentState?.save();
-                      // await eventsCollection.add({
-                      //   'College Name': _College,
-                      //   'Name': _Name,
-                      //   'Mail Id': _email,
-                      //   'Mobile No': _Number,
-                      //   'Year': dropdownValue,
-                      //   'Branch': dropdownValue1,
-                      //   'amount':amountt,
-                        
-                      // });
+                      _formKey.currentState?.reset();
 
-
-                      // Evvent newEvent = Evvent(
-                      //     // token: "uniqueToken",
-                      //      imageUrl: widget.imageUrl,
-                      //      time: widget.time,
-                      //      date: widget.date,
-                      //      title: widget.title,
-                      //      leaderName: "_Leader",
-                      //      college_name: widget.college_name,
-                      //     College_Name: _College,
-                      //   Name: _Name,
-                      //   Mail_Id: _email,
-                      //   Mobile_No: _Number,
-                      //   Year: dropdownValue,
-                      //   Branch: dropdownValue1,
-                      //   amount:amountt, 
-                      //   token: '1234',
-                      //   );
-                      //   ref.read(eventListProvider.notifier).addEvent(newEvent);
-
-                      
-
-                      // Navigator.push(context, MaterialPageRoute(builder: (context) => startpgtransaction() ,));
+                      participantNames.clear();
                     },
                     child: const Padding(
                       padding: EdgeInsets.all(13),
@@ -636,7 +583,6 @@ return base64Body;
                                 fontSize: 15,
                                 color: Colors.white),
                           ),
-                          
                         ],
                       ),
                     ),
@@ -650,20 +596,3 @@ return base64Body;
     );
   }
 }
-
-
-
-//testing phomepe
-
-class MyWidget extends StatelessWidget {
-  const MyWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: Text("data"),),
-    );
-  }
-}
-
-

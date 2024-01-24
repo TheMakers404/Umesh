@@ -35,6 +35,14 @@ import 'package:syncfusion_flutter_pdf/pdf.dart';
 
 //your events screen ticket
 class Evvent {
+  final String College_Name;
+  final String Name;
+  final String Mail_Id;
+  final String Mobile_No;
+  final String Year;
+  final String Branch;
+  final int amount;
+
   final String token;
   final String imageUrl;
   final String time;
@@ -43,14 +51,18 @@ class Evvent {
   final String leaderName;
   final String college_name;
 
-  Evvent({
+  
+
+  Evvent(  {
     required this.token,
     required this.imageUrl,
     required this.time,
     required this.date,
     required this.title,
     required this.leaderName,
-    required this.college_name,
+    required this.college_name, 
+    required this.College_Name,required this.Name, 
+    required this.Mail_Id, required this.Mobile_No, required this.Year, required this.Branch, required this.amount,
   });
 }
 
@@ -125,7 +137,7 @@ class _TokenDisplayScreenState extends State<TokenDisplayScreen> {
                               horizontal: 10, vertical: 10),
                           child: ClipRRect(
                               borderRadius: BorderRadius.circular(15),
-                              child: Image.asset(
+                              child: Image.network(
                                 widget.event.imageUrl,
                                 height: 200,
                               )),
