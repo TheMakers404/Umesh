@@ -75,13 +75,13 @@ return base64Body;
   Widget build(BuildContext context) {
     
     return Scaffold(
-      appBar: AppBar(title: Text("Payment"),),
+      appBar: AppBar(title: const Text("Payment"),),
       body: Column(
         children: [
           ElevatedButton(onPressed: (){
             startpgtransaction();
-          }, child: Text("Pay Now")),
-          SizedBox(height: 10,),
+          }, child: const Text("Pay Now")),
+          const SizedBox(height: 10,),
           Text("result \n $result"),
           Text(widget.amount.toString()),
         ],

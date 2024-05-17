@@ -83,7 +83,7 @@ class _TabsScreen extends State<TabsScreen> {
         title: 'Favorites',
         
       ),
-      Profile(),
+      const Profile(),
     ];
     return Scaffold(
         body: PageView(
@@ -100,7 +100,7 @@ class _TabsScreen extends State<TabsScreen> {
           color: Colors.black.withOpacity(0.3), // Shadow color
           spreadRadius: 1, // Spread radius
           blurRadius: 13, // Blur radius
-          offset: Offset(0, 0), // Offset in the x and y directions
+          offset: const Offset(0, 0), // Offset in the x and y directions
         ),
       ],
             ),
@@ -115,11 +115,11 @@ class _TabsScreen extends State<TabsScreen> {
               BottomNavigationBarItem(
                 
                 icon: _selectedPageIndex == 0
-            ? Icon(
+            ? const Icon(
                 Icons.home,
                 size: 35,
               )
-            : Icon(
+            : const Icon(
                 Icons.home_outlined,
                 size: 35,
               ),
@@ -139,11 +139,11 @@ class _TabsScreen extends State<TabsScreen> {
               ),
               BottomNavigationBarItem(
                 icon: _selectedPageIndex == 2
-            ? Icon(
+            ? const Icon(
                 Icons.favorite,
                 size: 35,
               )
-            : Icon(
+            : const Icon(
                 Icons.favorite_border_rounded,
                 size: 35,
               ),
@@ -151,11 +151,11 @@ class _TabsScreen extends State<TabsScreen> {
               ),
               BottomNavigationBarItem(
                 icon: _selectedPageIndex == 3
-            ? Icon(
+            ? const Icon(
                 Icons.person,
                 size: 35,
               )
-            : Icon(
+            : const Icon(
                 Icons.person_outline,
                 size: 35,
               ),

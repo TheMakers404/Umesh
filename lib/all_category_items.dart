@@ -78,7 +78,7 @@ class AllCategoryItems extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
+                            SizedBox(
                               width: 370,
                               height: 200,
                               child: Stack(

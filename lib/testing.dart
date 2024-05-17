@@ -16,7 +16,7 @@ class _MyFormState extends State<MyForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dynamic TextFormFields Example'),
+        title: const Text('Dynamic TextFormFields Example'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -43,7 +43,7 @@ class _MyFormState extends State<MyForm> {
                     ),
                 ],
               ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             // Display the values in the list
             Text('Values: $textFieldsValues'),
           ],

@@ -1,30 +1,16 @@
 
+import 'dart:async';
 import 'dart:developer';
-import 'package:campusbuzz/event_detail_screen.dart';
-import 'package:campusbuzz/homescreen.dart';
+
 import 'package:campusbuzz/nav.dart';
 import 'package:campusbuzz/retrieveError.dart';
 import 'package:campusbuzz/shimmer.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'event_list.dart';
-import 'createaccount.dart';
-import 'welcomeback.dart';
-import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'firebase_options.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
-// import 'event_list.dart';
-import 'NoConnectionScreen.dart';
-import 'dart:async';
-import 'main.dart';
-import 'package:campusbuzz/FavProv.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'FavProv.dart';
-import 'FavProv.dart'; 
-import 'package:riverpod/riverpod.dart';
-import 'package:campusbuzz/FavProv.dart';
+
+import 'event_list.dart';
 
 
 // void main() async {
@@ -88,7 +74,7 @@ log("---------------------------------------------------------------------------
         else if (snapshot.connectionState == ConnectionState.done) {
           log("Inside the final task");
           // **** Redirect to TabsScreen here **** 
-        final tabsScreen = Directionality(
+        final tabsScreen = const Directionality(
               textDirection: TextDirection.ltr, // or TextDirection.rtl as needed
               child: TabsScreen(),
             );

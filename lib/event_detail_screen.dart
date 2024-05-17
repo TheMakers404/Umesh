@@ -1,12 +1,12 @@
-
-
 //   bool isLiked(String eventId) {
 //     return _likedEventIds.contains(eventId);
 //   }
 // }
 
 import 'package:campusbuzz/FavProv.dart';
-import 'package:campusbuzz/Foorms/Foorm.dart';
+import 'package:campusbuzz/Foorms/Cultural.dart';
+import 'package:campusbuzz/Foorms/Sport.dart';
+import 'package:campusbuzz/Foorms/Techfest.dart';
 import 'package:campusbuzz/Foorms/fest.dart';
 import 'package:campusbuzz/Foorms/hackform.dart';
 import 'package:campusbuzz/model/event.dart';
@@ -17,9 +17,7 @@ import 'package:readmore/readmore.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 _launchurl(Event event) async {
-
-  var url = Uri.parse(event.location
-       );
+  var url = Uri.parse(event.location);
 
   if (!await canLaunchUrl(url)) {
     await launchUrl(url);
@@ -27,7 +25,6 @@ _launchurl(Event event) async {
     throw 'Cannot launch URL';
   }
 }
-
 
 class EventDetailScreen extends StatelessWidget {
   const EventDetailScreen({
@@ -41,6 +38,7 @@ class EventDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final likedEventsProvider = Provider.of<LikedEventsProvider>(context);
 
     // final provider= Provider.of<Favoriteprovider>(context);
     // final favoriteEvents = ref.watch(favoriteEventsProvider);
@@ -48,7 +46,7 @@ class EventDetailScreen extends StatelessWidget {
     // final isFavorite = favoriteEvents.contains(event);
     print("detailpage build");
     return Scaffold(
-      backgroundColor: Color(0xffF5F5F5),
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -65,7 +63,6 @@ class EventDetailScreen extends StatelessWidget {
                             bottomRight: Radius.circular(15)),
                         child: Hero(
                             tag: 'eventImage_${event.id}',
-                            
                             child: Image.network(
                               event.imageUrl,
                               width: double.infinity,
@@ -108,7 +105,9 @@ class EventDetailScreen extends StatelessWidget {
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(50)),
                                 child: InkWell(
-                                  onTap: () {
+                                  onTap: () async{
+                                     likedEventsProvider.toggleLikedEvent(event.id);
+              await likedEventsProvider.updateFirestore('2wLYIC4i8kMa0RSHSOrh');
 
                                     // provider.togglefav(event);
                                     // Add your onPressed function here
@@ -128,16 +127,16 @@ class EventDetailScreen extends StatelessWidget {
                                     // widget.onToggleFavorite(event);
                                   },
                                   child: Padding(
-                                    padding: EdgeInsets.all(5.0),
+                                    padding: const EdgeInsets.all(5.0),
                                     child: Icon(
-                                      // provider.isExist(event)?
-                                      Icons.favorite
-                                      // :Icons.favorite_border_outlined,color: Colors.red,
-                                      )
+                                      likedEventsProvider.likedEvents
+                                              .contains(event.id)
+                                          ? Icons.favorite
+                                          : Icons.favorite_border,
+                                    ),
                                   ),
                                 ),
                               ),
-                            
                             ),
                           ),
                         )
@@ -149,23 +148,23 @@ class EventDetailScreen extends StatelessWidget {
 
               //title
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15),
+                padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Text(
                   event.title,
-                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.w500),
+                  style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w500),
                 ),
               ),
 
               //about title
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
 
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15),
+                padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Text(
                   event.about_event_title,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
                 ),
               ),
 
@@ -195,9 +194,7 @@ class EventDetailScreen extends StatelessWidget {
                 ),
               ),
 
-              
-              
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
 
@@ -231,16 +228,16 @@ class EventDetailScreen extends StatelessWidget {
                                       children: [
                                         Text(
                                           event.date,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 15,
                                               fontWeight: FontWeight.w500),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 1.5,
                                         ),
                                         Text(
                                           event.time,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 13,
                                               fontWeight: FontWeight.w500,
                                               color: Color(0xff8D8D8D)),
@@ -263,10 +260,10 @@ class EventDetailScreen extends StatelessWidget {
                       const SizedBox(
                         height: 7,
                       ),
-                      Divider(
+                      const Divider(
                         thickness: 1,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 7,
                       ),
 
@@ -317,8 +314,8 @@ class EventDetailScreen extends StatelessWidget {
                                     )
                                   ],
                                 ),
-                                InkWell(
-                                  child: const Padding(
+                                const InkWell(
+                                  child: Padding(
                                     padding: EdgeInsets.only(left: 0),
                                     child: Icon(Icons.arrow_forward_ios),
                                   ),
@@ -340,70 +337,100 @@ class EventDetailScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: MaterialButton(
-                  color: Color(0xff112031),
+                  color: const Color(0xff112031),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15)),
                   onPressed: () {
                     // Navigator.push(context,
                     //     MaterialPageRoute(builder: (context) =>FormScreen ()));
                     switch (event.categories) {
-      case 'c1':
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => Fest(
-            imageUrl: event.imageUrl,
-          time: event.time,
-          date: event.date,
-          title: event.title,college_name:event.college_name, 
-          
-
-          )),
-        );
-        break;
-      case 'c2':
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => Fest(
-          imageUrl: event.imageUrl,
-          time: event.time,
-          date: event.date,
-          title: event.title,college_name:event.college_name, 
-
-          )),
-        );
-        break;
-      case 'c3':
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => FormScreen1(
-
-          )),
-        );
-        break;
-      case 'c4':
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => Fest(imageUrl: event.imageUrl,
-          time: event.time,
-          date: event.date,title: event.title,college_name:event.college_name, 
-
-          )),
-        );
-        break;
-      case 'c5':
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) =>Fest(imageUrl: event.imageUrl,
-          time: event.time,
-          date: event.date,title: event.title,college_name:event.college_name, 
-
-          )),
-        );
-        break;
-      default:
-        
-        break;
-    }
+                      case 'c1':
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Fest(
+                                    imageUrl: event.imageUrl,
+                                    time: event.time,
+                                    date: event.date,
+                                    title: event.title,
+                                    college_name: event.college_name,
+                                    id:event.id,
+                                  )),
+                        );
+                        break;
+                      case 'c2':
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Sport(
+                                id:event.id,
+                                imageUrl: event.imageUrl,
+                                    time: event.time,
+                                    date: event.date,
+                                    title: event.title,
+                                    college_name: event.college_name,
+                                
+                                    
+                                  )),
+                        );
+                        break;
+                      case 'c3':
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Cultural(
+                                id:event.id,
+                                imageUrl: event.imageUrl,
+                                    time: event.time,
+                                    date: event.date,
+                                    title: event.title,
+                                    college_name: event.college_name,
+                              )),
+                        );
+                        break;
+                      case 'c4':
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => TechFest(
+                                    imageUrl: event.imageUrl,
+                                    time: event.time,
+                                    date: event.date,
+                                    title: event.title,
+                                    college_name: event.college_name, id: event.id,
+                                  )),
+                        );
+                        break;
+                      case 'c5':
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => TechFest(
+                                    imageUrl: event.imageUrl,
+                                    time: event.time,
+                                    date: event.date,
+                                    title: event.title,
+                                    college_name: event.college_name,id: event.id,
+                                  )),
+                        );
+                        break;
+                        case 'c6':
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => FormScreen1(
+                                imageUrl: event.imageUrl,
+                                    time: event.time,
+                                    date: event.date,
+                                    title: event.title,
+                                    college_name: event.college_name,id: event.id,
+                                    
+                                  )),
+                        );
+                        break;
+                      default:
+                        break;
+                    }
                   },
                   child: const Padding(
                     padding: EdgeInsets.all(13),

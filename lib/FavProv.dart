@@ -119,3 +119,34 @@
 //   }
 
 // }
+
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+
+class LikedEventsProvider extends ChangeNotifier {
+  List<String> _likedEvents = [];
+
+  List<String> get likedEvents => _likedEvents;
+
+  void toggleLikedEvent(String eventId) {
+    if (_likedEvents.contains(eventId)) {
+      _likedEvents.remove(eventId);
+    } else {
+      _likedEvents.add(eventId);
+    }
+    notifyListeners();
+  }
+
+  Future<void> updateFirestore(String userId) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('User')
+          .doc("2wLYIC4i8kMa0RSHSOrh")
+          .update({'fav_list': _likedEvents});
+    } catch (error) {
+      print('Error updating Firestore: $error');
+    }
+  }
+}
+

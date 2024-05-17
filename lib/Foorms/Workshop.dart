@@ -171,8 +171,8 @@ class _WorkshopState extends State<Workshop> {
 
   Widget _buildMOBILENM() {
     return Column(children: [
-      Padding(
-        padding: const EdgeInsets.only(right: 24, bottom: 5),
+      const Padding(
+        padding: EdgeInsets.only(right: 24, bottom: 5),
         child: Row(
           children: [
             Text(
@@ -189,13 +189,13 @@ class _WorkshopState extends State<Workshop> {
       TextFormField(
         decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
+                borderSide: const BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(5.5)),
             focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
+                borderSide: const BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(5.5)),
             hintText: 'Enter your Number',
-            hintStyle: TextStyle(
+            hintStyle: const TextStyle(
               color: Colors.grey,
             ),
             filled: true),
@@ -217,8 +217,8 @@ class _WorkshopState extends State<Workshop> {
 
   Widget _buildMailID() {
     return Column(children: [
-      Padding(
-        padding: const EdgeInsets.only(right: 27, bottom: 5),
+      const Padding(
+        padding: EdgeInsets.only(right: 27, bottom: 5),
         child: Row(
           children: [
             Text(
@@ -235,13 +235,13 @@ class _WorkshopState extends State<Workshop> {
       TextFormField(
         decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
+                borderSide: const BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(5.5)),
             focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
+                borderSide: const BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(5.5)),
             hintText: 'Enter Mail Id',
-            hintStyle: TextStyle(
+            hintStyle: const TextStyle(
               color: Colors.grey,
             ),
             filled: true),
@@ -287,12 +287,12 @@ class _WorkshopState extends State<Workshop> {
         ),
         Container(
           decoration: BoxDecoration(
-              color: Color(0xffF0F0F0),
+              color: const Color(0xffF0F0F0),
               borderRadius: BorderRadius.circular(5.5)),
           child: Padding(
             padding: const EdgeInsets.only(left: 12, right: 12),
             child: DropdownButton<String>(
-              underline: SizedBox(),
+              underline: const SizedBox(),
               value: dropdownValue,
               isExpanded: true,
               borderRadius: BorderRadius.circular(5.5),
@@ -329,12 +329,12 @@ class _WorkshopState extends State<Workshop> {
         ),
         Container(
           decoration: BoxDecoration(
-              color: Color(0xffF0F0F0),
+              color: const Color(0xffF0F0F0),
               borderRadius: BorderRadius.circular(5.5)),
           child: Padding(
             padding: const EdgeInsets.only(left: 12, right: 12),
             child: DropdownButton<String>(
-              underline: SizedBox(),
+              underline: const SizedBox(),
               value: dropdownValue1,
               isExpanded: true,
               borderRadius: BorderRadius.circular(5.5),

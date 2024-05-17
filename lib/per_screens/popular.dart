@@ -1,15 +1,11 @@
-import 'package:campusbuzz/FavProv.dart';
 import 'package:campusbuzz/model/event.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'package:provider/provider.dart';
 
 class EventItemm2 extends StatelessWidget {
   final Event event;
   final void Function(Event event) onselectevent;
 
-  EventItemm2({required this.event, required this.onselectevent});
+  const EventItemm2({super.key, required this.event, required this.onselectevent});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +23,7 @@ class EventItemm2 extends StatelessWidget {
                         color: Colors.grey.withOpacity(0.5),
                         spreadRadius: -4,
                         blurRadius: 11,
-                        offset: Offset(0, 10), // changes position of shadow
+                        offset: const Offset(0, 10), // changes position of shadow
                       ),
                     ],
         //border: Border.all(color: Colors.black, width: 0.1),
@@ -50,7 +46,7 @@ class EventItemm2 extends StatelessWidget {
                     child: Stack(
                       children: [
                         ClipRRect(
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                               topLeft: Radius.circular(12),
                               topRight: Radius.circular(12)),
                           child: Hero(
@@ -78,7 +74,7 @@ class EventItemm2 extends StatelessWidget {
                         color: Colors.grey.withOpacity(0.5),
                         spreadRadius: -4,
                         blurRadius: 11,
-                        offset: Offset(0, 0), // changes position of shadow
+                        offset: const Offset(0, 0), // changes position of shadow
                       ),
                     ],
                                       borderRadius: BorderRadius.circular(50)),
@@ -105,7 +101,7 @@ class EventItemm2 extends StatelessWidget {
 
                                       // widget.onToggleFavorite(event);
                                     },
-                                    child: Padding(
+                                    child: const Padding(
                                         padding: EdgeInsets.all(5.0),
                                         child: Icon(
                                         
@@ -133,41 +129,41 @@ class EventItemm2 extends StatelessWidget {
                     child: Column(
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(right: 50, left: 5),
+                          padding: const EdgeInsets.only(right: 50, left: 5),
                           child: Text(
                             event.title,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.w600),
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: 6, left: 3),
+                          padding: const EdgeInsets.only(top: 6, left: 3),
                           child: SizedBox(
                             child: Row(
                               children: [
-                                Icon(
+                                const Icon(
                                   Icons.calendar_today_outlined,
                                   size: 15,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 4,
                                 ),
                                 Text(
                                   event.date,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 13,
                                       fontWeight: FontWeight.w300),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 28,
                                 ),
-                                Icon(
+                                const Icon(
                                   Icons.watch_later_outlined,
                                   size: 15,
                                 ),
                                 Text(
                                   event.time,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 13,
                                       fontWeight: FontWeight.w300),
                                 ),

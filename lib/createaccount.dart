@@ -131,7 +131,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
           log("Reading data of: $google_user_firebase_id");
           // runApp(MaterialApp(home: retrieve()));
           Navigator.pushReplacement(
-              context, CupertinoPageRoute(builder: (context) => retrieve()));
+              context, CupertinoPageRoute(builder: (context) => const retrieve()));
 
         
         }
@@ -161,7 +161,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
         }
           //navigation
           Navigator.pushReplacement(
-              context, CupertinoPageRoute(builder: (context) => retrieve()));
+              context, CupertinoPageRoute(builder: (context) => const retrieve()));
       }
   }  } catch (e) {
       log("Google-Auth Error: ${e}");
@@ -241,7 +241,7 @@ Future<void> write_new_user() async {
         // btnCancelOnPress: () {},
         btnOkOnPress: () {
           Navigator.pushReplacement(context,
-              CupertinoPageRoute(builder: (context) => WelcomeBackScreen()));
+              CupertinoPageRoute(builder: (context) => const WelcomeBackScreen()));
         },
       )..show();
     } else {
@@ -277,7 +277,7 @@ Future<void> write_new_user() async {
           btnCancelOnPress: () {},
           btnOkOnPress: () {
             Navigator.pushReplacement(context,
-              CupertinoPageRoute(builder: (context) => WelcomeBackScreen()));
+              CupertinoPageRoute(builder: (context) => const WelcomeBackScreen()));
           },
         )..show();
 
@@ -395,7 +395,7 @@ Future<void> write_new_user() async {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => TabsScreen(),//preview homepage
+                    builder: (context) => const TabsScreen(),//preview homepage
                   ),
                 );
               },

@@ -1,16 +1,26 @@
 import 'dart:developer';
+import 'dart:io';
+
+import 'package:campusbuzz/token.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
 // import 'package:flutter_document_picker/flutter_document_picker.dart';
 import 'package:file_picker/file_picker.dart';
-import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
-
 class FormScreen1 extends StatefulWidget {
   const FormScreen1({
-    super.key,
+    super.key, required this.imageUrl, required this.time, required this.date, required this.title, required this.college_name, required this.id,
   });
+
+  final String imageUrl;
+  final String time;
+  final String date;
+  final String title;
+  final String college_name;
+
+  final String id;
+
 
   @override
   State<StatefulWidget> createState() {
@@ -67,6 +77,13 @@ class FormScreenState extends State<FormScreen1> {
       // Replace this with your Firestore code
       await FirebaseFirestore.instance.collection("Test12").add(formData);
       _formKey.currentState?.reset();
+
+      Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => TokenDisplayScreen(event: Evvent(token: "token", imageUrl: widget.imageUrl, time: widget.time, date: widget.date, title: widget.title, leaderName:_Leader, college_name: widget.college_name, College_Name: "widget.College_Name", Name: "widget.Name", Mail_Id: "Mail_Id", Mobile_No: "Mobile_No", Year: "Year", Branch: "Branch", amount: 1),),
+            ),
+          );
 
       // For now, log the data
       log("Form Data: $formData");
@@ -138,13 +155,13 @@ class FormScreenState extends State<FormScreen1> {
       TextFormField(
         decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
+                borderSide: const BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(5.5)),
             focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
+                borderSide: const BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(5.5)),
             hintText: 'Enter your Name',
-            hintStyle: TextStyle(
+            hintStyle: const TextStyle(
               color: Colors.grey,
             ),
             filled: true),
@@ -165,8 +182,8 @@ class FormScreenState extends State<FormScreen1> {
 
   Widget _buildEmail() {
     return Column(children: [
-      Padding(
-        padding: const EdgeInsets.only(right: 27, bottom: 5),
+      const Padding(
+        padding: EdgeInsets.only(right: 27, bottom: 5),
         child: Row(
           children: [
             Text(
@@ -183,13 +200,13 @@ class FormScreenState extends State<FormScreen1> {
       TextFormField(
         decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
+                borderSide: const BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(5.5)),
             focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
+                borderSide: const BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(5.5)),
             hintText: 'Enter Mail Id',
-            hintStyle: TextStyle(
+            hintStyle: const TextStyle(
               color: Colors.grey,
             ),
             filled: true),
@@ -220,8 +237,8 @@ class FormScreenState extends State<FormScreen1> {
 
   Widget _buildLeader() {
     return Column(children: [
-      Padding(
-        padding: const EdgeInsets.only(right: 22, bottom: 5),
+      const Padding(
+        padding: EdgeInsets.only(right: 22, bottom: 5),
         child: Row(
           children: [
             Text(
@@ -238,13 +255,13 @@ class FormScreenState extends State<FormScreen1> {
       TextFormField(
         decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
+                borderSide: const BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(5.5)),
             focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
+                borderSide: const BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(5.5)),
             hintText: 'Enter your Name',
-            hintStyle: TextStyle(
+            hintStyle: const TextStyle(
               color: Colors.grey,
             ),
             filled: true),
@@ -265,8 +282,8 @@ class FormScreenState extends State<FormScreen1> {
 
   Widget _buildCLGNAME() {
     return Column(children: [
-      Padding(
-        padding: const EdgeInsets.only(right: 21, bottom: 5),
+      const Padding(
+        padding: EdgeInsets.only(right: 21, bottom: 5),
         child: Row(
           children: [
             Text(
@@ -283,13 +300,13 @@ class FormScreenState extends State<FormScreen1> {
       TextFormField(
         decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
+                borderSide: const BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(5.5)),
             focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
+                borderSide: const BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(5.5)),
             hintText: 'Enter Collage Name',
-            hintStyle: TextStyle(
+            hintStyle: const TextStyle(
               color: Colors.grey,
             ),
             filled: true),
@@ -310,8 +327,8 @@ class FormScreenState extends State<FormScreen1> {
 
   Widget _buildPhoneNumber() {
     return Column(children: [
-      Padding(
-        padding: const EdgeInsets.only(right: 24, bottom: 5),
+      const Padding(
+        padding: EdgeInsets.only(right: 24, bottom: 5),
         child: Row(
           children: [
             Text(
@@ -328,13 +345,13 @@ class FormScreenState extends State<FormScreen1> {
       TextFormField(
         decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
+                borderSide: const BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(5.5)),
             focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
+                borderSide: const BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(5.5)),
             hintText: 'Enter your Number',
-            hintStyle: TextStyle(
+            hintStyle: const TextStyle(
               color: Colors.grey,
             ),
             filled: true),
@@ -356,8 +373,8 @@ class FormScreenState extends State<FormScreen1> {
 
   Widget _buiLdAboutAbstract() {
     return Column(children: [
-      Padding(
-        padding: const EdgeInsets.only(right: 20, bottom: 5),
+      const Padding(
+        padding: EdgeInsets.only(right: 20, bottom: 5),
         child: Row(
           children: [
             Text(
@@ -374,13 +391,13 @@ class FormScreenState extends State<FormScreen1> {
       TextFormField(
         decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
+                borderSide: const BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(5.5)),
             focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
+                borderSide: const BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(5.5)),
             hintText: '       brief description...............    ',
-            hintStyle: TextStyle(
+            hintStyle: const TextStyle(
               color: Colors.grey,
             ),
             filled: true),
@@ -417,12 +434,12 @@ class FormScreenState extends State<FormScreen1> {
         ),
         Container(
           decoration: BoxDecoration(
-              color: Color(0xffF0F0F0),
+              color: const Color(0xffF0F0F0),
               borderRadius: BorderRadius.circular(5.5)),
           child: Padding(
             padding: const EdgeInsets.only(left: 12, right: 12),
             child: DropdownButton<String>(
-              underline: SizedBox(),
+              underline: const SizedBox(),
               value: dropdownValue,
               isExpanded: true,
               borderRadius: BorderRadius.circular(5.5),
@@ -457,7 +474,7 @@ class FormScreenState extends State<FormScreen1> {
             ),
           ],
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         selectedFileName != 'NOFileSelected'
             ? Stack(children: [
                 InkWell(
@@ -485,7 +502,7 @@ class FormScreenState extends State<FormScreen1> {
                             selectedFileName.length > 20
                                 ? '${selectedFileName.substring(0, 20)}...'
                                 : selectedFileName,
-                            style: TextStyle(fontSize: 20),
+                            style: const TextStyle(fontSize: 20),
                             overflow: TextOverflow.ellipsis,
                           ),
                         ],
@@ -500,9 +517,9 @@ class FormScreenState extends State<FormScreen1> {
                       fileData = null;
                     });
                   },
-                  child: Align(
+                  child: const Align(
                     alignment: Alignment.topRight,
-                    child: const Icon(
+                    child: Icon(
                       Icons.clear,
                       color: Colors.red,
                     ),
@@ -516,11 +533,11 @@ class FormScreenState extends State<FormScreen1> {
                     color: const Color(0xffF0F0F0),
                     borderRadius: BorderRadius.circular(5.5),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
+                  child: const Padding(
+                    padding: EdgeInsets.all(10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Icon(Icons.add),
                         SizedBox(width: 5),
                         Text("Add File"),
@@ -537,7 +554,7 @@ class FormScreenState extends State<FormScreen1> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Form Demo",
           style: TextStyle(
               color: Colors.black, fontSize: 25, fontWeight: FontWeight.w500),
@@ -550,32 +567,32 @@ class FormScreenState extends State<FormScreen1> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          margin: EdgeInsets.all(24),
+          margin: const EdgeInsets.all(24),
           child: Form(
             key: _formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 _buildName(),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 _buildEmail(),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 _buildPhoneNumber(),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 _buildCLGNAME(),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 _buildLeader(),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 _buiLdAboutAbstract(),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 _builddropdownbox(),
-                SizedBox(height: 51),
+                const SizedBox(height: 51),
                 _buildAddFiles(),
-                SizedBox(height: 50),
+                const SizedBox(height: 50),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: MaterialButton(
-                    color: Color(0xff112031),
+                    color: const Color(0xff112031),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15)),
                     onPressed: _submitForm,
@@ -615,7 +632,7 @@ class PdfViewer extends StatelessWidget {
     log("PDF Viewer File Path: $filePath");
     return Scaffold(
       appBar: AppBar(
-        title: Text("PDF Viewer"),
+        title: const Text("PDF Viewer"),
       ),
       body: PDFView(
         filePath: filePath,

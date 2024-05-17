@@ -2,7 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class TechFest extends StatefulWidget {
-  const TechFest({super.key});
+  const TechFest({super.key, required this.imageUrl, required this.time, required this.date, required this.title, required this.college_name, required this.id});
+    final String imageUrl;
+  final String time;
+  final String date;
+  final String title;
+  final String college_name;
+
+  final String id;
 
   @override
   State<TechFest> createState() => _TechFestState();
@@ -172,8 +179,8 @@ class _TechFestState extends State<TechFest> {
 
   Widget _buildMOBILENM() {
     return Column(children: [
-      Padding(
-        padding: const EdgeInsets.only(right: 24, bottom: 5),
+      const Padding(
+        padding: EdgeInsets.only(right: 24, bottom: 5),
         child: Row(
           children: [
             Text(
@@ -190,13 +197,13 @@ class _TechFestState extends State<TechFest> {
       TextFormField(
         decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
+                borderSide: const BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(5.5)),
             focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
+                borderSide: const BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(5.5)),
             hintText: 'Enter your Number',
-            hintStyle: TextStyle(
+            hintStyle: const TextStyle(
               color: Colors.grey,
             ),
             filled: true),
@@ -218,8 +225,8 @@ class _TechFestState extends State<TechFest> {
 
   Widget _buildMailID() {
     return Column(children: [
-      Padding(
-        padding: const EdgeInsets.only(right: 27, bottom: 5),
+      const Padding(
+        padding: EdgeInsets.only(right: 27, bottom: 5),
         child: Row(
           children: [
             Text(
@@ -236,13 +243,13 @@ class _TechFestState extends State<TechFest> {
       TextFormField(
         decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
+                borderSide: const BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(5.5)),
             focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
+                borderSide: const BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(5.5)),
             hintText: 'Enter Mail Id',
-            hintStyle: TextStyle(
+            hintStyle: const TextStyle(
               color: Colors.grey,
             ),
             filled: true),
@@ -288,12 +295,12 @@ class _TechFestState extends State<TechFest> {
         ),
         Container(
           decoration: BoxDecoration(
-              color: Color(0xffF0F0F0),
+              color: const Color(0xffF0F0F0),
               borderRadius: BorderRadius.circular(5.5)),
           child: Padding(
             padding: const EdgeInsets.only(left: 12, right: 12),
             child: DropdownButton<String>(
-              underline: SizedBox(),
+              underline: const SizedBox(),
               value: dropdownValue,
               isExpanded: true,
               borderRadius: BorderRadius.circular(5.5),
@@ -330,12 +337,12 @@ class _TechFestState extends State<TechFest> {
         ),
         Container(
           decoration: BoxDecoration(
-              color: Color(0xffF0F0F0),
+              color: const Color(0xffF0F0F0),
               borderRadius: BorderRadius.circular(5.5)),
           child: Padding(
             padding: const EdgeInsets.only(left: 12, right: 12),
             child: DropdownButton<String>(
-              underline: SizedBox(),
+              underline: const SizedBox(),
               value: dropdownValue1,
               isExpanded: true,
               borderRadius: BorderRadius.circular(5.5),
@@ -370,18 +377,18 @@ class _TechFestState extends State<TechFest> {
             ),
           ],
         ),
-        SizedBox(height: 5),
+        const SizedBox(height: 5),
         StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance.collection('Event').snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
             }
 
             //using snapshot
 
             var umeshDoc = snapshot.data!.docs
-                .firstWhere((doc) => doc.id == 'B4jzFfrKvIWpvomLK2tB');
+                .firstWhere((doc) => doc.id == widget.id);
             var sportNames = umeshDoc['sportNames'] as List<dynamic>;
             var entryFee = umeshDoc['entry fee'] as List<dynamic>;
             var participants = umeshDoc['participantCounts'] as List<dynamic>;
@@ -404,15 +411,15 @@ class _TechFestState extends State<TechFest> {
                 //dropdownbox
                 Container(
                   decoration: BoxDecoration(
-                    color: Color(0xffF0F0F0),
+                    color: const Color(0xffF0F0F0),
                     borderRadius: BorderRadius.circular(5.5),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.only(left: 12, right: 12),
                     child: DropdownButton<int>(
-                      underline: SizedBox(),
+                      underline: const SizedBox(),
                       value: selectedIndex,
-                      hint: Text('Select a sport'),
+                      hint: const Text('Select a sport'),
                       isExpanded: true,
                       borderRadius: BorderRadius.circular(5.5),
                       items: List.generate(sportNames.length, (index) {
@@ -431,10 +438,10 @@ class _TechFestState extends State<TechFest> {
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Text(
                     'Entry Fee: ${entryFee.length > selectedIndex ? entryFee[selectedIndex] : ""}'),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Text(
                     'Max Participants: ${participants.length > selectedIndex ? participants[selectedIndex] : ""}'),
 
@@ -451,7 +458,7 @@ class _TechFestState extends State<TechFest> {
     //  print(participants);
     return Column(
       children: [
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         _buildDynamicTextFields(participants),
       ],
     );
@@ -492,7 +499,7 @@ class _TechFestState extends State<TechFest> {
           },
         ),
       );
-      textFields.add(SizedBox(height: 15));
+      textFields.add(const SizedBox(height: 15));
     }
 
     return Column(children: textFields);

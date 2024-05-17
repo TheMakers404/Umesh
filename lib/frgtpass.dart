@@ -1,10 +1,11 @@
-import 'package:flutter/material.dart';
 import 'dart:developer';
+
+import "package:awesome_dialog/awesome_dialog.dart";
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import "package:awesome_dialog/awesome_dialog.dart";
+import 'package:flutter/material.dart';
+
 import 'welcomeback.dart';
-import 'package:flutter/services.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -59,7 +60,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           // btnCancelOnPress: () {},
           btnOkOnPress: () {
               Navigator.pushReplacement(context,
-            CupertinoPageRoute(builder: (context) => WelcomeBackScreen()));
+            CupertinoPageRoute(builder: (context) => const WelcomeBackScreen()));
           },
         )..show();
         log("Password reset Email has been sent");
@@ -80,7 +81,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           style: TextStyle(color: Color(0xFF112031)),
         ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios,
+          icon: const Icon(Icons.arrow_back_ios,
               color: Color.fromARGB(227, 15, 14, 14)),
           onPressed: () {
             Navigator.pop(context);

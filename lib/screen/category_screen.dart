@@ -57,7 +57,7 @@ class EventScreen extends StatelessWidget {
           //  onToggleFavorite:onToggleFavorite,
         ),
         gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
       );
     }
     return Scaffold(
@@ -68,8 +68,8 @@ class EventScreen extends StatelessWidget {
             color: Color(0xffe93030),
           ),
         ),
-        backgroundColor: Color(0xfff5f5f5),
-        leading: BackButton(
+        backgroundColor: const Color(0xfff5f5f5),
+        leading: const BackButton(
           color: Color(0xffe93030),
         ),
         elevation: 0,

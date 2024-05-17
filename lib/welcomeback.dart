@@ -52,7 +52,7 @@ log("Current Users ID:${unique_user_id}");
 log("------------------------------------------------------------------------------------------------------------------------------");
           Navigator.popUntil(context, (route) => route.isFirst);
           Navigator.pushReplacement(
-              context, CupertinoPageRoute(builder: (context) => retrieve()));
+              context, CupertinoPageRoute(builder: (context) => const retrieve()));
         }
       } on FirebaseAuthException catch (ex) {
         String lexp = ex.code.toString();
@@ -164,7 +164,7 @@ log("---------------------------------------------------------------------------
                     ),
                     child: TextField(
                       controller: emailController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Email Address',
                         prefixIcon: Icon(Icons.email),
                       ),
@@ -181,7 +181,7 @@ log("---------------------------------------------------------------------------
                     child: TextField(
                       controller: passwordController,
                       obscureText: true,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Password',
                         prefixIcon: Icon(Icons.lock),
                       ),
@@ -278,7 +278,7 @@ Widget _buildGoogleSignInBlock(BuildContext context) {
 
     //navigation
     Navigator.pushReplacement(
-        context, CupertinoPageRoute(builder: (context) => TabsScreen()));
+        context, CupertinoPageRoute(builder: (context) => const TabsScreen()));
   }
   return Column(
     children: [
@@ -317,7 +317,7 @@ Widget _buildGoogleSignInBlock(BuildContext context) {
           ),
         ),
       ),
-      SizedBox(height: 10,),
+      const SizedBox(height: 10,),
       _buildDivider(),
     ],
   );

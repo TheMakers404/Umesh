@@ -1,14 +1,12 @@
 import 'dart:developer';
 
-import 'package:campusbuzz/FavProv.dart';
 import 'package:campusbuzz/model/event.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 // import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:shimmer/shimmer.dart';
 
-class Explore_list extends StatefulWidget {
+class Explore_list extends StatelessWidget {
   const Explore_list({
     super.key,
     required this.event,
@@ -20,11 +18,6 @@ class Explore_list extends StatefulWidget {
   final void Function(Event event) onselectevent;
 
   @override
-  State<Explore_list> createState() => _Explore_listState();
-}
-
-class _Explore_listState extends State<Explore_list> {
-  @override
   Widget build(BuildContext context) {
 
     log("explorepage build");
@@ -34,8 +27,7 @@ class _Explore_listState extends State<Explore_list> {
 
     // final isFavorite = favoriteEvents.contains(event);
 
-    return SingleChildScrollView(
-      child: Column(
+    return Column(
         children: [
           Column(
             children: [
@@ -52,7 +44,7 @@ class _Explore_listState extends State<Explore_list> {
                         color: Colors.grey.withOpacity(0.7),
                         spreadRadius: -4,
                         blurRadius: 11,
-                        offset: Offset(0, 9), // changes position of shadow
+                        offset: const Offset(0, 9), // changes position of shadow
                       ),
                     ],
 
@@ -63,22 +55,22 @@ class _Explore_listState extends State<Explore_list> {
                     padding: const EdgeInsets.all(0),
                     child: InkWell(
                         onTap: () {
-                          widget.onselectevent(widget.event);
+                          onselectevent(event);
                         },
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
+                            SizedBox(
                               width: 370,
                               height: 200,
                               child: Stack(
                                 children: [
                                   ClipRRect(
-                                    borderRadius: BorderRadius.only(
+                                    borderRadius: const BorderRadius.only(
                                         topLeft: Radius.circular(15),
                                         topRight: Radius.circular(15)),
                                     child: Hero(
-                                      tag: 'eventImage_${widget.event.id}',
+                                      tag: 'eventImage_${event.id}',
                                       child:
                                           // Image.network(
                                           //   event.imageUrl,
@@ -89,7 +81,7 @@ class _Explore_listState extends State<Explore_list> {
                                           Stack(
                                         children: [
                                           ClipRRect(
-                                            borderRadius: BorderRadius.only(
+                                            borderRadius: const BorderRadius.only(
                                               topLeft: Radius.circular(12),
                                               topRight: Radius.circular(12),
                                             ),
@@ -104,12 +96,12 @@ class _Explore_listState extends State<Explore_list> {
                                             ),
                                           ),
                                           ClipRRect(
-                                            borderRadius: BorderRadius.only(
+                                            borderRadius: const BorderRadius.only(
                                               topLeft: Radius.circular(12),
                                               topRight: Radius.circular(12),
                                             ),
                                             child: Image.network(
-                                              widget.event.imageUrl,
+                                              event.imageUrl,
                                               width: 370,
                                               height: 200,
                                               fit: BoxFit.cover,
@@ -136,7 +128,7 @@ class _Explore_listState extends State<Explore_list> {
                                                           .withOpacity(0.7),
                                                       spreadRadius: -11,
                                                       blurRadius: 11,
-                                                      offset: Offset(0,
+                                                      offset: const Offset(0,
                                                           9), // changes position of shadow
                                                     ),
                                                   ],
@@ -169,7 +161,7 @@ class _Explore_listState extends State<Explore_list> {
                                                   // );
                                                   // widget.onToggleFavorite(event);
                                                 },
-                                                child: Padding(
+                                                child: const Padding(
                                                     padding:
                                                         EdgeInsets.all(5.0),
                                                     child: Icon(
@@ -200,49 +192,49 @@ class _Explore_listState extends State<Explore_list> {
                                   Align(
                                     alignment: Alignment.centerLeft,
                                     child: Padding(
-                                      padding: EdgeInsets.only(left: 7),
+                                      padding: const EdgeInsets.only(left: 7),
                                       child: Text(
-                                        widget.event.title,
-                                        style: TextStyle(
+                                        event.title,
+                                        style: const TextStyle(
                                             fontSize: 22,
                                             fontWeight: FontWeight.w800),
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 6,
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.only(left: 7),
+                                    padding: const EdgeInsets.only(left: 7),
                                     child: SizedBox(
                                       child: Row(
                                         children: [
-                                          Icon(
+                                          const Icon(
                                             Icons.calendar_today_outlined,
                                             size: 15,
                                             color: Color(0xff646464),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 4,
                                           ),
                                           Text(
-                                            widget.event.date,
-                                            style: TextStyle(
+                                            event.date,
+                                            style: const TextStyle(
                                                 fontSize: 13,
                                                 fontWeight: FontWeight.w300,
                                                 color: Color(0xff646464)),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 35,
                                           ),
-                                          Icon(
+                                          const Icon(
                                             Icons.watch_later_outlined,
                                             size: 15,
                                             color: Color(0xff646464),
                                           ),
                                           Text(
-                                            widget.event.time,
-                                            style: TextStyle(
+                                            event.time,
+                                            style: const TextStyle(
                                               fontSize: 13,
                                               fontWeight: FontWeight.w300,
                                               color: Color(0xff646464),
@@ -252,26 +244,26 @@ class _Explore_listState extends State<Explore_list> {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 6,
                                   ),
                                   Row(
                                     children: [
-                                      Padding(
+                                      const Padding(
                                         padding:
-                                            const EdgeInsets.only(left: 6.0),
+                                            EdgeInsets.only(left: 6.0),
                                         child: Icon(
                                           Icons.location_on_outlined,
                                           size: 15,
                                           color: Color(0xff646464),
                                         ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 4,
                                       ),
                                       Text(
-                                        widget.event.college_name,
-                                        style: TextStyle(
+                                        event.college_name,
+                                        style: const TextStyle(
                                             fontSize: 13,
                                             color: Color(0xff646464),
                                             fontWeight: FontWeight.w300),
@@ -289,7 +281,7 @@ class _Explore_listState extends State<Explore_list> {
             ],
           ),
         ],
-      ),
-    );
+      );
+  
   }
 }

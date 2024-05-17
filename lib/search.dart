@@ -16,14 +16,14 @@ class DtSearch extends SearchDelegate<String> {
               showSuggestions(context);
             }
           },
-          icon: Icon(Icons.clear),
+          icon: const Icon(Icons.clear),
         ),
       ];
 
   @override
   Widget? buildLeading(BuildContext context) => IconButton(
         onPressed: () => close(context, ''),
-        icon: Icon(Icons.arrow_back),
+        icon: const Icon(Icons.arrow_back),
       );
 
   @override
@@ -43,13 +43,13 @@ Widget buildSuggestions(BuildContext context) {
     builder: (context, snapshot) {
       switch (snapshot.connectionState) {
         case ConnectionState.waiting:
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         default:
           final events = snapshot.data;
           if (events == null || events.isEmpty) {
             return Container(
               height: 100,
-              child: Center(
+              child: const Center(
                 child: Text(
                   'No Matches Found.',
                   style: TextStyle(fontSize: 24),
@@ -67,11 +67,11 @@ Widget buildSuggestions(BuildContext context) {
                 children: <TextSpan>[
                   TextSpan(
                     text: text.substring(0, queryIndex),
-                    style: TextStyle(color: Colors.grey, fontSize: 18),
+                    style: const TextStyle(color: Colors.grey, fontSize: 18),
                   ),
                   TextSpan(
                     text: text.substring(queryIndex, queryIndex + query.length),
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
@@ -79,13 +79,13 @@ Widget buildSuggestions(BuildContext context) {
                   ),
                   TextSpan(
                     text: text.substring(queryIndex + query.length),
-                    style: TextStyle(color: Colors.grey, fontSize: 18),
+                    style: const TextStyle(color: Colors.grey, fontSize: 18),
                   ),
                 ],
               );
               return RichText(text: span);
             } else {
-              return Text(text, style: TextStyle(color: Colors.grey, fontSize: 18));
+              return Text(text, style: const TextStyle(color: Colors.grey, fontSize: 18));
             }
           }
 
@@ -97,7 +97,7 @@ Widget buildSuggestions(BuildContext context) {
           if (searchResults.isEmpty) {
             return Container(
               height: 100,
-              child: Center(
+              child: const Center(
                 child: Text(
                   'No Matches Found.',
                   style: TextStyle(fontSize: 24),

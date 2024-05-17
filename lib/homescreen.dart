@@ -1,6 +1,7 @@
 import 'package:campusbuzz/categories.dart';
 import 'package:campusbuzz/data/category_list.dart';
 import 'package:campusbuzz/event_detail_screen.dart';
+import 'package:campusbuzz/location/location.dart';
 import 'package:campusbuzz/model/event.dart';
 import 'package:campusbuzz/per_screens/Nearby.dart';
 import 'package:campusbuzz/per_screens/popular.dart';
@@ -13,7 +14,7 @@ import 'package:provider/provider.dart';
 
 import 'event_list.dart';
 
-// ignore: must_be_immutable
+
 class Homescreen extends StatefulWidget {
   const Homescreen(
       {super.key,
@@ -22,7 +23,6 @@ class Homescreen extends StatefulWidget {
   final String url = 'https://www.example.com'; // Replace with your URL
 
   final List<Event> event;
-
   final void Function(Event event) onselectevent;
 
   // final void Function(Event event) onToggleFavorite;
@@ -55,9 +55,9 @@ class _HomescreenState extends State<Homescreen> {
   //  NotificationServices notificationServices = NotificationServices();
 
   Widget _buildDivider() {
-  return Padding(
-    padding: const EdgeInsets.only(left: 10,right: 10),
-    child: const Row(
+  return const Padding(
+    padding: EdgeInsets.only(left: 10,right: 10),
+    child: Row(
       children: [
         Expanded(child: Divider()),
         Padding(
@@ -77,9 +77,9 @@ class _HomescreenState extends State<Homescreen> {
   );
 }
  Widget _buildDivider2() {
-  return Padding(
-    padding: const EdgeInsets.only(left: 10,right: 10),
-    child: const Row(
+  return const Padding(
+    padding: EdgeInsets.only(left: 10,right: 10),
+    child: Row(
       children: [
         Expanded(child: Divider()),
         Padding(
@@ -118,7 +118,7 @@ class _HomescreenState extends State<Homescreen> {
     // For example, you might fetch new data from the server
     // or update the existing data
     // For now, let's just simulate a delay using Future.delayed
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
     // Set the new data
     setState(() {
       // Update your data here
@@ -136,7 +136,7 @@ class _HomescreenState extends State<Homescreen> {
         currentFocus.unfocus();
       },
       child: Scaffold(
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: SafeArea(
         
         child: RefreshIndicator(
@@ -150,60 +150,66 @@ class _HomescreenState extends State<Homescreen> {
                     vertical: 8,
                   ),
                   child: Row(
+                    
                     //top bar
           
                     children: [
-                      Image.asset(
-                        'svg/realloaction.png',
-                        width: 25,
-                      ),
-                      SizedBox(
-                        width: 4,
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(bottom: 0),
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(right: 70.0),
-                              child: Row(
-                                children: [
-                                  Text('New bowenaplly ',
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w600,color: Color.fromARGB(195, 0, 0, 0)),
-                                          textScaleFactor: 1.2,),
-                                  Icon(Icons.keyboard_arrow_down_rounded),
-                                ],
-                              ),
-                            ),
-                            Text(
-                              'vijaya mansion,plot no 52,jayanagar colony  ',
-                              style: TextStyle(
-                                  fontSize: 10, fontWeight: FontWeight.w400,color: Colors.black87),
-                              //textAlign: TextAlign.center,
-                              textScaleFactor: 1.2,
-                            ),
-                          ],
-                        ),
-                      ),
+
+                      const Text(" Hello, ",style: TextStyle(fontSize: 25,fontWeight: FontWeight.w400),),
+                      const Text("Umesh!",style: TextStyle(fontSize: 25,fontWeight: FontWeight.w600,color: Colors.red),),
+                      const Spacer(),
+                      // Image.asset(
+                      //   'svg/realloaction.png',
+                      //   width: 25,
+                      // ),
+                      // SizedBox(
+                      //   width: 4,
+                      // ),
+                      // const Padding(
+                      //   padding: EdgeInsets.only(bottom: 0),
+                      //   child: Column(
+                      //     children: [
+                      //       Padding(
+                      //         padding: EdgeInsets.only(right: 70.0),
+                      //         child: Row(
+                      //           children: [
+                      //             Text('New bowenaplly ',
+                      //                 style: TextStyle(
+                      //                     fontSize: 15,
+                      //                     fontWeight: FontWeight.w600,color: Color.fromARGB(195, 0, 0, 0)),
+                      //                     textScaleFactor: 1.2,),
+                      //             Icon(Icons.keyboard_arrow_down_rounded),
+                      //           ],
+                      //         ),
+                      //       ),
+                      //       Text(
+                      //         'vijaya mansion,plot no 52,jayanagar colony  ',
+                      //         style: TextStyle(
+                      //             fontSize: 10, fontWeight: FontWeight.w400,color: Colors.black87),
+                      //         //textAlign: TextAlign.center,
+                      //         textScaleFactor: 1.2,
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                       GestureDetector(
                         onTap: () {
-                          final results = showSearch(context:context, delegate: DtSearch());
-                          // Navigator.push(
-                          //       context,
-                          //       MaterialPageRoute(
-                          //         builder: (context) => MyForm(),
-                          //       ));
+                          // final results = showSearch(context:context, delegate: DtSearch());
+                          Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MyForm(),
+                                ));
                           print("bell icon tapped");
                         },
-                        child: const Padding(
-                            padding: EdgeInsets.only(left: 26),
-                            child: Icon(
-                              Icons.notifications_none,
-                              size: 30,
-                            ) //Image.asset('svg/bell_3.png', width: 25),
-                            ),
+                        
+                            
+                              child: const Icon(
+                                Icons.notifications_none,
+                                size: 30,
+                              ),
+                             //Image.asset('svg/bell_3.png', width: 25),
+              
                       ),
                     ],
                   ),
@@ -216,41 +222,57 @@ class _HomescreenState extends State<Homescreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Color(0xfff5f5f5),
+                      color: const Color(0xfff5f5f5),
                       borderRadius: BorderRadius.circular(15.5),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.grey.withOpacity(0.7),
                           spreadRadius: -11,
                           blurRadius: 11,
-                          offset: Offset(0, 9), // changes position of shadow
+                          offset: const Offset(0, 9), // changes position of shadow
                         ),
                       ],
                     ),
-                    child: InkWell(
+                    child: GestureDetector(
                       onTap: () {
                         final results = showSearch(context:context, delegate: DtSearch());
                       },
                       child: Padding(
                         padding:
                             const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                        child: TextFormField(
-                          decoration: const InputDecoration(
-                              contentPadding: EdgeInsets.only(top: 14),
-                              border: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                              hintText: 'Search for events...',
-                              hintStyle: TextStyle(color: Color(0xff939393)),
-                              prefixIcon: Icon(
+                        child: Stack(
+                          children: [
+                            Container(
+                              height: 40,
+                              decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(5))),
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.only(top:5.0,left: 5),
+                              child: Icon(
                                 Icons.search_rounded,
                                 color: Color(0xff858585),
                                 size: 30,
                               ),
-                              suffixIcon: Icon(
-                                Icons.mic,
-                                color: Color(0xff525252),
-                                size: 30,
-                              )),
+                            ),
+                            const Positioned(left: 50,top: 7,child:Text("search for event...",style: TextStyle(color: Color(0xff939393),fontSize: 17),), )
+                            
+                          ],
+                          // decoration: InputDecoration(
+                          //     contentPadding: EdgeInsets.only(top: 14),
+                          //     border: InputBorder.none,
+                          //     focusedBorder: InputBorder.none,
+                          //     hintText: 'Search for events...',
+                          //     hintStyle: TextStyle(color: Color(0xff939393)),
+                          //     prefixIcon: Icon(
+                          //       Icons.search_rounded,
+                          //       color: Color(0xff858585),
+                          //       size: 30,
+                          //     ),
+                          //     suffixIcon: Icon(
+                          //       Icons.mic,
+                          //       color: Color(0xff525252),
+                          //       size: 30,
+                          //     )),
                         ),
                       ),
                     ),
@@ -277,7 +299,7 @@ class _HomescreenState extends State<Homescreen> {
                     ],
                   ),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
           
                 //running banner
           
@@ -297,7 +319,7 @@ class _HomescreenState extends State<Homescreen> {
                           color: Colors.grey.withOpacity(0.7),
                           spreadRadius: -4,
                           blurRadius: 11,
-                          offset: Offset(0, 9), // changes position of shadow
+                          offset: const Offset(0, 9), // changes position of shadow
                         ),
                       ],
                         ),
@@ -309,10 +331,10 @@ class _HomescreenState extends State<Homescreen> {
                             items: imageList
                                 .map(
                                   (item) => Container(
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                       
                                     ),
-                                    margin: EdgeInsets.symmetric(horizontal: 5),
+                                    margin: const EdgeInsets.symmetric(horizontal: 5),
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(10),
                                       child: Image.asset(
@@ -346,7 +368,7 @@ class _HomescreenState extends State<Homescreen> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Positioned(
@@ -368,7 +390,7 @@ class _HomescreenState extends State<Homescreen> {
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   color: currentIndex == entry.key
-                                      ? Color.fromARGB(255, 189, 29, 29)
+                                      ? const Color.fromARGB(255, 189, 29, 29)
                                       : const Color.fromARGB(255, 0, 0, 0)),
                             ),
                           );
@@ -389,7 +411,7 @@ class _HomescreenState extends State<Homescreen> {
           
                 //nearby events list
                 Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     //color: Colors.amber,gradient: LinearGradient(colors: Colors.accents)                
                     ),
                   
@@ -473,7 +495,7 @@ class _HomescreenState extends State<Homescreen> {
           
                 //popluar events
                 Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     //color: Colors.amber,gradient: LinearGradient(colors: Colors.accents)                
                     ),
                   

@@ -15,7 +15,8 @@ class Fest extends ConsumerStatefulWidget {
   final String date;
   final String title;
   final String college_name;
-  const Fest({super.key, required this.imageUrl, required this.time, required this.date, required this.title, required this.college_name});
+  final String id;
+  const Fest({super.key, required this.imageUrl, required this.time, required this.date, required this.title, required this.college_name,required this.id});
 
   @override
   ConsumerState<Fest> createState() => _FestState();
@@ -157,8 +158,8 @@ class _FestState extends ConsumerState<Fest> {
 
   Widget _buildMailID() {
     return Column(children: [
-      Padding(
-        padding: const EdgeInsets.only(right: 27, bottom: 5),
+      const Padding(
+        padding: EdgeInsets.only(right: 27, bottom: 5),
         child: Row(
           children: [
             Text(
@@ -176,13 +177,13 @@ class _FestState extends ConsumerState<Fest> {
         controller: mail,
         decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
+                borderSide: const BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(5.5)),
             focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
+                borderSide: const BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(5.5)),
             hintText: 'Enter Mail Id',
-            hintStyle: TextStyle(
+            hintStyle: const TextStyle(
               color: Colors.grey,
             ),
             filled: true),
@@ -210,8 +211,8 @@ class _FestState extends ConsumerState<Fest> {
 
   Widget _buildMOBILENM() {
     return Column(children: [
-      Padding(
-        padding: const EdgeInsets.only(right: 24, bottom: 5),
+      const Padding(
+        padding: EdgeInsets.only(right: 24, bottom: 5),
         child: Row(
           children: [
             Text(
@@ -229,13 +230,13 @@ class _FestState extends ConsumerState<Fest> {
         controller: newController,
         decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
+                borderSide: const BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(5.5)),
             focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
+                borderSide: const BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(5.5)),
             hintText: 'Enter your Number',
-            hintStyle: TextStyle(
+            hintStyle: const TextStyle(
               color: Colors.grey,
             ),
             filled: true),
@@ -272,12 +273,12 @@ class _FestState extends ConsumerState<Fest> {
         ),
         Container(
           decoration: BoxDecoration(
-              color: Color(0xffF0F0F0),
+              color: const Color(0xffF0F0F0),
               borderRadius: BorderRadius.circular(5.5)),
           child: Padding(
             padding: const EdgeInsets.only(left: 12, right: 12),
             child: DropdownButton<String>(
-              underline: SizedBox(),
+              underline: const SizedBox(),
               value: dropdownValue,
               isExpanded: true,
               borderRadius: BorderRadius.circular(5.5),
@@ -314,12 +315,12 @@ class _FestState extends ConsumerState<Fest> {
         ),
         Container(
           decoration: BoxDecoration(
-              color: Color(0xffF0F0F0),
+              color: const Color(0xffF0F0F0),
               borderRadius: BorderRadius.circular(5.5)),
           child: Padding(
             padding: const EdgeInsets.only(left: 12, right: 12),
             child: DropdownButton<String>(
-              underline: SizedBox(),
+              underline: const SizedBox(),
               value: dropdownValue1,
               isExpanded: true,
               borderRadius: BorderRadius.circular(5.5),
@@ -339,32 +340,26 @@ class _FestState extends ConsumerState<Fest> {
     );
   }
    Widget _buildamount() {
-    return Column(
+    return Row(
       children: [
-        const Row(
-          children: [
-            Text(
-              "List of sports",
-              style: TextStyle(fontSize: 20),
+        
+        const SizedBox(height: 5),
+        const Text(
+              " ₹",
+              style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),
             ),
-            Text(
-              "*",
-              style: TextStyle(fontSize: 20, color: Colors.red),
-            ),
-          ],
-        ),
-        SizedBox(height: 5),
+            const SizedBox(width: 5,),
         StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance.collection('Event').snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
             }
 
             //using snapshot
 
             var umeshDoc = snapshot.data!.docs
-                .firstWhere((doc) => doc.id == '6sVrYoG9WDgU2MpZSRwN');
+                .firstWhere((doc) => doc.id == widget.id);
             int amount = umeshDoc['price'] ;
 
             amountt= amount;
@@ -380,7 +375,7 @@ class _FestState extends ConsumerState<Fest> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(amountt.toString()),
+                Text(amountt.toString(), style: const TextStyle(fontSize: 20,fontWeight: FontWeight.w600,),),
                 
                 
               ],
@@ -573,9 +568,9 @@ return base64Body;
                 _buildamount(),
                 // const SizedBox(height: 15),
                 // _builddropdown2(),
-                const SizedBox(height: 50),
+                const SizedBox(height: 15),
                 Padding(
-                  padding:  EdgeInsets.symmetric(horizontal: 15),
+                  padding:  const EdgeInsets.symmetric(horizontal: 15),
                   child: MaterialButton(
                     color: const Color(0xff112031),
                     shape: RoundedRectangleBorder(
@@ -660,7 +655,7 @@ class MyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(child: Text("data"),),
     );
   }

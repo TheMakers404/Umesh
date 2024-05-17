@@ -20,6 +20,8 @@ class Explore extends StatelessWidget {
       MaterialPageRoute(
         builder: (ctx) => EventDetailScreen(
           event: event,
+          
+
           // onToggleFavorite: onToggleFavorite,
         ),
       ),
@@ -42,7 +44,7 @@ class Explore extends StatelessWidget {
                   fontWeight: FontWeight.w400,
                   color: Color(0xffE93030))),
 
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           // Text(
           //   'Try selecting a different category!',
           //   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
@@ -70,7 +72,7 @@ class Explore extends StatelessWidget {
     }
     return Scaffold(
       
-      backgroundColor: Color(0xfff5f5f5),
+      backgroundColor: const Color(0xfff5f5f5),
       body: SafeArea(
         child: NestedScrollView(
           
@@ -100,14 +102,14 @@ class Explore extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Color(0xfff5f5f5),
+                          color: const Color(0xfff5f5f5),
                           borderRadius: BorderRadius.circular(15.5),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.grey.withOpacity(0.7),
                               spreadRadius: -11,
                               blurRadius: 11,
-                              offset: Offset(0, 9), // changes position of shadow
+                              offset: const Offset(0, 9), // changes position of shadow
                             ),
                           ],
                         ),
@@ -138,7 +140,7 @@ class Explore extends StatelessWidget {
                   ],
                 ),
               ),
-              backgroundColor: Color.fromARGB(255, 255, 255, 255),
+              backgroundColor: const Color.fromARGB(255, 255, 255, 255),
               elevation: 5,
             ),
           ],

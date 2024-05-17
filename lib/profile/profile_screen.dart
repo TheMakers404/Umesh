@@ -35,7 +35,7 @@ class Profile extends StatefulWidget {
 
 
 
-  Profile({super.key, });
+  const Profile({super.key, });
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -71,7 +71,7 @@ class _ProfileState extends State<Profile> {
     await FirebaseAuth.instance.signOut();
     Navigator.popUntil(context, (route) => route.isFirst);
     Navigator.pushReplacement(
-        context, CupertinoPageRoute(builder: (context) => OnboardScreens()));
+        context, CupertinoPageRoute(builder: (context) => const OnboardScreens()));
   }
 
   final List<String> items = [
@@ -230,7 +230,7 @@ class _ProfileState extends State<Profile> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           // Return a loading indicator while data is being fetched
-          return CircularProgressIndicator(); // You can customize this
+          return const CircularProgressIndicator(); // You can customize this
         } 
         
         
@@ -259,7 +259,7 @@ class _ProfileState extends State<Profile> {
                           border: Border.all(width: 0.25),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.only(right: 19),
+                          padding: const EdgeInsets.only(right: 19),
                           child: Center(
                               child: ElevatedButton(
                                   onPressed: () {
@@ -275,7 +275,7 @@ class _ProfileState extends State<Profile> {
                                       },
                                     )..show();
                                   },
-                                  child: Text('Sign Out'))),
+                                  child: const Text('Sign Out'))),
                         ),
                       ); // Adjust
                     }
@@ -292,10 +292,10 @@ class _ProfileState extends State<Profile> {
                                     height: 100,
                                     child: Padding(
                                       padding:
-                                          EdgeInsets.only(top: 30, left: 15),
+                                          const EdgeInsets.only(top: 30, left: 15),
                                       child: Text(
                                         "Hi ${DisplayFname}",
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 25,
                                             color: Color(0xffF81B1B),
                                             fontWeight: FontWeight.bold),

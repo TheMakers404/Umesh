@@ -1,8 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:campusbuzz/FavProv.dart';
 import 'package:campusbuzz/model/event.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 // import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -12,7 +10,7 @@ class EventItemm extends StatelessWidget {
   final Event event;
   final void Function(Event event) onselectevent;
 
-  EventItemm({required this.event, required this.onselectevent});
+  const EventItemm({super.key, required this.event, required this.onselectevent});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +28,7 @@ class EventItemm extends StatelessWidget {
                         color: Colors.grey.withOpacity(0.5),
                         spreadRadius: -4,
                         blurRadius: 11,
-                        offset: Offset(0, 10), // changes position of shadow
+                        offset: const Offset(0, 10), // changes position of shadow
                       ),
                     ],
         //border: Border.all(color: Colors.black, width: 0.1),
@@ -47,13 +45,13 @@ class EventItemm extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
+                  SizedBox(
                     width: 210,
                     height: 138,
                     child: Stack(
                       children: [
                         ClipRRect(
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                               topLeft: Radius.circular(12),
                               topRight: Radius.circular(12)),
                           child: Hero(
@@ -62,7 +60,7 @@ class EventItemm extends StatelessWidget {
                             Stack(
     children: [
       ClipRRect(
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(12),
           topRight: Radius.circular(12),
         ),
@@ -77,7 +75,7 @@ class EventItemm extends StatelessWidget {
         ),
       ),
       ClipRRect(
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(12),
           topRight: Radius.circular(12),
         ),
@@ -94,7 +92,7 @@ class EventItemm extends StatelessWidget {
         height: 138,
         fit: BoxFit.cover,
         //placeholder: (context, url) => CircularProgressIndicator(),
-        errorWidget: (context, url, error) => Icon(Icons.error),
+        errorWidget: (context, url, error) => const Icon(Icons.error),
      ),
       ),
     ],
@@ -124,7 +122,7 @@ class EventItemm extends StatelessWidget {
                         color: Colors.grey.withOpacity(0.5),
                         spreadRadius: -4,
                         blurRadius: 11,
-                        offset: Offset(0, 0), // changes position of shadow
+                        offset: const Offset(0, 0), // changes position of shadow
                       ),
                     ],
                                       borderRadius: BorderRadius.circular(50)),
@@ -151,7 +149,7 @@ class EventItemm extends StatelessWidget {
 
                                       // widget.onToggleFavorite(event);
                                     },
-                                    child: Padding(
+                                    child: const Padding(
                                         padding: EdgeInsets.all(5.0),
                                         child: Icon(
                                           // provider.isExist(event)
@@ -179,41 +177,41 @@ class EventItemm extends StatelessWidget {
                     child: Column(
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(right: 50, left: 5),
+                          padding: const EdgeInsets.only(right: 50, left: 5),
                           child: Text(
                             event.title,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.w600),
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: 6, left: 3),
+                          padding: const EdgeInsets.only(top: 6, left: 3),
                           child: SizedBox(
                             child: Row(
                               children: [
-                                Icon(
+                                const Icon(
                                   Icons.calendar_today_outlined,
                                   size: 15,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 4,
                                 ),
                                 Text(
                                   event.date,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 13,
                                       fontWeight: FontWeight.w300),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 28,
                                 ),
-                                Icon(
+                                const Icon(
                                   Icons.watch_later_outlined,
                                   size: 15,
                                 ),
                                 Text(
                                   event.time,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 13,
                                       fontWeight: FontWeight.w300),
                                 ),

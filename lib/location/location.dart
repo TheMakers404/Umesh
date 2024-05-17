@@ -63,7 +63,7 @@ class _MyFormState extends State<MyForm> {
   //time picker
 
 
-  TimeOfDay time =TimeOfDay(hour:12, minute: 30, );
+  TimeOfDay time =const TimeOfDay(hour:12, minute: 30, );
   String selectedPeriod = '';
   String combinedTime = '';
 
@@ -92,7 +92,7 @@ class _MyFormState extends State<MyForm> {
     
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dynamic TextFormFields Example'),
+        title: const Text('Dynamic TextFormFields Example'),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -103,9 +103,9 @@ class _MyFormState extends State<MyForm> {
               TextFormField(
                 controller: nController,
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: 'Enter the value of n'),
+                decoration: const InputDecoration(labelText: 'Enter the value of n'),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               // Create n * 3 TextFormFields using a nested loop
               ElevatedButton(
                 onPressed: () {
@@ -120,9 +120,9 @@ class _MyFormState extends State<MyForm> {
                     entryFees = List.filled(n, '');
                   });
                 },
-                child: Text('Generate TextFields'),
+                child: const Text('Generate TextFields'),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               if (textFieldsValues.isNotEmpty)
                 // Create n * 3 TextFormFields using a nested loop
                 for (int i = 0; i < textFieldsValues.length; i++)
@@ -154,12 +154,12 @@ class _MyFormState extends State<MyForm> {
                         ),
                     ],
                   ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               // Display the values in the lists
               Text('Sport Names: $sportNames'),
               Text('No of Participants: $participantCounts'),
               Text('Entry Fees: $entryFees'),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () async {
                   // Submit data to Firestore
@@ -170,12 +170,12 @@ class _MyFormState extends State<MyForm> {
                   });
                   // Show a snackbar to indicate successful submission
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
+                    const SnackBar(
                       content: Text('Data submitted to Firestore!'),
                     ),
                   );
                 },
-                child: Text('Submit to Firestore'),
+                child: const Text('Submit to Firestore'),
               ),
 
 
@@ -184,19 +184,19 @@ class _MyFormState extends State<MyForm> {
               // MaterialButton(onPressed:_showDatePicker,child: Text("Select date"),),
 
               // Text(_dateTime.day.toString(),style: TextStyle(fontSize: 40),)
-              Text(
+              const Text(
               "Testing date picker",
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
             ),
             MaterialButton(
               onPressed: _showDatePicker,
-              child: Text("Select date"),
+              child: const Text("Select date"),
             ),
             Text(
               _formattedDate,
-              style: TextStyle(fontSize: 40),
+              style: const TextStyle(fontSize: 40),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             
 
             //time picker
@@ -204,9 +204,9 @@ class _MyFormState extends State<MyForm> {
 
 
 
-            Text("Time Picker"),
-              Text('$hours:$minutes $selectedPeriod', style: TextStyle(fontSize: 39)),
-              SizedBox(height: 20),
+            const Text("Time Picker"),
+              Text('$hours:$minutes $selectedPeriod', style: const TextStyle(fontSize: 39)),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () async {
                   TimeOfDay? newTime = await showTimePicker(context: context, initialTime: time);
@@ -218,26 +218,26 @@ class _MyFormState extends State<MyForm> {
                     combinedTime = '$hours:$minutes $selectedPeriod';
                   });
                 },
-                child: Text("Pick time"),
+                child: const Text("Pick time"),
               ),
 
               ElevatedButton(
               onPressed: _saveToFirestore,
-              child: Text('Save to Firestore'),
+              child: const Text('Save to Firestore'),
             ),
 
 
               ElevatedButton(onPressed: (){
                 Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => Hack(
+                            builder: (context) => const Hack(
                               
                                
                                 ),
                           ),
                         );
 
-              }, child: Text("hackbutton",style: TextStyle(fontSize: 50),))
+              }, child: const Text("hackbutton",style: TextStyle(fontSize: 50),))
 
 
             ],
@@ -283,12 +283,12 @@ class _HackState extends State<Hack> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Hack Testing")),
+      appBar: AppBar(title: const Text("Hack Testing")),
       body: FutureBuilder<DocumentSnapshot>(
         future: FirebaseFirestore.instance.collection('User').doc('4MwYiindWvDZO0OJvS3c').get(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           }
 
           if (snapshot.hasError) {
@@ -296,7 +296,7 @@ class _HackState extends State<Hack> {
           }
 
           if (!snapshot.hasData || !snapshot.data!.exists) {
-            return Text('Document not found');
+            return const Text('Document not found');
           }
 
           if (_currentHackStatus == null) {
@@ -324,9 +324,9 @@ class _HackState extends State<Hack> {
 
           return Column(
             children: [
-              ElevatedButton(onPressed: _launchurl, child: Text("click here")),
+              ElevatedButton(onPressed: _launchurl, child: const Text("click here")),
               Text("Name: $name"),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   updateHackStatus(true);
@@ -334,9 +334,9 @@ class _HackState extends State<Hack> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: hackStatus ? Colors.green : null,
                 ),
-                child: Text("Accept"),
+                child: const Text("Accept"),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () {
                   updateHackStatus(false);
@@ -344,7 +344,7 @@ class _HackState extends State<Hack> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: hackStatus ? null : Colors.red,
                 ),
-                child: Text("Deny"),
+                child: const Text("Deny"),
               ),
             ],
           );

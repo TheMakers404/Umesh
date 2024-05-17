@@ -1,3 +1,4 @@
+import 'package:campusbuzz/FavProv.dart';
 import 'package:campusbuzz/event_list.dart';
 import 'package:campusbuzz/nav.dart';
 import 'package:campusbuzz/provider/banner.dart';
@@ -33,6 +34,8 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (context) => EventListNotifier(), ),
         ChangeNotifierProvider(create: (context) => BannerProvider(),),
+        ChangeNotifierProvider(
+      create: (context) => LikedEventsProvider(),)
 
       ],
         
@@ -49,7 +52,7 @@ void main() async {
             // );
       return 
        
-        (MaterialApp(
+        (const MaterialApp(
           debugShowCheckedModeBanner: false,
           home:TabsScreen()
           )
@@ -67,7 +70,7 @@ void main() async {
             );
           } else {
             // Data retrieval is in progress, show a loading indicator
-            return MaterialApp(
+            return const MaterialApp(
               home: Scaffold(
                 body: Center(
                   child: CircularProgressIndicator(),
@@ -124,7 +127,7 @@ class _OnboardAppState extends State<OnboardApp> {
         // home: (FirebaseAuth.instance.currentUser != null)
         //     ? Home()
         //     : WelcomeBackScreen(),
-            home:(FirebaseAuth.instance.currentUser != null) ? TabsScreen():OnboardScreens()
+            home:(FirebaseAuth.instance.currentUser != null) ? const TabsScreen():const OnboardScreens()
       
       );
     
@@ -165,11 +168,11 @@ class _OnboardScreensState extends State<OnboardScreens> {
         OnboardPage(
       imageUrl: 'images/yt.png',
       ttitle: Text(
-  'FINDING OUT EVENTS IS ${TextSpan(text: 'EASIER', style: TextStyle(color: Colors.red))} THAN YOU THINK!',
+  'FINDING OUT EVENTS IS ${const TextSpan(text: 'EASIER', style: TextStyle(color: Colors.red))} THAN YOU THINK!',
 ),
       title: "FINDING OUT EVENTS IS EASIER THAN YOU THINK!",
       rchtitle: RichText(
-  text: TextSpan(
+  text: const TextSpan(
     style: TextStyle(
       fontFamily: 'Inter',
       fontSize: 22,
@@ -196,8 +199,8 @@ class _OnboardScreensState extends State<OnboardScreens> {
       description: "Unlock Exciting Events with Ease!",
       // descriptionTextColor: Color.fromARGB(192, 8, 8, 7),
       descriptionTextColor: Colors.grey,
-      descriptionHighlightedTextColor: Color.fromARGB(255, 15, 14, 14),
-      bgColor: Color.fromARGB(126, 255, 255, 255),
+      descriptionHighlightedTextColor: const Color.fromARGB(255, 15, 14, 14),
+      bgColor: const Color.fromARGB(126, 255, 255, 255),
       elevation: 0,
       showButtons: true,
       highlightedWord: 'EASIER',
@@ -211,8 +214,8 @@ class _OnboardScreensState extends State<OnboardScreens> {
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: _currentPage <= 1
-            ? Color.fromARGB(126, 255, 255, 255)
-            : Color.fromARGB(126, 255, 255, 255),
+            ? const Color.fromARGB(126, 255, 255, 255)
+            : const Color.fromARGB(126, 255, 255, 255),
         title: Padding(
           padding: const EdgeInsets.only(left: 4.0),
           child: RichText(
@@ -249,7 +252,7 @@ class _OnboardScreensState extends State<OnboardScreens> {
                   _pageController.jumpToPage(_pages.length - 1);
                 },
                 style: TextButton.styleFrom(
-                  backgroundColor: Color.fromARGB(126, 255, 255, 255),
+                  backgroundColor: const Color.fromARGB(126, 255, 255, 255),
                 ),
                 child: const Text(
                   'Skip',
@@ -526,7 +529,7 @@ class _OnboardPageState extends State<OnboardPage> {
                 RichText(
                   textAlign: TextAlign.start,
                   text: TextSpan(
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 22,
                       fontWeight: FontWeight.bold,

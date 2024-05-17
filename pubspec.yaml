@@ -23,6 +23,7 @@ dependencies:
   flutter_barcode_scanner: ^2.0.0
   barcode: ^2.2.4
   path_provider: ^2.1.1
+  shared_preferences: ^2.2.2
   
 
   flutter:

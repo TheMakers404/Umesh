@@ -20,7 +20,7 @@ class Detail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffF5F5F5),
+      backgroundColor: const Color(0xffF5F5F5),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -94,7 +94,7 @@ class Detail extends StatelessWidget {
               ),
 
               //about title
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
 
@@ -193,7 +193,7 @@ class Detail extends StatelessWidget {
               //   child: Text('here will be a brief description about the above event long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using Content here, content here, making it look like readable English.',
               //   style: TextStyle(fontWeight:FontWeight.w300 ),),
               // )
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
 
@@ -273,17 +273,17 @@ class Detail extends StatelessWidget {
                                 },
                       child: Container( 
                     
-                        child: SizedBox(
+                        child: const SizedBox(
                           child: Row(
                             children: [
-                           const   Icon(
+                           Icon(
                                 Icons.location_on_outlined,
                                 size: 40,
                               ),
-                            const  SizedBox(
+                            SizedBox(
                                 width: 20,
                               ),
-                            const  Column(
+                            Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   SizedBox(
@@ -315,7 +315,7 @@ class Detail extends StatelessWidget {
                               ),
                               InkWell(
                                
-                                child:const Padding(
+                                child:Padding(
                                   padding: EdgeInsets.only(left: 0),
                                   child: Icon(Icons.arrow_forward_ios),
                                 ),
@@ -337,7 +337,7 @@ class Detail extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: MaterialButton(
-                  color: Color(0xff112031),
+                  color: const Color(0xff112031),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15)),
                   onPressed: () {},
@@ -358,7 +358,7 @@ class Detail extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
             ],

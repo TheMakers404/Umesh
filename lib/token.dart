@@ -69,7 +69,7 @@ class Evvent {
 class TokenDisplayScreen extends StatefulWidget {
   final Evvent event;
 
-  TokenDisplayScreen({required this.event});
+  const TokenDisplayScreen({super.key, required this.event});
 
   @override
   State<TokenDisplayScreen> createState() => _TokenDisplayScreenState();
@@ -97,9 +97,9 @@ class _TokenDisplayScreenState extends State<TokenDisplayScreen> {
     // int number = 0;
 
     return  Scaffold(
-        backgroundColor: Color(0xfff5f5f5),
+        backgroundColor: const Color(0xfff5f5f5),
         appBar: AppBar(
-          iconTheme: IconThemeData(
+          iconTheme: const IconThemeData(
             color: Colors.black,
           ),
           backgroundColor: Colors.white,
@@ -114,7 +114,7 @@ class _TokenDisplayScreenState extends State<TokenDisplayScreen> {
               Center(
                 child: Padding(
                   padding:
-                       EdgeInsets.symmetric(horizontal: 25, vertical: 25),
+                       const EdgeInsets.symmetric(horizontal: 25, vertical: 25),
                   child: Container(
                     height: 545,
                     width: double.infinity,
@@ -126,14 +126,14 @@ class _TokenDisplayScreenState extends State<TokenDisplayScreen> {
                           color: Colors.grey.withOpacity(1),
                           spreadRadius: -8,
                           blurRadius: 20,
-                          offset: Offset(0, 0), // changes position of shadow
+                          offset: const Offset(0, 0), // changes position of shadow
                         ),
                       ],
                     ),
                     child: Stack(
                       children: [
                         Padding(
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               horizontal: 10, vertical: 10),
                           child: ClipRRect(
                               borderRadius: BorderRadius.circular(15),
@@ -148,7 +148,7 @@ class _TokenDisplayScreenState extends State<TokenDisplayScreen> {
                           left: 20,
                           child: Text(
                             widget.event.title,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 30,
                                 fontWeight: FontWeight.w500),
@@ -166,18 +166,18 @@ class _TokenDisplayScreenState extends State<TokenDisplayScreen> {
                               ),
                               Text(
                                 widget.event.college_name,
-                                style: TextStyle(color: Colors.black),
+                                style: const TextStyle(color: Colors.black),
                               ),
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 300),
+                        const Padding(
+                          padding: EdgeInsets.only(top: 300),
                           child: Divider(thickness: 0.5),
                         ),
     
                         //name
-                        Positioned(
+                        const Positioned(
                           top: 320,
                           left: 20,
                           child: Text(
@@ -191,7 +191,7 @@ class _TokenDisplayScreenState extends State<TokenDisplayScreen> {
                           left: 20,
                           child: Text(
                             widget.event.leaderName,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500),
@@ -199,7 +199,7 @@ class _TokenDisplayScreenState extends State<TokenDisplayScreen> {
                         ),
                         //date
     
-                        Positioned(
+                        const Positioned(
                           top: 375,
                           left: 20,
                           child: Text(
@@ -212,13 +212,13 @@ class _TokenDisplayScreenState extends State<TokenDisplayScreen> {
                             left: 20,
                             child: Text(
                               widget.event.date,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.w500),
                             )),
     
                         //time
-                        Positioned(
+                        const Positioned(
                           top: 375,
                           left: 200,
                           child: Text(
@@ -231,12 +231,12 @@ class _TokenDisplayScreenState extends State<TokenDisplayScreen> {
                             left: 200,
                             child: Text(
                               widget.event.time,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.w500),
                             )),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 415),
+                        const Padding(
+                          padding: EdgeInsets.only(top: 415),
                           child: Divider(thickness: 0.5),
                         ),
                         Positioned(
@@ -277,7 +277,7 @@ class _TokenDisplayScreenState extends State<TokenDisplayScreen> {
                   ),
                 ),
               ),
-              ElevatedButton(onPressed: _createPDF, child: Text("Download")),
+              ElevatedButton(onPressed: _createPDF, child: const Text("Download")),
               
             ],
           ),
@@ -291,7 +291,7 @@ class _TokenDisplayScreenState extends State<TokenDisplayScreen> {
     PdfDocument document = PdfDocument();
      final page = document.pages.add();
 
-      page.graphics.drawString('Welcome to PDF Succinctly!',
+      page.graphics.drawString('Welcome to PDF ',
         PdfStandardFont(PdfFontFamily.helvetica, 30));
 
     

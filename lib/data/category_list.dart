@@ -53,7 +53,7 @@ class Categ extends StatelessWidget {
                         color: Colors.grey.withOpacity(0.7),
                         spreadRadius: -4,
                         blurRadius: 11,
-                        offset: Offset(0, 9), // changes position of shadow
+                        offset: const Offset(0, 9), // changes position of shadow
                       ),
                     ],
                 ),
@@ -67,10 +67,10 @@ class Categ extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 2,),
+            const SizedBox(height: 2,),
             Padding(
               padding: const EdgeInsets.only(left:15),
-              child: Text(categori.Ctitle,style: TextStyle(fontSize: 15,fontWeight: FontWeight.w500,color: Colors.black87),),
+              child: Text(categori.Ctitle,style: const TextStyle(fontSize: 15,fontWeight: FontWeight.w500,color: Colors.black87),),
             )
           ],
         ),
